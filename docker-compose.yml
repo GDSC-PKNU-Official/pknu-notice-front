@@ -1,11 +1,11 @@
-version: "3"
+version: '3'
 services:
   frontend:
     build:
       context: .
       dockerfile: dockerfile.dev
     ports:
-      - "5173:5173"
+      - '5173:5173'
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
