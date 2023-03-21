@@ -1,6 +1,6 @@
 FROM node:16
 WORKDIR /usr/src/app
 COPY package.json ./
-RUN npm install
+RUN yarn
 COPY ./ ./
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "dev", "--host", "0.0.0.0"]
