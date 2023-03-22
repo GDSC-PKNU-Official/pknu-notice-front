@@ -1,7 +1,33 @@
 import styled from '@emotion/styled';
 import React, { CSSProperties } from 'react';
 
-import { imageSize, Size } from './style';
+type Size = 'large' | 'medium' | 'small';
+
+type ImageSize = {
+  [key in Size]: {
+    height: CSSProperties['height'];
+    width: CSSProperties['width'];
+  };
+};
+
+const large = '250 px' as CSSProperties['height' | 'width'];
+const medium = '200 px' as CSSProperties['height' | 'width'];
+const small = '150 px' as CSSProperties['height' | 'width'];
+
+const imageSize: ImageSize = {
+  large: {
+    height: large,
+    width: large,
+  },
+  medium: {
+    height: medium,
+    width: medium,
+  },
+  small: {
+    height: small,
+    width: small,
+  },
+};
 
 interface ImageProps {
   src: string;
@@ -14,14 +40,13 @@ type ImageStyleProps = Pick<ImageProps, 'outline'> & {
   height: CSSProperties['height'];
 };
 
-const borerImage: CSSProperties['border'] = '3px solid ';
-
+const border: CSSProperties['border'] = '3px solid black';
 const StyledImage = styled.img<ImageStyleProps>(
   ({ width, height, outline }) => {
     return {
       width,
       height,
-      border: outline ? borerImage : '',
+      border: outline ? border : '',
       borderRadius: '10px',
     };
   },
