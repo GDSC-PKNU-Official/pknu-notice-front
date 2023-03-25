@@ -1,0 +1,46 @@
+name: CI Workflow
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - '**'
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      # 해당 저장소의 코드를 가져온다
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # docker-compose 테스트
+      - name: Start docker container
+        run: docker-compose -f "docker-compose.yml" up -d --build
+
+      # Node 16 버전 사용
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      # yarn 설치
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      # yarn을 이용해 패키지 설치
+      - name: Install dependencies
+        run: sudo yarn install --frozen-lockfile
+
+      # 테스트 수행
+      - name: Run tests
+        run: yarn test
+
+      # 앞의 작업이 성공/실패와 관계 없이 컨테이너 종료
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
