@@ -34,7 +34,7 @@ jobs:
 
       # yarn을 이용해 패키지 설치
       - name: Install dependencies
-        run: sudo yarn install --frozen-lockfile
+        run: sudo yarn install
 
       # 테스트 수행
       - name: Run tests
