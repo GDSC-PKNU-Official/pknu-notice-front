@@ -1,15 +1,15 @@
-import Button from '@components/Button';
+import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import React from 'react';
 
 const Header = () => {
   return (
     <Container>
-      <Button>뒤로가기</Button>
+      <Icon kind="arrowBack" />
 
       <Logo>Logo</Logo>
 
-      <Button>메뉴바</Button>
+      <Icon kind="menu" />
     </Container>
   );
 };
