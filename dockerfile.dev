@@ -3,4 +3,5 @@ WORKDIR /usr/src/app
 COPY package.json ./
 RUN yarn
 COPY ./ ./
+RUN yarn test
 CMD ["yarn", "dev", "--host", "0.0.0.0"]
