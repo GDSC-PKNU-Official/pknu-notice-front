@@ -1,23 +1,24 @@
 import Icon from '@components/Icon';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
 
 const Header = () => {
   return (
-    <Container>
+    <header
+      css={css`
+        display: flex;
+        justify-content: space-between;
+
+        padding: 5px 10px;
+      `}
+    >
       <Icon kind="arrowBack" />
       <Logo>Logo</Logo>
       <Icon kind="menu" />
-    </Container>
+    </header>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  padding: 5px 10px;
-`;
 
 const Logo = styled.span`
   display: flex;
