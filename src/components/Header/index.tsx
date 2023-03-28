@@ -6,9 +6,7 @@ const Header = () => {
   return (
     <Container>
       <Icon kind="arrowBack" />
-
       <Logo>Logo</Logo>
-
       <Icon kind="menu" />
     </Container>
   );
@@ -19,10 +17,6 @@ const Container = styled.div`
   justify-content: space-between;
 
   padding: 5px 10px;
-
-  Button {
-    width: 10%;
-  }
 `;
 
 const Logo = styled.span`
@@ -32,7 +26,6 @@ const Logo = styled.span`
 
   text-transform: uppercase;
   font-weight: bold;
-  width: 80vw;
 `;
 
 export default Header;
