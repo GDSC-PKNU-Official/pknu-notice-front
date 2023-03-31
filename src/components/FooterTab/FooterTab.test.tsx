@@ -26,11 +26,7 @@ describe('하단 탭 컴포넌트', () => {
     icons.forEach((icon, index) => {
       userEvent.click(icon);
 
-      const urls = [
-        'https://example.com/icon1',
-        'https://example.com/icon2',
-        'https://example.com/icon3',
-      ];
+      const urls = ['/map', '/', '/my'];
 
       expect(window.location.href).toBe(urls[index]);
     });
