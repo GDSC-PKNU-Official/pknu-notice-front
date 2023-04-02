@@ -36,7 +36,7 @@ interface IconProps {
 
 const Icon = ({ kind, ...props }: IconProps) => {
   const TargetIcon = ICON[kind];
-  return <TargetIcon size={28} {...props} />;
+  return <TargetIcon size={28} role="button" {...props} />;
 };
 
 export default Icon;
