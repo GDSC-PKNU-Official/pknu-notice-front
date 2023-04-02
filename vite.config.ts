@@ -10,6 +10,10 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: '@type',
+        replacement: resolve(__dirname, './src/@types'),
+      },
+      {
         find: '@components',
         replacement: resolve(__dirname, './src/components'),
       },

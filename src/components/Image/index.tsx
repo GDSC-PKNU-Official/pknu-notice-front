@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import { Size, SizeOption } from '@type/styles/size';
 import { setSize } from '@utils/styles/size';
-import React, { CSSProperties } from 'react';
-import { Size, SizeOption } from 'src/@types/styles/size';
+import { CSSProperties } from 'react';
 
 type ImageSize = {
   [key in SizeOption]: Size;

@@ -1,4 +1,4 @@
-import { Size } from 'src/@types/styles/size';
+import { Size } from '@type/styles/size';
 
 export function setSize(heigth: number): Size;
 export function setSize(height: number, width?: number): Size;
