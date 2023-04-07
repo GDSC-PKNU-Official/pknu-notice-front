@@ -19,7 +19,7 @@ const InformCard = ({ icon, title, path }: InformCardProps) => {
   const onClick = () => navigate(path);
 
   return (
-    <Card icon={icon} onClick={onClick}>
+    <Card data-testid="card" icon={icon} onClick={onClick}>
       <Icon
         kind={icon}
         color={icon === 'school' ? theme.text.gray : theme.text.white}
