@@ -6,8 +6,6 @@ import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import InformCard from './index';
 
-// 3. memoryRouter, 가상 라우터
-
 describe('Card 클릭 시 페이지 이동이 잘 되는지에 대한 테스트', () => {
   it('공지사항 클릭 테스트', () => {
     const ICON = 'notification';
@@ -22,10 +20,12 @@ describe('Card 클릭 시 페이지 이동이 잘 되는지에 대한 테스트'
 
     const card = screen.getByTestId('card');
 
-    userEvent.click(card);
-    waitFor(() => {
-      expect(window.location.pathname).toBe(`/${PATH}`);
-    });
+    (async () => {
+      await userEvent.click(card);
+      waitFor(() => {
+        expect(window.location.pathname).toBe(`/${PATH}`);
+      });
+    })();
   });
 
   it('졸업요건 클릭 테스트', () => {
@@ -41,9 +41,11 @@ describe('Card 클릭 시 페이지 이동이 잘 되는지에 대한 테스트'
 
     const card = screen.getByTestId('card');
 
-    userEvent.click(card);
-    waitFor(() => {
-      expect(window.location.pathname).toBe(`/${PATH}`);
-    });
+    (async () => {
+      await userEvent.click(card);
+      waitFor(() => {
+        expect(window.location.pathname).toBe(`/${PATH}`);
+      });
+    })();
   });
 });
