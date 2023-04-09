@@ -12,10 +12,6 @@ type IconKind =
   | 'menu'
   | 'arrowBack';
 
-type IconContainerProps = {
-  onClick: () => void;
-};
-
 const PRIMARY_COLOR = '#71BC5C'; // 해당 상수는 추후 color 파일이 만들어지면 대체될 예정
 const BLACK_COLOR = 'black';
 
@@ -67,7 +63,7 @@ const Footer = styled.div`
   background: white;
 `;
 
-const IconContainer = styled.div<IconContainerProps>`
+const IconContainer = styled.div`
   width: 100%;
   text-align: center;
   &: hover {
