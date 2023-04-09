@@ -28,10 +28,9 @@ describe('하단 탭 아이콘 클릭 테스트', () => {
     const { location } = window;
     window.location = { ...location, href: '' };
 
+    const urls = ['/map', '/', '/my'];
     icons.forEach(async (icon, index) => {
       await userEvent.click(icon);
-
-      const urls = ['/map', '/', '/my'];
 
       expect(window.location.href).toBe(urls[index]);
     });
