@@ -1,20 +1,20 @@
 import { Theme } from '@emotion/react';
 
-export const theme: Theme = {
-  background: '#EAEAEA',
+export const THEME: Theme = {
+  BACKGROUND: '#EAEAEA',
 
-  text: {
-    black: '#000000',
-    gray: '#808080',
-    white: '#FFFFFF',
+  TEXT: {
+    BLACK: '#000000',
+    GRAY: '#808080',
+    WHITE: '#FFFFFF',
   },
 
-  primary: '#71BC5C',
+  PRIMARY: '#71BC5C',
 
-  button: {
-    green: '#71BC5C',
-    gray: '#E7E7E7',
+  BUTTON: {
+    GREEN: '#71BC5C',
+    GRAY: '#E7E7E7',
   },
 
-  modalBackground: 'rgba(0, 0, 0, 0.6)',
+  MODAL_BACKGROUND: 'rgba(0, 0, 0, 0.6)',
 };

@@ -2,20 +2,20 @@ import '@emotion/react';
 
 declare module '@emotion/react' {
   export interface Theme {
-    background: string; // EAEAEA
-    text: {
-      black: string;
-      gray: string;
-      white: string;
+    BACKGROUND: string; // EAEAEA
+    TEXT: {
+      BLACK: string;
+      GRAY: string;
+      WHITE: string;
     };
 
-    primary: string; // 71BC5C
+    PRIMARY: string; // 71BC5C
 
-    button: {
-      green: string;
-      gray: string;
+    BUTTON: {
+      GREEN: string;
+      GRAY: string;
     };
 
-    modalBackground: string;
+    MODAL_BACKGROUND: string;
   }
 }
