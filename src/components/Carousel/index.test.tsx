@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import Image from '@type/styles/image';
+import { ImageProps } from '@type/styles/image';
 import { MemoryRouter } from 'react-router-dom';
 
 import Carousel from './index';
 
 describe('캐러셀 동작 테스트', () => {
   it('2초후 다음 이미지로 자동 전환 테스트', async () => {
-    const images: Image[] = [
+    const images: ImageProps[] = [
       { src: 'image1.jpg', alt: 'Image1' },
       { src: 'image2.jpg', alt: 'Image2' },
     ];

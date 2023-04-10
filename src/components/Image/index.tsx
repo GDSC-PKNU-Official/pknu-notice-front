@@ -1,23 +1,13 @@
 import styled from '@emotion/styled';
-import { Size, SizeOption } from '@type/styles/size';
+import { ImageSize, ImageProps } from '@type/styles/image';
 import { setSize } from '@utils/styles/size';
 import { CSSProperties } from 'react';
-
-type ImageSize = {
-  [key in SizeOption]: Size;
-};
 
 const imageSize: ImageSize = {
   large: setSize(200),
   medium: setSize(150),
   small: setSize(100),
 };
-
-interface ImageProps {
-  src: string;
-  outline?: boolean;
-  size?: SizeOption;
-}
 
 const Image = ({ src, outline = false, size = 'medium' }: ImageProps) => {
   return (
