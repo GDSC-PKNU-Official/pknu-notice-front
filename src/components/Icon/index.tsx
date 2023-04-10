@@ -1,3 +1,4 @@
+import { IconKind } from '@type/styles/icon';
 import { IconType } from 'react-icons/lib';
 import {
   MdMap,
@@ -8,15 +9,6 @@ import {
   MdMenu,
   MdArrowBackIos,
 } from 'react-icons/md';
-
-type IconKind =
-  | 'map'
-  | 'home'
-  | 'accountCircle'
-  | 'school'
-  | 'notification'
-  | 'menu'
-  | 'arrowBack';
 
 const ICON: { [key in IconKind]: IconType } = {
   map: MdMap,
