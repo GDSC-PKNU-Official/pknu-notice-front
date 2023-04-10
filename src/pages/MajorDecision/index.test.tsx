@@ -7,8 +7,6 @@ import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import MajorDecision from './index';
 
-// 훅은 오직 함수형 컴포넌트 내부에서만 사용할 수 있다.
-// const { major } = useMajor();
 const mockedUsedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
