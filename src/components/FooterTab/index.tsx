@@ -1,19 +1,9 @@
 import Icon from '@components/Icon';
 import styled from '@emotion/styled';
+import { THEME } from '@styles/ThemeProvider/theme';
+import { IconKind } from '@type/styles/icon';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-type IconKind =
-  | 'map'
-  | 'home'
-  | 'accountCircle'
-  | 'school'
-  | 'notification'
-  | 'menu'
-  | 'arrowBack';
-
-const PRIMARY_COLOR = '#71BC5C'; // 해당 상수는 추후 color 파일이 만들어지면 대체될 예정
-const BLACK_COLOR = 'black';
 
 const footerIcons = [
   { kind: 'map', path: '/map' },
@@ -45,7 +35,7 @@ const FooterTab = () => {
           <Icon
             key={kind}
             kind={kind}
-            color={activeIcon === path ? PRIMARY_COLOR : BLACK_COLOR}
+            color={activeIcon === path ? THEME.PRIMARY : THEME.TEXT.BLACK}
           />
         </IconContainer>
       ))}
