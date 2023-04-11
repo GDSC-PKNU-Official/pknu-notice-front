@@ -2,7 +2,6 @@ import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const footerIcons = [
@@ -12,15 +11,9 @@ const footerIcons = [
 ] as const;
 
 const FooterTab = () => {
-  const [activeIcon, setActiveIcon] = useState('/');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setActiveIcon(window.location.pathname);
-  }, [window.location.pathname]);
-
   const handleIconClick = (kind: IconKind, path: string) => {
-    setActiveIcon(kind);
     navigate(path);
   };
 
@@ -35,7 +28,11 @@ const FooterTab = () => {
           <Icon
             key={kind}
             kind={kind}
-            color={activeIcon === path ? THEME.PRIMARY : THEME.TEXT.BLACK}
+            color={
+              window.location.pathname === path
+                ? THEME.PRIMARY
+                : THEME.TEXT.BLACK
+            }
           />
         </IconContainer>
       ))}
