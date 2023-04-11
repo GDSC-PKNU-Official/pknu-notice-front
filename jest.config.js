@@ -1,7 +1,7 @@
 export default {
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
-  testMatch: ['**/src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
+  testEnvironment: 'jest-environment-jsdom',
+  testMatch: ['**/src/**/*.{spec,test,e2e}.{js,jsx,ts,tsx}'],
   moduleNameMapper: {
     '^@type/(.*)$': '<rootDir>/src/@types/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
