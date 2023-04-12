@@ -11,6 +11,7 @@ export default {
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@assets/(.*)$': '<rootDir>/public/assets/$1',
+    '\\.(css|less)$': 'identity-obj-proxy',
   },
   setupFilesAfterEnv: ['./jest.setup.js'],
 };
