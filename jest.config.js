@@ -12,4 +12,5 @@ export default {
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@assets/(.*)$': '<rootDir>/public/assets/$1',
   },
+  setupFilesAfterEnv: ['./jest.setup.js'],
 };
