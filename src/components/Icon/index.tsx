@@ -8,6 +8,7 @@ import {
   MdNotifications,
   MdMenu,
   MdArrowBackIos,
+  MdAddCircleOutline,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -18,6 +19,7 @@ const ICON: { [key in IconKind]: IconType } = {
   notification: MdNotifications,
   menu: MdMenu,
   arrowBack: MdArrowBackIos,
+  plus: MdAddCircleOutline,
 };
 
 interface IconProps {
