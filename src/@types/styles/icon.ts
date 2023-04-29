@@ -5,4 +5,5 @@ export type IconKind =
   | 'school'
   | 'notification'
   | 'menu'
-  | 'arrowBack';
+  | 'arrowBack'
+  | 'plus';
