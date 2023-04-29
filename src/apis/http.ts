@@ -1,8 +1,8 @@
-import config from '@config/index';
-import axios from 'axios';
+import { SERVER_URL } from '@config/index';
+import axios, { AxiosInstance } from 'axios';
 
-const http = axios.create({
-  baseURL: config.SERVER_URL,
+const http: AxiosInstance = axios.create({
+  baseURL: SERVER_URL,
 });
 
 export default http;

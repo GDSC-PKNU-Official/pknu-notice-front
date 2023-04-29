@@ -1,5 +1,1 @@
-const config = {
-  SERVER_URL: import.meta.env.VITE_BACKEND_URL,
-};
-
-export default config;
+export const SERVER_URL: string = import.meta.env.VITE_BACKEND_URL;
