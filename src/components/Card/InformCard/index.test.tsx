@@ -1,44 +1,78 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import MajorContext from '@contexts/major';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Major from '@type/major';
+import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 
 import '@testing-library/jest-dom';
 import InformCard from './index';
 
-describe('Card 클릭 시 페이지 이동이 잘 되는지에 대한 테스트', () => {
-  it('공지사항 클릭 테스트', () => {
-    const ICON = 'notification';
-    const TITLE = '공지사항';
-    const PATH = 'announcement';
-    render(<InformCard icon={ICON} title={TITLE} path={PATH} />, {
-      wrapper: MemoryRouter,
-    });
+const ICON = 'notification';
+const TITLE = '공지사항';
+const PATH = '/announcement';
 
-    const card = screen.getByTestId('card');
+const setMajorMock = (mode: string) => {
+  const mockMajor: Major = mode === 'modal' ? null : '컴퓨터공학과';
+  const mockSetMajor = jest.fn();
 
-    (async () => {
-      await userEvent.click(card);
-      waitFor(() => {
-        expect(window.location.pathname).toBe(`/${PATH}`);
-      });
-    })();
+  jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: () => [mockMajor, mockSetMajor],
+  }));
+
+  return {
+    major: mockMajor,
+    setMajor: mockSetMajor,
+  };
+};
+
+const mockRouterTo = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockRouterTo,
+}));
+
+describe('InformCard 컴포넌트 테스트', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('졸업요건 클릭 테스트', () => {
-    const ICON = 'school';
-    const TITLE = '졸업요건';
-    const PATH = 'graduation-requirements';
-    render(<InformCard icon={ICON} title={TITLE} path={PATH} />, {
-      wrapper: MemoryRouter,
-    });
+  it('전역상태가 설정 됐을 경우, 페이지 이동 테스트', async () => {
+    render(
+      <MajorContext.Provider value={{ ...setMajorMock('not-modal') }}>
+        <InformCard icon={ICON} title={TITLE} path={PATH} />
+      </MajorContext.Provider>,
+      {
+        wrapper: MemoryRouter,
+      },
+    );
 
     const card = screen.getByTestId('card');
-
-    (async () => {
+    await act(async () => {
       await userEvent.click(card);
-      waitFor(() => {
-        expect(window.location.pathname).toBe(`/${PATH}`);
-      });
-    })();
+    });
+
+    expect(mockRouterTo).toHaveBeenCalledWith(`${PATH}`);
+  });
+
+  it('전역상태가 설정 안됐을 경우, 모달 렌더링 테스트', async () => {
+    render(
+      <MajorContext.Provider value={{ ...setMajorMock('modal') }}>
+        <InformCard icon={ICON} title={TITLE} path={PATH} />
+      </MajorContext.Provider>,
+      {
+        wrapper: MemoryRouter,
+      },
+    );
+
+    const card = screen.getByTestId('card');
+    await act(async () => {
+      await userEvent.click(card);
+    });
+
+    expect(
+      screen.getByText('아직 학과를 알려주지 않았어요'),
+    ).toBeInTheDocument();
   });
 });
