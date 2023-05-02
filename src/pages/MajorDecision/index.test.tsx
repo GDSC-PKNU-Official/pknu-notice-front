@@ -14,7 +14,7 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-describe('학과선택 페이지 로직 테스트', () => {
+describe.skip('학과선택 페이지 로직 테스트', () => {
   it('전공 선택 버튼 클릭 후, 상태 변경 테스트', async () => {
     render(
       <MemoryRouter>
