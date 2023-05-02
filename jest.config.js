@@ -1,17 +1,17 @@
 export default {
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
-  testMatch: ['**/src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
+  testEnvironment: 'jest-environment-jsdom',
+  testMatch: ['**/src/**/*.{spec,test,e2e}.{js,jsx,ts,tsx}'],
   moduleNameMapper: {
     '^@type/(.*)$': '<rootDir>/src/@types/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@constants/(.*)$': '<rootDir>/src/constants/$1',
+    '^@contexts/(.*)$': '<rootDir>/src/contexts/$1',
     '^@styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@assets/(.*)$': '<rootDir>/public/assets/$1',
-    '\\.(css|less)$': 'identity-obj-proxy',
   },
-  setupFilesAfterEnv: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['./src/jest.setup.ts'],
 };
