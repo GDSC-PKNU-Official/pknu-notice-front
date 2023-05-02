@@ -14,8 +14,16 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/@types'),
       },
       {
+        find: '@apis',
+        replacement: resolve(__dirname, './src/apis'),
+      },
+      {
         find: '@components',
         replacement: resolve(__dirname, './src/components'),
+      },
+      {
+        find: '@config',
+        replacement: resolve(__dirname, './src/config'),
       },
       {
         find: '@constants',

@@ -4,7 +4,9 @@ export default {
   testMatch: ['**/src/**/*.{spec,test,e2e}.{js,jsx,ts,tsx}'],
   moduleNameMapper: {
     '^@type/(.*)$': '<rootDir>/src/@types/$1',
+    '^@apis/(.*)$': '<rootDir>/src/apis/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
+    '^@config/(.*)$': '<rootDir>/src/config/$1',
     '^@constants/(.*)$': '<rootDir>/src/constants/$1',
     '^@contexts/(.*)$': '<rootDir>/src/contexts/$1',
     '^@styles/(.*)$': '<rootDir>/src/styles/$1',
