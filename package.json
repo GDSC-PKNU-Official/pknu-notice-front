@@ -59,5 +59,8 @@
     "vite": "^4.2.0",
     "vite-tsconfig-paths": "^4.0.7"
   },
-  "types": "module"
+  "types": "module",
+  "msw": {
+    "workerDirectory": "public"
+  }
 }
