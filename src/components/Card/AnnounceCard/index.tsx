@@ -6,10 +6,9 @@ interface AnnounceCardProps {
   title: string;
   path: string;
   date: string;
-  desc: string;
 }
 
-const AnnounceCard = ({ title, path, date, desc }: AnnounceCardProps) => {
+const AnnounceCard = ({ title, path, date }: AnnounceCardProps) => {
   const onClick = () => {
     window.location.href = path;
   };
@@ -31,7 +30,6 @@ const AnnounceCard = ({ title, path, date, desc }: AnnounceCardProps) => {
         />
         <span>{date}</span>
       </div>
-      <p>{desc}</p>
     </Card>
   );
 };
@@ -46,13 +44,13 @@ const Card = styled.div`
   cursor: pointer;
 
   color: ${THEME.TEXT.BLACK};
-
-  & > div > span:first-child {
+  // first-child 가 ssr 에서 위험한 이유
+  & > div > span:first-of-type {
     font-size: 18px;
     font-weight: bold;
   }
 
-  & > div > span:nth-child(3) {
+  & > div > span:nth-of-type(2) {
     font-size: 12px;
   }
 
