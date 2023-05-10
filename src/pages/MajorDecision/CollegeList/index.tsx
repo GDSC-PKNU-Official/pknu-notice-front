@@ -16,8 +16,9 @@ const CollegeList = () => {
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target === e.currentTarget) {
-      const COLLEGENAME = e.currentTarget.textContent;
-      routerTo(`/major-decision/${COLLEGENAME}`);
+      const COLLEGENAME = e.currentTarget.textContent as string;
+      const ENCODECOLLEGENAME = encodeURI(encodeURIComponent(COLLEGENAME));
+      routerTo(`/major-decision/${ENCODECOLLEGENAME}`);
     }
   };
 
