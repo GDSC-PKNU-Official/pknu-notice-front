@@ -29,7 +29,11 @@ const CollegeList = () => {
   return collegeList ? (
     <CollegeContainer>
       {collegeList.map((college) => (
-        <CollegeWrapper key={college} onClick={onClick}>
+        <CollegeWrapper
+          key={college}
+          onClick={onClick}
+          data-testid="collegeList"
+        >
           {college}
           <IconWrapper>
             <Icon kind="right" />
