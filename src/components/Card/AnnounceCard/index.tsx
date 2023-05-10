@@ -1,14 +1,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
+import { AnnounceItem } from '@type/announcement';
 
-interface AnnounceCardProps {
-  title: string;
-  path: string;
-  date: string;
-}
-
-const AnnounceCard = ({ title, path, date }: AnnounceCardProps) => {
+const AnnounceCard = ({ title, path, date }: AnnounceItem) => {
   const onClick = () => {
     window.location.href = path;
   };
@@ -44,7 +39,7 @@ const Card = styled.div`
   cursor: pointer;
 
   color: ${THEME.TEXT.BLACK};
-  // first-child 가 ssr 에서 위험한 이유
+
   & > div > span:first-of-type {
     font-size: 18px;
     font-weight: bold;
