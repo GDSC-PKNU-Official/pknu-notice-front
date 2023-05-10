@@ -5,8 +5,6 @@ import { AnnounceItem } from '@type/announcement';
 import axios from 'axios';
 import { MemoryRouter } from 'react-router-dom';
 
-import AnnounceList from './AnnounceList';
-
 import AnnounceCard from '.';
 
 describe('공지사항 카드 컴포넌트 테스트', () => {
