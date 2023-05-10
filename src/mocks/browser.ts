@@ -1,5 +1,6 @@
 import { setupWorker } from 'msw';
 
-import { handlers } from './handlers';
+import { majorHandlers } from './handlers/majorHandlers';
+import { testHandlers } from './handlers/testHandlers';
 
-export const worker = setupWorker(...handlers); // 브라우저 환경 서버
+export const worker = setupWorker(...majorHandlers, ...testHandlers); // 브라우저 환경 서버
