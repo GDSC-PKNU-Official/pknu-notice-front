@@ -1,8 +1,7 @@
-import { SERVER_URL } from '@config/index';
+import http from '@apis/http';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AnnounceItem } from '@type/announcement';
-import axios from 'axios';
 import { MemoryRouter } from 'react-router-dom';
 
 import AnnounceCard from '.';
@@ -27,9 +26,7 @@ describe('공지사항 카드 컴포넌트 테스트', () => {
   });
 
   it('카드 클릭시 페이지 이동 테스트', async () => {
-    const axiosResult = await axios.get(
-      `${SERVER_URL}/announcement?major=컴퓨터공학과`,
-    );
+    const axiosResult = await http.get('/announcement?major=컴퓨터공학과');
     const announceList: AnnounceItem[] = axiosResult.data;
 
     announceList.forEach(async (annouce) => {
