@@ -1,4 +1,4 @@
-import { getAnnounceList } from '@apis/announcement';
+import http from '@apis/http';
 import { AnnounceItem } from '@type/announcement';
 import Major from '@type/major';
 import { useEffect, useState } from 'react';
@@ -14,8 +14,8 @@ const AnnounceList = ({ major }: AnnounceListProps) => {
 
   useEffect(() => {
     (async () => {
-      const data = await getAnnounceList(major);
-      setAnnounceList(data);
+      const axiosResult = await http.get(`/announcement?major=${major}`);
+      setAnnounceList(axiosResult.data);
     })();
   }, []);
 
