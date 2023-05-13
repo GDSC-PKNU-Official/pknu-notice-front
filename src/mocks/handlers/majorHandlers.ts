@@ -1,13 +1,12 @@
+import { SERVER_URL } from '@config/index';
 import { rest, RequestHandler } from 'msw';
 
-const MOCKSERVERURL = 'http://localhost:8080';
-
 export const majorHandlers: RequestHandler[] = [
-  rest.get(MOCKSERVERURL + '/majorDecision', (req, res, ctx) => {
+  rest.get(SERVER_URL + '/majorDecision', (req, res, ctx) => {
     const collegeList = ['경영대학', '공과대학', '정보융합대학'];
     return res(ctx.status(200), ctx.json(collegeList));
   }),
-  rest.get(MOCKSERVERURL + '/majorDecision/:college', (req, res, ctx) => {
+  rest.get(SERVER_URL + '/majorDecision/:college', (req, res, ctx) => {
     const { college } = req.params;
     if (college === '정보융합대학') {
       const INFORMATIONCONVERGENCE = [

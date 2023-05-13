@@ -1,9 +1,8 @@
+import { SERVER_URL } from '@config/index';
 import { rest, RequestHandler } from 'msw';
 
-const MOCKSERVERURL = 'http://localhost:8080';
-
 export const testHandlers: RequestHandler[] = [
-  rest.get(MOCKSERVERURL + '/test', (req, res, ctx) => {
+  rest.get(SERVER_URL + '/test', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ message: 'Hello, world!' }));
   }),
 ];
