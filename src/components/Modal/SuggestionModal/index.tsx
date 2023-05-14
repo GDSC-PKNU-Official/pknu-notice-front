@@ -4,7 +4,7 @@ import { SERVER_URL } from '@config/index';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { areaResize } from '@utils/styles/area-resize';
+import { areaResize } from '@utils/styles/textarea-resize';
 import React, { useRef, useState } from 'react';
 
 import Modal from '..';
