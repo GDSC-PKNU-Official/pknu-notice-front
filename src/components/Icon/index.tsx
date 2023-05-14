@@ -9,6 +9,8 @@ import {
   MdMenu,
   MdArrowBackIos,
   MdAddCircleOutline,
+  MdOutlineModeEdit,
+  MdOutlineQuestionAnswer,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -20,6 +22,8 @@ const ICON: { [key in IconKind]: IconType } = {
   menu: MdMenu,
   arrowBack: MdArrowBackIos,
   plus: MdAddCircleOutline,
+  edit: MdOutlineModeEdit,
+  suggest: MdOutlineQuestionAnswer,
 };
 
 interface IconProps {
