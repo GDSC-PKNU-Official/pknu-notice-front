@@ -6,4 +6,6 @@ export type IconKind =
   | 'notification'
   | 'menu'
   | 'arrowBack'
-  | 'plus';
+  | 'plus'
+  | 'edit'
+  | 'suggest';
