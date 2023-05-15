@@ -22,6 +22,7 @@ const Modal = ({ children, onClose }: ModalProps) => {
       <div
         css={css`
           animation: ${isOpen ? modalIn : modalOut} 0.3s ease-out;
+          width: 80%;
         `}
       >
         {children}
