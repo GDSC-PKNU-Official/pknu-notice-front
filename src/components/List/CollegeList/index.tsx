@@ -1,5 +1,6 @@
 import http from '@apis/http';
 import Icon from '@components/Icon';
+import DepartmentList from '@components/List/DepartmentList';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';
@@ -24,6 +25,7 @@ const CollegeList = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  if (window.location.search) return <DepartmentList />;
 
   return collegeList ? (
     <CollegeContainer>
