@@ -7,4 +7,6 @@ export type IconKind =
   | 'menu'
   | 'arrowBack'
   | 'plus'
+  | 'edit'
+  | 'suggest'
   | 'right';

@@ -42,7 +42,7 @@ const ModalContent = styled.div`
   align-items: center;
 
   background-color: ${THEME.TEXT.WHITE};
-  padding: 50px;
+  padding: 30px;
   border-radius: 15px;
 
   Button {
