@@ -2,7 +2,6 @@ import http from '@apis/http';
 import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
-import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useState, useEffect } from 'react';
 
 const CollegeList = () => {
@@ -14,12 +13,12 @@ const CollegeList = () => {
     setCollegeList(result.data);
   };
 
-  const onClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.target === e.currentTarget) {
-      const COLLEGENAME = e.currentTarget.textContent as string;
-      const ENCODECOLLEGENAME = encodeURI(encodeURIComponent(COLLEGENAME));
-      routerTo(`/major-decision/${ENCODECOLLEGENAME}`);
-    }
+  const onClick: React.MouseEventHandler<HTMLElement> = (e) => {
+    if (e.target !== e.currentTarget) return;
+
+    const collegeName = e.currentTarget.textContent;
+    if (collegeName === null) routerTo('/major-decision');
+    else routerTo(`/major-decision?major=${collegeName}`);
   };
 
   useEffect(() => {
