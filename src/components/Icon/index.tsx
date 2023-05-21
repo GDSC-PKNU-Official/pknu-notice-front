@@ -9,6 +9,7 @@ import {
   MdMenu,
   MdArrowBackIos,
   MdAddCircleOutline,
+  MdChevronRight,
   MdOutlineModeEdit,
   MdOutlineQuestionAnswer,
 } from 'react-icons/md';
@@ -22,6 +23,7 @@ const ICON: { [key in IconKind]: IconType } = {
   menu: MdMenu,
   arrowBack: MdArrowBackIos,
   plus: MdAddCircleOutline,
+  right: MdChevronRight,
   edit: MdOutlineModeEdit,
   suggest: MdOutlineQuestionAnswer,
 };

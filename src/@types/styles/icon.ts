@@ -8,4 +8,5 @@ export type IconKind =
   | 'arrowBack'
   | 'plus'
   | 'edit'
-  | 'suggest';
+  | 'suggest'
+  | 'right';
