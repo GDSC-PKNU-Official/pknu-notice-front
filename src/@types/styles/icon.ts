@@ -9,4 +9,6 @@ export type IconKind =
   | 'plus'
   | 'edit'
   | 'suggest'
-  | 'right';
+  | 'right'
+  | 'checkedRadio'
+  | 'uncheckedRadio';
