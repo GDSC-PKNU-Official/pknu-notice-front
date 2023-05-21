@@ -1,13 +1,16 @@
 import http from '@apis/http';
-import Icon from '@components/Icon';
+import List from '@components/List';
 import DepartmentList from '@components/List/DepartmentList';
-import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';
 
 const CollegeList = () => {
   const [collegeList, setCollegeList] = useState<string[]>();
   const { routerTo } = useRouter();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const result = await http.get('/majorDecision');
@@ -22,42 +25,21 @@ const CollegeList = () => {
     else routerTo(`/major-decision?major=${collegeName}`);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
   if (window.location.search) {
     const college = window.location.search.split('?major=')[1];
     return <DepartmentList college={college} />;
   }
 
   return collegeList ? (
-    <CollegeContainer>
-      {collegeList.map((college) => (
-        <CollegeWrapper
-          key={college}
-          onClick={onClick}
-          data-testid="collegeList"
-        >
-          {college}
-          <IconWrapper>
-            <Icon kind="right" />
-          </IconWrapper>
-        </CollegeWrapper>
-      ))}
-    </CollegeContainer>
+    <List
+      title="학부/학과 선택하기"
+      onClick={onClick}
+      icon="right"
+      contents={collegeList}
+    />
   ) : (
-    <div>loading..</div>
+    <div>loading...</div>
   );
 };
 
 export default CollegeList;
-
-const CollegeContainer = styled.div``;
-
-const CollegeWrapper = styled.div`
-  padding: 3%;
-`;
-
-const IconWrapper = styled.div`
-  float: right;
-`;
