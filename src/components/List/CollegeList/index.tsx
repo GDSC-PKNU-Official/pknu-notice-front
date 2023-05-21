@@ -1,5 +1,5 @@
 import http from '@apis/http';
-import List from '@components/List';
+import List, { ContentsLists } from '@components/List';
 import DepartmentList from '@components/List/DepartmentList';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';
@@ -35,6 +35,7 @@ const CollegeList = () => {
       title="학부/학과 선택하기"
       onClick={onClick}
       icon="right"
+      altIcon="right"
       contents={collegeList}
     />
   ) : (
