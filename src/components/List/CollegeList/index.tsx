@@ -25,7 +25,10 @@ const CollegeList = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  if (window.location.search) return <DepartmentList />;
+  if (window.location.search) {
+    const college = window.location.search.split('?major=')[1];
+    return <DepartmentList college={college} />;
+  }
 
   return collegeList ? (
     <CollegeContainer>

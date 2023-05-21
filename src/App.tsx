@@ -1,6 +1,6 @@
+import CollegeList from '@components/List/CollegeList';
 import Announcement from '@pages/Announcement';
 import Home from '@pages/Home';
-import CollegeList from '@pages/MajorDecision/CollegeList';
 import My from '@pages/My';
 import { Routes, Route } from 'react-router-dom';
 
