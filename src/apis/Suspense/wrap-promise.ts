@@ -9,10 +9,8 @@ const wrapPromise = <T>(promise: Promise<AxiosResponse<T>>) => {
 
   const suspender = promise.then(
     (res: AxiosResponse<T>) => {
-      setTimeout(() => {
-        status = 'resolve';
-        response = res;
-      }, 3000);
+      status = 'resolve';
+      response = res;
     },
     (err: AxiosError) => {
       status = 'error';
