@@ -1,31 +1,28 @@
-import http from '@apis/http';
 import { AnnounceItem } from '@type/announcement';
-import Major from '@type/major';
-import { useEffect, useState } from 'react';
+import { AxiosError, AxiosResponse } from 'axios';
 
 import AnnounceCard from '..';
 
+type Resource = AxiosResponse<AnnounceItem[]> | AxiosError | null;
+
 interface AnnounceListProps {
-  major: Major;
+  resource: {
+    read: () => Resource;
+  };
 }
 
-const AnnounceList = ({ major }: AnnounceListProps) => {
-  const [announceList, setAnnounceList] = useState<AnnounceItem[] | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      const axiosResult = await http.get(`/announcement?major=${major}`);
-      setAnnounceList(axiosResult.data);
-    })();
-  }, []);
+const AnnounceList = ({ resource }: AnnounceListProps) => {
+  const announceList: Resource = resource.read();
 
   return (
     <>
-      {announceList?.map((announce, idx) => (
-        <div key={idx}>
-          <AnnounceCard {...announce} />
-        </div>
-      ))}
+      {Array.isArray(announceList)
+        ? announceList.map((announce, idx) => (
+            <div key={idx}>
+              <AnnounceCard {...announce} />
+            </div>
+          ))
+        : null}
     </>
   );
 };
