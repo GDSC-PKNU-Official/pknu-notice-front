@@ -1,5 +1,5 @@
 import http from '@apis/http';
-import List, { ContentsLists } from '@components/List';
+import List from '@components/List';
 import DepartmentList from '@components/List/DepartmentList';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';

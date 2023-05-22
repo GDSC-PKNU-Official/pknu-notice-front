@@ -33,7 +33,6 @@ const DepartmentList = (props: DepartmentListProps) => {
 
   const buttonClick: React.MouseEventHandler<HTMLElement> = (e) => {
     if (e.target !== e.currentTarget) return;
-    console.log(department);
     localStorage.setItem('major', department);
     setMajor('컴퓨터공학과');
     alert('전공 선택 완료 !');
