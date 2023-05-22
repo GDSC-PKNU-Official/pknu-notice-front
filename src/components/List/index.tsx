@@ -9,16 +9,16 @@ interface ListProps {
   icon: IconKind;
   altIcon: IconKind;
   title: string;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick: React.MouseEventHandler<HTMLElement>;
 }
 
 const List = (props: ListProps) => {
   const [selected, setSelected] = useState<string | null>();
-  const onClick = props.onClick
-    ? props.onClick
-    : (e: React.MouseEvent<HTMLElement>) => {
-        setSelected(e.currentTarget.textContent);
-      };
+  const onClick: React.MouseEventHandler<HTMLElement> = (e) => {
+    if (e.target !== e.currentTarget) return;
+    setSelected(e.currentTarget.textContent);
+    props.onClick(e);
+  };
 
   return (
     <ListContainer>
