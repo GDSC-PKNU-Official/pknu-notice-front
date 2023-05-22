@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import SkeletomItem from '@styles/SkeletonItem';
+import SkeletomItem from '@styles/Skeleton/SkeletonItem';
 
 interface AnnounceCardSkeletonProps {
   length: number;
