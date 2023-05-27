@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 interface ButtonProps {
   children?: ReactNode;
-  onClick?: any;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   disabled?: boolean;
 }
 
