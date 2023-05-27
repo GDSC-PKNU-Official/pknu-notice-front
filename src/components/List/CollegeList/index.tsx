@@ -1,6 +1,7 @@
 import http from '@apis/http';
-import List from '@components/List';
+import Icon from '@components/Icon';
 import DepartmentList from '@components/List/DepartmentList';
+import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';
 
@@ -31,16 +32,29 @@ const CollegeList = () => {
   }
 
   return collegeList ? (
-    <List
-      title="학부/학과 선택하기"
-      onClick={onClick}
-      icon="right"
-      altIcon="right"
-      contents={collegeList}
-    />
+    <ListContainer>
+      {collegeList.map((college) => (
+        <ListWrapper key={college} onClick={onClick}>
+          {college}
+          <IconWrapper>
+            <Icon kind="right" />
+          </IconWrapper>
+        </ListWrapper>
+      ))}
+    </ListContainer>
   ) : (
     <div>loading...</div>
   );
 };
+
+const ListContainer = styled.div``;
+
+const ListWrapper = styled.div`
+  padding: 3%;
+`;
+
+const IconWrapper = styled.div`
+  float: right;
+`;
 
 export default CollegeList;

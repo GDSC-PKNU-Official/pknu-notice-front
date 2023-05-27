@@ -1,8 +1,9 @@
 import http from '@apis/http';
 import Button from '@components/Button';
-import List from '@components/List';
+import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
+import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ interface DepartmentListProps {
 
 const DepartmentList = (props: DepartmentListProps) => {
   const [departmentList, setDepartmentList] = useState<string[]>();
-  const [department, setDepartment] = useState<string>('');
+  const [selected, setSelected] = useState<string>('');
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
   const router = useNavigate();
   const { setMajor } = useMajor();
@@ -27,13 +28,13 @@ const DepartmentList = (props: DepartmentListProps) => {
 
   const onClick: React.MouseEventHandler<HTMLElement> = (e) => {
     if (e.currentTarget.textContent === null) return;
-    setDepartment(e.currentTarget.textContent);
+    setSelected(e.currentTarget.textContent);
     setButtonDisable(false);
   };
 
   const buttonClick: React.MouseEventHandler<HTMLElement> = (e) => {
     if (e.target !== e.currentTarget) return;
-    localStorage.setItem('major', department);
+    localStorage.setItem('major', selected);
     setMajor('컴퓨터공학과');
     alert('전공 선택 완료 !');
     router('/');
@@ -44,35 +45,44 @@ const DepartmentList = (props: DepartmentListProps) => {
   }, []);
 
   return departmentList ? (
-    <Container>
-      <List
-        title="학부/학과 선택하기"
-        icon="uncheckedRadio"
-        altIcon="checkedRadio"
-        contents={departmentList}
-        onClick={onClick}
-      />
+    <ListContainer>
+      {departmentList.map((department) => (
+        <ListWrapper key={department} onClick={onClick}>
+          {department}
+          <IconWrapper>
+            <Icon
+              kind={selected === department ? 'checkedRadio' : 'uncheckedRadio'}
+              color={selected === department ? THEME.PRIMARY : THEME.TEXT.GRAY}
+            />
+          </IconWrapper>
+        </ListWrapper>
+      ))}
       <ButtonContainer>
         <Button disabled={buttonDisable} onClick={buttonClick}>
           선택완료
         </Button>
       </ButtonContainer>
-    </Container>
+    </ListContainer>
   ) : (
     <div>loading..</div>
   );
 };
-
-const Container = styled.div`
-  position: relative;
-  height: 100vh;
-`;
 
 const ButtonContainer = styled.div`
   position: absolute;
   width: 98%;
   margin: 0 1% 1% 1%;
   bottom: 0;
+`;
+
+const ListContainer = styled.div``;
+
+const ListWrapper = styled.div`
+  padding: 3%;
+`;
+
+const IconWrapper = styled.div`
+  float: right;
 `;
 
 export default DepartmentList;
