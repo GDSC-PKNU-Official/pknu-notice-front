@@ -43,19 +43,13 @@ const Card = styled.div`
   & > div > span:first-of-type {
     font-size: 18px;
     font-weight: bold;
+    flex: 9;
+    text-align: center;
   }
 
   & > div > span:nth-of-type(2) {
     font-size: 12px;
-  }
-
-  & > p {
-    margin-top: 10px;
-    line-height: 25px;
-    overflow: hidden;
-    text-overflow: clip;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    flex: 1;
+    text-align: center;
   }
 `;
