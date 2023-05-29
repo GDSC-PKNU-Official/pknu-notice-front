@@ -33,6 +33,7 @@ const CollegeList = () => {
 
   return collegeList ? (
     <ListContainer>
+      <Title>단과대 선택하기</Title>
       {collegeList.map((college) => (
         <ListWrapper key={college} onClick={onClick}>
           {college}
@@ -47,14 +48,21 @@ const CollegeList = () => {
   );
 };
 
-const ListContainer = styled.div``;
+const ListContainer = styled.div`
+  padding-top: 2%;
+  padding-left: 2%;
+`;
 
 const ListWrapper = styled.div`
-  padding: 3%;
+  padding: 3% 3% 3% 1%;
 `;
 
 const IconWrapper = styled.div`
   float: right;
+`;
+
+const Title = styled.h2`
+  font-size: 2rem;
 `;
 
 export default CollegeList;

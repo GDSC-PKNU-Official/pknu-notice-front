@@ -46,6 +46,7 @@ const DepartmentList = (props: DepartmentListProps) => {
 
   return departmentList ? (
     <ListContainer>
+      <Title>학과 선택하기</Title>
       {departmentList.map((department) => (
         <ListWrapper key={department} onClick={onClick}>
           {department}
@@ -75,10 +76,17 @@ const ButtonContainer = styled.div`
   bottom: 0;
 `;
 
-const ListContainer = styled.div``;
+const ListContainer = styled.div`
+  padding-top: 2%;
+  padding-left: 2%;
+`;
+
+const Title = styled.h2`
+  font-size: 2rem;
+`;
 
 const ListWrapper = styled.div`
-  padding: 3%;
+  padding: 3% 3% 3% 1%;
 `;
 
 const IconWrapper = styled.div`
