@@ -10,7 +10,10 @@ jest.mock('@config/index', () => {
 
 beforeAll(() => server.listen());
 
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  server.resetHandlers();
+  jest.clearAllMocks();
+});
 
 afterAll(() => {
   server.close();
