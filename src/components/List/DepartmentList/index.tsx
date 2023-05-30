@@ -5,21 +5,18 @@ import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-interface DepartmentListProps {
-  college: string;
-}
-
-const DepartmentList = (props: DepartmentListProps) => {
+const DepartmentList = () => {
   const [departmentList, setDepartmentList] = useState<string[]>();
   const [selected, setSelected] = useState<string>('');
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
   const router = useNavigate();
   const { setMajor } = useMajor();
+  const { college } = useParams();
 
-  const fetchData = async (collegeName: string) => {
-    const result = await http.get(`majorDecision/${collegeName}`);
+  const fetchData = async () => {
+    const result = await http.get(`majorDecision/${college}`);
     if (result.data === undefined) {
       router(-1);
     }
@@ -41,7 +38,7 @@ const DepartmentList = (props: DepartmentListProps) => {
   };
 
   useEffect(() => {
-    fetchData(props.college);
+    fetchData();
   }, []);
 
   return departmentList ? (

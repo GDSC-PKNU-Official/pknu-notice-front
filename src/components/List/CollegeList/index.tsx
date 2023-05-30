@@ -1,6 +1,5 @@
 import http from '@apis/http';
 import Icon from '@components/Icon';
-import DepartmentList from '@components/List/DepartmentList';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';
@@ -22,14 +21,10 @@ const CollegeList = () => {
     if (e.target !== e.currentTarget) return;
 
     const collegeName = e.currentTarget.textContent;
-    if (collegeName === null) routerTo('/major-decision');
-    else routerTo(`/major-decision?major=${collegeName}`);
-  };
 
-  if (window.location.search) {
-    const college = window.location.search.split('?major=')[1];
-    return <DepartmentList college={college} />;
-  }
+    if (collegeName === null) routerTo('/major-decision');
+    else routerTo(`/major-decision/${collegeName}`);
+  };
 
   return collegeList ? (
     <ListContainer>
