@@ -4,7 +4,7 @@ import { RequestHandler, rest } from 'msw';
 export const announceHandlers: RequestHandler[] = [
   rest.get(`${SERVER_URL}/announcement`, (req, res, ctx) => {
     const query = req.url.searchParams;
-    if (query.get('major') === '컴퓨터공학과') {
+    if (query.get('major') === '컴퓨터인공지능학부') {
       return res(
         ctx.status(200),
         ctx.json([
