@@ -42,12 +42,13 @@ const FooterTab = () => {
 
 const Footer = styled.div`
   position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
   display: flex;
   justify-content: space-around;
   bottom: 0;
-  width: 100vw;
-  height: 70px;
-  background: white;
 `;
 
 const IconContainer = styled.div`
