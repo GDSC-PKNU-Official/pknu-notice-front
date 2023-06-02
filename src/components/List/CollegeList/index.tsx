@@ -1,6 +1,5 @@
 import http from '@apis/http';
 import Icon from '@components/Icon';
-import DepartmentList from '@components/List/DepartmentList';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import React, { useState, useEffect } from 'react';
@@ -8,6 +7,10 @@ import React, { useState, useEffect } from 'react';
 const CollegeList = () => {
   const [collegeList, setCollegeList] = useState<string[]>();
   const { routerTo } = useRouter();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const result = await http.get('/majorDecision');
@@ -18,43 +21,43 @@ const CollegeList = () => {
     if (e.target !== e.currentTarget) return;
 
     const collegeName = e.currentTarget.textContent;
+
     if (collegeName === null) routerTo('/major-decision');
-    else routerTo(`/major-decision?major=${collegeName}`);
+    else routerTo(`/major-decision/${collegeName}`);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-  if (window.location.search) return <DepartmentList />;
-
   return collegeList ? (
-    <CollegeContainer>
+    <ListContainer>
+      <Title>단과대 선택하기</Title>
       {collegeList.map((college) => (
-        <CollegeWrapper
-          key={college}
-          onClick={onClick}
-          data-testid="collegeList"
-        >
+        <ListWrapper key={college} onClick={onClick}>
           {college}
           <IconWrapper>
             <Icon kind="right" />
           </IconWrapper>
-        </CollegeWrapper>
+        </ListWrapper>
       ))}
-    </CollegeContainer>
+    </ListContainer>
   ) : (
-    <div>loading..</div>
+    <div>loading...</div>
   );
 };
 
-export default CollegeList;
+const ListContainer = styled.div`
+  padding-top: 2%;
+  padding-left: 2%;
+`;
 
-const CollegeContainer = styled.div``;
-
-const CollegeWrapper = styled.div`
-  padding: 3%;
+const ListWrapper = styled.div`
+  padding: 3% 3% 3% 1%;
 `;
 
 const IconWrapper = styled.div`
   float: right;
 `;
+
+const Title = styled.h2`
+  font-size: 2rem;
+`;
+
+export default CollegeList;

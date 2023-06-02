@@ -12,6 +12,8 @@ import {
   MdChevronRight,
   MdOutlineModeEdit,
   MdOutlineQuestionAnswer,
+  MdRadioButtonUnchecked,
+  MdRadioButtonChecked,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -26,6 +28,8 @@ const ICON: { [key in IconKind]: IconType } = {
   right: MdChevronRight,
   edit: MdOutlineModeEdit,
   suggest: MdOutlineQuestionAnswer,
+  checkedRadio: MdRadioButtonChecked,
+  uncheckedRadio: MdRadioButtonUnchecked,
 };
 
 interface IconProps {

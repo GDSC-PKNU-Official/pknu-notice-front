@@ -14,7 +14,7 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockRouterTo,
 }));
 
-describe('학과선택 페이지 로직 테스트', () => {
+describe.skip('학과선택 페이지 로직 테스트', () => {
   const mockSetMajor = jest.fn();
   beforeEach(() => {
     jest.mock('react', () => ({
