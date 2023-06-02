@@ -1,5 +1,9 @@
+import InformCard from '@components/Card/InformCard';
+
 const Home = () => {
-  return <h1>메인 페이지</h1>;
+  return (
+    <InformCard icon="notification" path="/announcement" title="공지사항" />
+  );
 };
 
 export default Home;
