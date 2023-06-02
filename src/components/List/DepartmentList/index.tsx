@@ -67,10 +67,19 @@ const DepartmentList = () => {
 };
 
 const ButtonContainer = styled.div`
-  position: absolute;
-  width: 98%;
-  margin: 0 1% 1% 1%;
-  bottom: 0;
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  Button {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    & > svg {
+      margin-right: 15px;
+    }
+  }
 `;
 
 const ListContainer = styled.div`
