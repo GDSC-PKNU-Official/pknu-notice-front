@@ -1,9 +1,11 @@
 import Icon from '@components/Icon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import useRoter from '@hooks/useRouter';
 import React from 'react';
 
 const Header = () => {
+  const { routerTo, goBack } = useRoter();
   return (
     <header
       css={css`
@@ -13,8 +15,8 @@ const Header = () => {
         padding: 5px 10px;
       `}
     >
-      <Icon kind="arrowBack" />
-      <Logo>Logo</Logo>
+      <Icon kind="arrowBack" onClick={goBack} />
+      <Logo onClick={() => routerTo('/')}>Logo</Logo>
       <Icon kind="menu" />
     </header>
   );
