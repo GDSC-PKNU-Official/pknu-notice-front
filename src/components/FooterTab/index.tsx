@@ -1,4 +1,5 @@
 import Icon from '@components/Icon';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
@@ -41,20 +42,23 @@ const FooterTab = () => {
 };
 
 const Footer = styled.div`
+  // Footer 스타일 컴포넌트 수정
+  max-width: 480px;
+
   position: fixed;
-  bottom: 100px;
   left: 50%;
+  bottom: 0;
   transform: translate(-50%, -50%);
   width: 100%;
+
   display: flex;
   justify-content: space-around;
-  bottom: 0;
 `;
 
 const IconContainer = styled.div`
   width: 100%;
   text-align: center;
-  &: hover {
+  &:hover {
     cursor: pointer;
   }
 `;
