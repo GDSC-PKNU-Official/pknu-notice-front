@@ -25,7 +25,7 @@ const Carousel = ({ title, images }: CarouselProps) => {
       <Slider {...settings}>
         {images.map((image, index) => (
           <div key={index}>
-            <img src={image.src} height="300em" />
+            <img src={image.src} />
           </div>
         ))}
       </Slider>
@@ -34,9 +34,9 @@ const Carousel = ({ title, images }: CarouselProps) => {
 };
 
 const CarouselContainer = styled.div`
-  width: 30%;
-  height: 200em;
+  width: 100%;
   margin: 0 auto;
+  padding: 30px;
 `;
 
 export default Carousel;
