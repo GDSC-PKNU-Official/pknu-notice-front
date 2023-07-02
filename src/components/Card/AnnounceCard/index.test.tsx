@@ -26,7 +26,9 @@ describe('공지사항 카드 컴포넌트 테스트', () => {
   });
 
   it('카드 클릭시 페이지 이동 테스트', async () => {
-    const axiosResult = await http.get('/announcement?major=컴퓨터공학과');
+    const axiosResult = await http.get(
+      '/announcement?major=컴퓨터인공지능학부',
+    );
     const announceList: AnnounceItem[] = axiosResult.data;
 
     announceList.forEach(async (annouce) => {
