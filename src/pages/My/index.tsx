@@ -69,8 +69,6 @@ const Suggestion = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 90%;
-
   Button {
     display: flex;
     align-items: center;

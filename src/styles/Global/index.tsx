@@ -105,6 +105,9 @@ const resetCss = css`
   }
   body {
     line-height: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
   }
   ol,
   ul {

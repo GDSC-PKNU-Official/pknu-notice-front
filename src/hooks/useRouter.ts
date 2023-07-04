@@ -1,11 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { To, useNavigate } from 'react-router-dom';
 
 const useRoter = () => {
   const router = useNavigate();
 
   return {
     currentPath: window.location.pathname,
-    routerTo: (path: string) => router(path),
+    routerTo: (path: To) => router(path),
+    goBack: () => router(-1 as To),
   };
 };
 
