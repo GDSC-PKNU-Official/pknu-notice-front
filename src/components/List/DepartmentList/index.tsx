@@ -16,7 +16,7 @@ const DepartmentList = () => {
   const { college } = useParams();
 
   const fetchData = async () => {
-    const result = await http.get(`majorDecision/${college}`);
+    const result = await http.get(`/api/majorDecision/${college}`);
     if (result.data === undefined) {
       router(-1);
     }
