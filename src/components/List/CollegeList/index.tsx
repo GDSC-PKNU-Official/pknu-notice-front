@@ -13,7 +13,7 @@ const CollegeList = () => {
   }, []);
 
   const fetchData = async () => {
-    const result = await http.get('/majorDecision');
+    const result = await http.get('/api/majorDecision');
     setCollegeList(result.data);
   };
 

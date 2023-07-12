@@ -1,0 +1,18 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile.prod
+    ports:
+      - '5173:5173'
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: dockerfile
+      context: ./nginx/proxy
+    ports:
+      - '80:80'
+    links:
+      - frontend
