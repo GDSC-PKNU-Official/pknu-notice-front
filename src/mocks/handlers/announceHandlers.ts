@@ -2,7 +2,7 @@ import { SERVER_URL } from '@config/index';
 import { RequestHandler, rest } from 'msw';
 
 export const announceHandlers: RequestHandler[] = [
-  rest.get(`${SERVER_URL}/announcement`, (req, res, ctx) => {
+  rest.get(`${SERVER_URL}/api/announcement`, (req, res, ctx) => {
     const query = req.url.searchParams;
     if (query.get('major') === '컴퓨터인공지능학부') {
       return res(
