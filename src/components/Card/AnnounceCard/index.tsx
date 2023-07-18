@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
 
-const AnnounceCard = ({ title, path, date }: AnnounceItem) => {
+const AnnounceCard = ({ title, link, uploadDate }: AnnounceItem) => {
   const onClick = () => {
-    window.location.href = path;
+    window.location.href = link;
   };
   return (
     <Card onClick={onClick} data-testid="card">
@@ -23,7 +23,7 @@ const AnnounceCard = ({ title, path, date }: AnnounceItem) => {
             margin: 0 10px;
           `}
         />
-        <span>{date}</span>
+        <span>{uploadDate}</span>
       </div>
     </Card>
   );
