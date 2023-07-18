@@ -1,6 +1,6 @@
 import { To, useNavigate } from 'react-router-dom';
 
-const useRoter = () => {
+const useRouter = () => {
   const router = useNavigate();
 
   return {
@@ -10,4 +10,4 @@ const useRoter = () => {
   };
 };
 
-export default useRoter;
+export default useRouter;
