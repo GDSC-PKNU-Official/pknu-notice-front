@@ -1,9 +1,8 @@
 import Icon from '@components/Icon';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
-import { useNavigate } from 'react-router-dom';
 
 const footerIcons = [
   { kind: 'map', path: '/map' },
@@ -12,10 +11,10 @@ const footerIcons = [
 ] as const;
 
 const FooterTab = () => {
-  const navigate = useNavigate();
+  const { routerTo } = useRouter();
 
   const handleIconClick = (kind: IconKind, path: string) => {
-    navigate(path);
+    routerTo(path);
   };
 
   return (
