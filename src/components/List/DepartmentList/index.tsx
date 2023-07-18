@@ -3,22 +3,23 @@ import Button from '@components/Button';
 import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
+import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const DepartmentList = () => {
   const [departmentList, setDepartmentList] = useState<string[]>();
   const [selected, setSelected] = useState<string>('');
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
-  const router = useNavigate();
+  const { routerTo, goBack } = useRouter();
   const { setMajor } = useMajor();
   const { college } = useParams();
 
   const fetchData = async () => {
     const result = await http.get(`/api/majorDecision/${college}`);
     if (result.data === undefined) {
-      router(-1);
+      goBack();
     }
     setDepartmentList(result.data);
   };
@@ -34,7 +35,7 @@ const DepartmentList = () => {
     localStorage.setItem('major', selected);
     setMajor(selected);
     alert('전공 선택 완료 !');
-    router('/');
+    routerTo('/');
   };
 
   useEffect(() => {

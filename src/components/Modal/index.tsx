@@ -1,5 +1,6 @@
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useState } from 'react';
 
 interface ModalProps {
@@ -19,14 +20,7 @@ const Modal = ({ children, onClose }: ModalProps) => {
 
   return (
     <ModalBackground onClick={onClick}>
-      <div
-        css={css`
-          animation: ${isOpen ? modalIn : modalOut} 0.3s ease-out;
-          width: 80%;
-        `}
-      >
-        {children}
-      </div>
+      <ModalContent isOpen={isOpen}>{children}</ModalContent>
     </ModalBackground>
   );
 };
@@ -44,6 +38,19 @@ const ModalBackground = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 9999;
+`;
+
+const ModalContent = styled.div<{ isOpen: boolean }>`
+  display: flex;
+  flex-direction: column;
+
+  animation: ${({ isOpen }) => (isOpen ? modalIn : modalOut)} 0.3s ease-out;
+  width: 80%;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: ${THEME.TEXT.WHITE};
+  color: ${THEME.TEXT.GRAY};
+  font-weight: bold;
 `;
 
 const modalIn = keyframes`

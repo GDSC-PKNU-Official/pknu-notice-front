@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { THEME } from '@styles/ThemeProvider/theme';
 import { ReactNode } from 'react';
 
 interface ButtonProps {
@@ -18,6 +19,10 @@ const Button = ({ children, disabled = false, ...props }: ButtonProps) => {
 export default Button;
 
 const StyledButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
 
   width: 100%;
@@ -25,14 +30,18 @@ const StyledButton = styled.button`
   margin: 4px 0;
 
   border-radius: 8px;
+  padding: 10px;
 
-  background-color: #71bc5c;
+  background-color: ${THEME.BUTTON.GREEN};
   color: #ffffff;
   font-weight: bold;
 
   &:disabled {
-    background-color: #e7e7e7;
+    background-color: ${THEME.BUTTON.GRAY};
     color: #868686;
     cursor: auto;
+  }
+  & > svg {
+    margin-right: 5px;
   }
 `;

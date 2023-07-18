@@ -1,4 +1,4 @@
-let SERVER_URL = 'http://13.209.91.5:8080';
+let SERVER_URL = 'https://burimi.store';
 if (process.env.NODE_ENV === 'development') {
   SERVER_URL = 'http://localhost:8080';
 }

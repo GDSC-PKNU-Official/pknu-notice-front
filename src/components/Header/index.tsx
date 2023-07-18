@@ -1,11 +1,11 @@
 import Icon from '@components/Icon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useRoter from '@hooks/useRouter';
+import useRouter from '@hooks/useRouter';
 import React from 'react';
 
 const Header = () => {
-  const { routerTo, goBack } = useRoter();
+  const { routerTo, goBack } = useRouter();
   return (
     <header
       css={css`
