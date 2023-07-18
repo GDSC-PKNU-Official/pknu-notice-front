@@ -38,7 +38,7 @@ describe('공지사항 카드 컴포넌트 테스트', () => {
     const annouceCards = screen.getAllByTestId('card');
     annouceCards.forEach(async (card, idx) => {
       await userEvent.click(card);
-      expect(window.location.href).toBe(announceList[idx].path);
+      expect(window.location.href).toBe(announceList[idx].link);
     });
   });
 });
