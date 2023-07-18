@@ -21,7 +21,6 @@ const My = () => {
         <SuggestionModal onClose={() => setIsModalOpen((prev) => !prev)} />
       )}
       <h1>마이페이지</h1>
-
       <Major>
         <span>전공</span>
         <div
@@ -68,13 +67,4 @@ const Suggestion = styled.div`
   bottom: 100px;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  Button {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    & > svg {
-      margin-right: 15px;
-    }
-  }
 `;
