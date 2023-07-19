@@ -1,6 +1,6 @@
 import DepartmentList from '@components/List/DepartmentList';
 import useMajor from '@hooks/useMajor';
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, findByText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
@@ -72,5 +72,27 @@ describe('학과선택 테스트', () => {
 
     expect(mockSetMajor).toBeCalledWith('컴퓨터인공지능학부');
     expect(routerToMock).toBeCalledWith('/');
+  });
+
+  it('학과 이름에 스페이스가 있는 경우 (학부, 전공이 모두 있는경우) 테스트', async () => {
+    const collegName = '정보융합대학';
+    render(
+      <MemoryRouter initialEntries={[`/major-decision/${collegName}`]}>
+        <Routes>
+          <Route path="/major-decision/:college" element={<DepartmentList />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    const confirmButton = await screen.findByRole('button', {
+      name: '선택완료',
+    });
+    const college = await screen.findByText('조형학부 건축학전공');
+    await act(async () => {
+      await userEvent.click(college);
+    });
+    await userEvent.click(confirmButton);
+
+    expect(mockSetMajor).toBeCalledWith('건축학전공');
   });
 });
