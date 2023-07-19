@@ -13,6 +13,7 @@ export const majorHandlers: RequestHandler[] = [
         '데이터정보과학부',
         '미디어커뮤니케이션학부',
         '컴퓨터인공지능학부',
+        '조형학부 건축학전공',
       ];
       return res(ctx.status(200), ctx.json(INFORMATIONCONVERGENCE));
     }
