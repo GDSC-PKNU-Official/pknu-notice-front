@@ -14,6 +14,7 @@ import {
   MdOutlineQuestionAnswer,
   MdRadioButtonUnchecked,
   MdRadioButtonChecked,
+  MdOutlineCancel,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -30,6 +31,7 @@ const ICON: { [key in IconKind]: IconType } = {
   suggest: MdOutlineQuestionAnswer,
   checkedRadio: MdRadioButtonChecked,
   uncheckedRadio: MdRadioButtonUnchecked,
+  cancel: MdOutlineCancel,
 };
 
 interface IconProps {
