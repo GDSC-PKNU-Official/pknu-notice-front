@@ -1,13 +1,14 @@
 import Icon from '@components/Icon';
-import MajorModal from '@components/Modal/MajorModal';
+import AlertModal from '@components/Modal/AlertModal';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
 import { setSize } from '@utils/styles/size';
-import { useState } from 'react';
 
 interface InformCardProps {
   icon: IconKind & ('school' | 'notification');
@@ -17,26 +18,33 @@ interface InformCardProps {
 
 const InformCard = ({ icon, title, path }: InformCardProps) => {
   const { major } = useMajor();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { routerTo } = useRouter();
 
-  const onClick = () => {
-    if (!major) {
-      setIsModalOpen((prev) => !prev);
+  const { routerTo } = useRouter();
+  const routerToPath = (path: string) => routerTo(path);
+  const routerToMajorDecision = () => routerTo('/major-decision');
+
+  const { openModal, closeModal } = useModals();
+
+  const handleMajorModal = () => {
+    if (major) {
+      routerToPath(path);
       return;
     }
-    routerTo(path);
+    openModal(AlertModal, {
+      message: MODAL_MESSAGE.ALERT.setMajor,
+      buttonMessage: '전공선택하러 가기',
+      iconKind: 'plus',
+      onClose: () => closeModal(AlertModal),
+      routerTo: () => {
+        closeModal(AlertModal);
+        routerToMajorDecision();
+      },
+    });
   };
 
   return (
     <>
-      {isModalOpen && (
-        <MajorModal
-          onClose={() => setIsModalOpen((prev) => !prev)}
-          routerTo={() => routerTo('major-decision')}
-        />
-      )}
-      <Card data-testid="card" icon={icon} onClick={onClick}>
+      <Card data-testid="card" icon={icon} onClick={handleMajorModal}>
         <Icon
           kind={icon}
           color={icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE}
