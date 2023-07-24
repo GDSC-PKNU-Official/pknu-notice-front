@@ -6,7 +6,7 @@ interface ModalsProviderProps {
   children: React.ReactNode;
 }
 
-const ModalsProvier = ({ children }: ModalsProviderProps) => {
+const ModalsProvider = ({ children }: ModalsProviderProps) => {
   const [modals, setModals] = useState<Modals>([]);
   return (
     <ModalsContext.Provider value={{ modals, setModals }}>
@@ -15,4 +15,4 @@ const ModalsProvier = ({ children }: ModalsProviderProps) => {
   );
 };
 
-export default ModalsProvier;
+export default ModalsProvider;
