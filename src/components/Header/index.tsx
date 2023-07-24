@@ -1,18 +1,20 @@
 import Icon from '@components/Icon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useRouter from '@hooks/useRouter';
+import useRoter from '@hooks/useRouter';
 import React from 'react';
 
 const Header = () => {
-  const { routerTo, goBack } = useRouter();
+  const { routerTo, goBack } = useRoter();
   return (
     <header
       css={css`
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
-        padding: 5px 10px;
+        padding: 10px;
+        height: 5vh;
       `}
     >
       <Icon kind="arrowBack" onClick={goBack} />
