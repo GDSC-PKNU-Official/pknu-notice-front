@@ -36,6 +36,7 @@ const DepartmentList = () => {
     closeModal(AlertModal);
     routerTo('/');
   };
+
   const handlerMajorSetModal = () => {
     closeModal(ConfirmModal);
     localStorage.setItem('major', selected);
