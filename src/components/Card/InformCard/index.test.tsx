@@ -1,4 +1,8 @@
+import AlertModal from '@components/Modal/AlertModal';
+import ModalsProvider from '@components/ModalsProvider';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import MajorContext from '@contexts/major';
+import useModals from '@hooks/useModals';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Major from '@type/major';
@@ -12,8 +16,8 @@ const ICON = 'notification';
 const TITLE = '공지사항';
 const PATH = '/announcement';
 
-const setMajorMock = (mode: string) => {
-  const mockMajor: Major = mode === 'modal' ? null : '컴퓨터공학과';
+const setMajorMock = (isRender: boolean) => {
+  const mockMajor: Major = isRender ? null : '컴퓨터공학과';
   const mockSetMajor = jest.fn();
 
   jest.mock('react', () => ({
@@ -33,6 +37,18 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockRouterTo,
 }));
 
+jest.mock('@hooks/useModals', () => {
+  const modalsMock = {
+    modals: [],
+    openModal: jest.fn(),
+    closeModal: jest.fn(),
+  };
+  return {
+    __esModule: true,
+    default: () => modalsMock,
+  };
+});
+
 describe('InformCard 컴포넌트 테스트', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -40,8 +56,10 @@ describe('InformCard 컴포넌트 테스트', () => {
 
   it('전역상태가 설정 됐을 경우, 페이지 이동 테스트', async () => {
     render(
-      <MajorContext.Provider value={{ ...setMajorMock('not-modal') }}>
-        <InformCard icon={ICON} title={TITLE} path={PATH} />
+      <MajorContext.Provider value={{ ...setMajorMock(false) }}>
+        <ModalsProvider>
+          <InformCard icon={ICON} title={TITLE} path={PATH} />
+        </ModalsProvider>
       </MajorContext.Provider>,
       {
         wrapper: MemoryRouter,
@@ -58,8 +76,10 @@ describe('InformCard 컴포넌트 테스트', () => {
 
   it('전역상태가 설정 안됐을 경우, 모달 렌더링 테스트', async () => {
     render(
-      <MajorContext.Provider value={{ ...setMajorMock('modal') }}>
-        <InformCard icon={ICON} title={TITLE} path={PATH} />
+      <MajorContext.Provider value={{ ...setMajorMock(true) }}>
+        <ModalsProvider>
+          <InformCard icon={ICON} title={TITLE} path={PATH} />
+        </ModalsProvider>
       </MajorContext.Provider>,
       {
         wrapper: MemoryRouter,
@@ -71,8 +91,12 @@ describe('InformCard 컴포넌트 테스트', () => {
       await userEvent.click(card);
     });
 
-    expect(
-      screen.getByText('아직 학과를 알려주지 않았어요'),
-    ).toBeInTheDocument();
+    expect(useModals().openModal).toHaveBeenCalledWith(AlertModal, {
+      message: MODAL_MESSAGE.ALERT.SET_MAJOR,
+      buttonMessage: '전공선택하러 가기',
+      iconKind: 'plus',
+      onClose: expect.any(Function),
+      routerTo: expect.any(Function),
+    });
   });
 });

@@ -1,8 +1,12 @@
 import http from '@apis/http';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
+import AlertModal from '@components/Modal/AlertModal';
+import ConfirmModal from '@components/Modal/ConfirmModal';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useEffect, useState } from 'react';
@@ -15,6 +19,7 @@ const DepartmentList = () => {
   const { routerTo, goBack } = useRouter();
   const { setMajor } = useMajor();
   const { college } = useParams();
+  const { openModal, closeModal } = useModals();
 
   const fetchData = async () => {
     const result = await http.get(`/api/majorDecision/${college}`);
@@ -23,24 +28,41 @@ const DepartmentList = () => {
     }
     setDepartmentList(result.data);
   };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const routerToHome = () => {
+    closeModal(AlertModal);
+    routerTo('/');
+  };
+
+  const handlerMajorSetModal = () => {
+    closeModal(ConfirmModal);
+    localStorage.setItem('major', selected);
+    setMajor(selected);
+
+    openModal(AlertModal, {
+      message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
+      buttonMessage: '홈으로 이동하기',
+      onClose: () => routerToHome(),
+      routerTo: () => routerToHome(),
+    });
+  };
+
+  const handleMajorConfirmModal = () => {
+    openModal(ConfirmModal, {
+      message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
+      onConfirmButtonClick: () => handlerMajorSetModal(),
+      onCancelButtonClick: () => closeModal(ConfirmModal),
+    });
+  };
 
   const onClick: React.MouseEventHandler<HTMLElement> = (e) => {
     if (e.currentTarget.textContent === null) return;
     setSelected(e.currentTarget.textContent);
     setButtonDisable(false);
   };
-
-  const buttonClick: React.MouseEventHandler<HTMLElement> = (e) => {
-    if (e.target !== e.currentTarget) return;
-    localStorage.setItem('major', selected);
-    setMajor(selected);
-    alert('전공 선택 완료 !');
-    routerTo('/');
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return departmentList ? (
     <ListContainer>
@@ -57,7 +79,7 @@ const DepartmentList = () => {
         </ListWrapper>
       ))}
       <ButtonContainer>
-        <Button disabled={buttonDisable} onClick={buttonClick}>
+        <Button disabled={buttonDisable} onClick={handleMajorConfirmModal}>
           선택완료
         </Button>
       </ButtonContainer>

@@ -4,22 +4,26 @@ import SuggestionModal from '@components/Modal/SuggestionModal';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { useState } from 'react';
 
 const My = () => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const routerToMajorDecision = () => routerTo('/major-decision');
+  const { openModal, closeModal } = useModals();
 
-  const onClick = () => routerTo('/major-decision');
+  const handleSuggestionModal = () => {
+    openModal(SuggestionModal, {
+      title: '건의사항',
+      buttonMessage: '보내기',
+      onClose: () => closeModal(SuggestionModal),
+    });
+  };
 
   return (
     <>
-      {isModalOpen && (
-        <SuggestionModal onClose={() => setIsModalOpen((prev) => !prev)} />
-      )}
       <h1>마이페이지</h1>
       <Major>
         <span>전공</span>
@@ -33,18 +37,14 @@ const My = () => {
           <span>{major}</span>
           <Icon
             kind="edit"
-            onClick={onClick}
+            onClick={routerToMajorDecision}
             color={THEME.TEXT.GRAY}
             data-testid="edit"
           />
         </div>
       </Major>
-
       <Suggestion>
-        <Button
-          onClick={() => setIsModalOpen((prev) => !prev)}
-          data-testid="modal"
-        >
+        <Button data-testid="modal" onClick={handleSuggestionModal}>
           <Icon kind="suggest" color={THEME.TEXT.WHITE} />
           <span>건의사항 남기기</span>
         </Button>

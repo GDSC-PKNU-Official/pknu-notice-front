@@ -1,5 +1,10 @@
 import DepartmentList from '@components/List/DepartmentList';
+import MajorProvider from '@components/MajorProvider';
+import ConfirmModal from '@components/Modal/ConfirmModal';
+import ModalsProvider from '@components/ModalsProvider';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import useMajor from '@hooks/useMajor';
+import useModals from '@hooks/useModals';
 import { render, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
@@ -7,12 +12,23 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 const routerToMock = jest.fn();
 
 jest.mock('@hooks/useMajor');
-global.alert = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => routerToMock,
 }));
+
+jest.mock('@hooks/useModals', () => {
+  const modalsMock = {
+    modals: [],
+    openModal: jest.fn(),
+    closeModal: jest.fn(),
+  };
+  return {
+    __esModule: true,
+    default: () => modalsMock,
+  };
+});
 
 describe('학과선택 테스트', () => {
   const mockUseMajor = useMajor as jest.MockedFunction<typeof useMajor>;
@@ -28,11 +44,16 @@ describe('학과선택 테스트', () => {
   it('버튼 활성화 테스트', async () => {
     const collegName = '정보융합대학';
     render(
-      <MemoryRouter initialEntries={[`/major-decision/${collegName}`]}>
-        <Routes>
-          <Route path="/major-decision/:college" element={<DepartmentList />} />
-        </Routes>
-      </MemoryRouter>,
+      <ModalsProvider>
+        <MemoryRouter initialEntries={[`/major-decision/${collegName}`]}>
+          <Routes>
+            <Route
+              path="/major-decision/:college"
+              element={<DepartmentList />}
+            />
+          </Routes>
+        </MemoryRouter>
+      </ModalsProvider>,
     );
 
     const confirmButton = await screen.findByRole('button', {
@@ -51,7 +72,42 @@ describe('학과선택 테스트', () => {
     expect(confirmButton).toBeEnabled();
   });
 
-  it('버튼 클릭 로직 테스트', async () => {
+  it('버튼 클릭시 전공선택 확인 모달 렌더링 테스트', async () => {
+    const collegName = '정보융합대학';
+    render(
+      <MajorProvider>
+        <ModalsProvider>
+          <MemoryRouter initialEntries={[`/major-decision/${collegName}`]}>
+            <Routes>
+              <Route
+                path="/major-decision/:college"
+                element={<DepartmentList />}
+              />
+            </Routes>
+          </MemoryRouter>
+        </ModalsProvider>
+      </MajorProvider>,
+    );
+
+    const confirmButton = await screen.findByRole('button', {
+      name: '선택완료',
+    });
+    const college = await screen.findByText('컴퓨터인공지능학부');
+    await act(async () => {
+      await userEvent.click(college);
+    });
+    await act(async () => {
+      await userEvent.click(confirmButton);
+    });
+
+    expect(useModals().openModal).toHaveBeenCalledWith(ConfirmModal, {
+      message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
+      onCancelButtonClick: expect.any(Function),
+      onConfirmButtonClick: expect.any(Function),
+    });
+  });
+
+  it('학과 이름에 스페이스가 있는 경우 (학부, 전공이 모두 있는경우) 테스트', async () => {
     const collegName = '정보융합대학';
     render(
       <MemoryRouter initialEntries={[`/major-decision/${collegName}`]}>
@@ -64,13 +120,12 @@ describe('학과선택 테스트', () => {
     const confirmButton = await screen.findByRole('button', {
       name: '선택완료',
     });
-    const college = await screen.findByText('컴퓨터인공지능학부');
+    const college = await screen.findByText('조형학부 건축학전공');
     await act(async () => {
       await userEvent.click(college);
     });
     await userEvent.click(confirmButton);
 
-    expect(mockSetMajor).toBeCalledWith('컴퓨터인공지능학부');
-    expect(routerToMock).toBeCalledWith('/');
+    expect(mockSetMajor).toBeCalledWith('건축학전공');
   });
 });
