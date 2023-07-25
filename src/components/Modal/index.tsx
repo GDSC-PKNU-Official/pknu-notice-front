@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface ModalProps {
   onClose: () => void;
@@ -9,18 +9,15 @@ interface ModalProps {
 }
 
 const Modal = ({ children, onClose }: ModalProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target === e.currentTarget) {
-      setIsOpen((prev) => !prev);
-      setTimeout(onClose, 200);
+      onClose();
     }
   };
 
   return (
     <ModalBackground onClick={onClick}>
-      <ModalContent isOpen={isOpen}>{children}</ModalContent>
+      <ModalContent>{children}</ModalContent>
     </ModalBackground>
   );
 };
@@ -39,20 +36,6 @@ const ModalBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 9999;
 `;
-
-const ModalContent = styled.div<{ isOpen: boolean }>`
-  display: flex;
-  flex-direction: column;
-
-  animation: ${({ isOpen }) => (isOpen ? modalIn : modalOut)} 0.3s ease-out;
-  width: 80%;
-  padding: 30px;
-  border-radius: 15px;
-  background-color: ${THEME.TEXT.WHITE};
-  color: ${THEME.TEXT.GRAY};
-  font-weight: bold;
-`;
-
 const modalIn = keyframes`
   from{
     opacity: 0;
@@ -64,13 +47,15 @@ const modalIn = keyframes`
   }
 `;
 
-const modalOut = keyframes`
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  animation: ${modalIn} 0.3s ease-out;
+  width: 80%;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: ${THEME.TEXT.WHITE};
+  color: ${THEME.TEXT.GRAY};
+  font-weight: bold;
 `;

@@ -1,4 +1,6 @@
 import MajorProvider from '@components/MajorProvider';
+import Modals from '@components/Modal/Modals';
+import ModalsProvider from '@components/ModalsProvider';
 import ThemeProvider from '@styles/ThemeProvider';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -16,7 +18,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
       <ThemeProvider>
         <MajorProvider>
-          <App />
+          <ModalsProvider>
+            <Modals />
+            <App />
+          </ModalsProvider>
         </MajorProvider>
       </ThemeProvider>
     </BrowserRouter>
