@@ -48,7 +48,7 @@ const SuggestionModal = ({
     onClose();
     closeModal(ConfirmModal);
     openModal(AlertModal, {
-      message: MODAL_MESSAGE.SUCCEED.postSuggestion,
+      message: MODAL_MESSAGE.SUCCEED.POST_SUGGESTION,
       buttonMessage: '확인',
       onClose: () => closeModal(AlertModal),
     });
@@ -56,7 +56,7 @@ const SuggestionModal = ({
 
   const handleSuggestionConfirmModal = () => {
     openModal(ConfirmModal, {
-      message: MODAL_MESSAGE.CONFIRM.postSuggestion,
+      message: MODAL_MESSAGE.CONFIRM.POST_SUGGESTION,
       onConfirmButtonClick: () => handleSuggestionPostModal(),
       onCancelButtonClick: () => closeModal(ConfirmModal),
     });

@@ -92,7 +92,7 @@ describe('InformCard 컴포넌트 테스트', () => {
     });
 
     expect(useModals().openModal).toHaveBeenCalledWith(AlertModal, {
-      message: MODAL_MESSAGE.ALERT.setMajor,
+      message: MODAL_MESSAGE.ALERT.SET_MAJOR,
       buttonMessage: '전공선택하러 가기',
       iconKind: 'plus',
       onClose: expect.any(Function),

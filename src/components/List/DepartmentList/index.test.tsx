@@ -53,7 +53,6 @@ describe('학과선택 테스트', () => {
             />
           </Routes>
         </MemoryRouter>
-        ,
       </ModalsProvider>,
     );
 
@@ -102,7 +101,7 @@ describe('학과선택 테스트', () => {
     });
 
     expect(useModals().openModal).toHaveBeenCalledWith(ConfirmModal, {
-      message: MODAL_MESSAGE.CONFIRM.setMajor,
+      message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
       onCancelButtonClick: expect.any(Function),
       onConfirmButtonClick: expect.any(Function),
     });

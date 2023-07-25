@@ -31,7 +31,7 @@ const InformCard = ({ icon, title, path }: InformCardProps) => {
       return;
     }
     openModal(AlertModal, {
-      message: MODAL_MESSAGE.ALERT.setMajor,
+      message: MODAL_MESSAGE.ALERT.SET_MAJOR,
       buttonMessage: '전공선택하러 가기',
       iconKind: 'plus',
       onClose: () => closeModal(AlertModal),

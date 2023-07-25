@@ -42,7 +42,7 @@ const DepartmentList = () => {
     setMajor(selected);
 
     openModal(AlertModal, {
-      message: MODAL_MESSAGE.SUCCEED.setMajor,
+      message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
       buttonMessage: '홈으로 이동하기',
       onClose: () => routerToHome(),
       routerTo: () => routerToHome(),
@@ -51,7 +51,7 @@ const DepartmentList = () => {
 
   const handleMajorConfirmModal = () => {
     openModal(ConfirmModal, {
-      message: MODAL_MESSAGE.CONFIRM.setMajor,
+      message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
       onConfirmButtonClick: () => handlerMajorSetModal(),
       onCancelButtonClick: () => closeModal(ConfirmModal),
     });
