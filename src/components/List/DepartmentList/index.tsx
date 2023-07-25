@@ -32,8 +32,9 @@ const DepartmentList = () => {
 
   const buttonClick: React.MouseEventHandler<HTMLElement> = (e) => {
     if (e.target !== e.currentTarget) return;
-    localStorage.setItem('major', selected);
-    setMajor(selected);
+    const afterSpace = selected.substring(selected.indexOf(' ') + 1);
+    localStorage.setItem('major', afterSpace);
+    setMajor(afterSpace);
     alert('전공 선택 완료 !');
     routerTo('/');
   };
