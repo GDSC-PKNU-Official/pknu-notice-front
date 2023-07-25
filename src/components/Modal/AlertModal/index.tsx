@@ -7,11 +7,6 @@ import React from 'react';
 
 import Modal from '..';
 
-/*
-TODO
-1. 모달이 필요한 컴포넌트 내부에서 모달의 상태 관리 -> 모달이 필요한 컴포넌트는 모달상태를 관리하는 Context APIf를 통해서 모달의 상태를 내려받음.
-*/
-
 interface AlertModalProps {
   message: string;
   buttonMessage: string;
@@ -45,7 +40,7 @@ const AlertModal = ({
               {message}
             </span>
             <Button onClick={routerTo}>
-              {iconKind && <Icon kind="plus" color={THEME.TEXT.WHITE} />}
+              {iconKind && <Icon kind={iconKind} color={THEME.TEXT.WHITE} />}
               {buttonMessage}
             </Button>
           </>
