@@ -39,8 +39,9 @@ const DepartmentList = () => {
 
   const handlerMajorSetModal = () => {
     closeModal(ConfirmModal);
-    localStorage.setItem('major', selected);
-    setMajor(selected);
+    const afterSpace = selected.substring(selected.indexOf(' ') + 1);
+    localStorage.setItem('major', afterSpace);
+    setMajor(afterSpace);
 
     openModal(AlertModal, {
       message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
