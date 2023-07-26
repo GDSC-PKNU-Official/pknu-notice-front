@@ -1,6 +1,8 @@
-import MapBoundsLimitModal from '@components/Modal/MapBoundsLimitModal';
+import AlertModal from '@components/Modal/AlertModal';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_MAP_LIMIT } from '@constants/pknu-map';
-import React, { useEffect, useState } from 'react';
+import useModals from '@hooks/useModals';
+import React, { useEffect } from 'react';
 
 interface MapBounds {
   map: any;
@@ -12,7 +14,7 @@ const MapboundaryObserver = ({ map, centerLocation }: MapBounds) => {
     return null;
   }
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { openModal, closeModal } = useModals();
   useEffect(() => {
     const boundayLimitHandler = () => {
       const { La, Ma } = map.getCenter();
@@ -22,9 +24,13 @@ const MapboundaryObserver = ({ map, centerLocation }: MapBounds) => {
         Ma <= PKNU_MAP_LIMIT.BOTTOM ||
         La <= PKNU_MAP_LIMIT.LEFT
       ) {
-        setIsModalOpen((prev) => !prev);
         map.setLevel(4);
         map.setCenter(centerLocation);
+        openModal(AlertModal, {
+          message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
+          buttonMessage: '닫기',
+          onClose: () => closeModal(AlertModal),
+        });
       }
     };
     window.kakao.maps.event.addListener(map, 'dragend', boundayLimitHandler);
@@ -38,13 +44,7 @@ const MapboundaryObserver = ({ map, centerLocation }: MapBounds) => {
     };
   }, []);
 
-  return (
-    <>
-      {isModalOpen && (
-        <MapBoundsLimitModal onClose={() => setIsModalOpen((prev) => !prev)} />
-      )}
-    </>
-  );
+  return <></>;
 };
 
 export default MapboundaryObserver;
