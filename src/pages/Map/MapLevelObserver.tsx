@@ -1,6 +1,8 @@
-import MapLevetLimitModal from '@components/Modal/MapLevelLimitModal';
+import AlertModal from '@components/Modal/AlertModal';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_MAP_LIMIT } from '@constants/pknu-map';
-import React, { useEffect, useState } from 'react';
+import useModals from '@hooks/useModals';
+import React, { useEffect } from 'react';
 
 interface MapLevelObserverProps {
   map: any;
@@ -12,8 +14,7 @@ const MapLevelObserver = ({ map, centerLocation }: MapLevelObserverProps) => {
     return null;
   }
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  const { openModal, closeModal } = useModals();
   useEffect(() => {
     const levelLimitHandler = () => {
       if (map.getLevel() <= PKNU_MAP_LIMIT.LEVEL) {
@@ -21,18 +22,23 @@ const MapLevelObserver = ({ map, centerLocation }: MapLevelObserverProps) => {
       }
       map.setLevel(PKNU_MAP_LIMIT.LEVEL);
       map.setCenter(centerLocation);
-      setIsModalOpen((prev) => !prev);
+      openModal(AlertModal, {
+        message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
+        buttonMessage: '닫기',
+        onClose: () => closeModal(AlertModal),
+      });
     };
     window.kakao.maps.event.addListener(map, 'zoom_changed', levelLimitHandler);
+    return () => {
+      window.kakao.maps.event.removeListener(
+        map,
+        'zoom_changed',
+        levelLimitHandler,
+      );
+    };
   });
 
-  return (
-    <>
-      {isModalOpen && (
-        <MapLevetLimitModal onClose={() => setIsModalOpen((prev) => !prev)} />
-      )}
-    </>
-  );
+  return <></>;
 };
 
 export default MapLevelObserver;
