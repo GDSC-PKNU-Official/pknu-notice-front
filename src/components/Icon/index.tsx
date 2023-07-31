@@ -38,6 +38,7 @@ interface IconProps {
   kind: IconKind;
   onClick?: () => void;
   color?: string;
+  size?: string;
 }
 
 const Icon = ({ kind, ...props }: IconProps) => {
