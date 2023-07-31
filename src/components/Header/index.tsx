@@ -1,26 +1,17 @@
 import Icon from '@components/Icon';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useRoter from '@hooks/useRouter';
-import React from 'react';
 
 const Header = () => {
   const { routerTo, goBack } = useRoter();
   return (
-    <header
-      css={css`
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        padding: 10px;
-        height: 5vh;
-      `}
-    >
-      <Icon kind="arrowBack" onClick={goBack} />
-      <Logo onClick={() => routerTo('/')}>Logo</Logo>
-      <Icon kind="menu" />
-    </header>
+    <HeaderContainer>
+      <HeaderWrapper>
+        <Icon kind="arrowBack" onClick={goBack} />
+        <Logo onClick={() => routerTo('/')}>Logo</Logo>
+        <Icon kind="menu" />
+      </HeaderWrapper>
+    </HeaderContainer>
   );
 };
 
@@ -34,3 +25,23 @@ const Logo = styled.span`
 `;
 
 export default Header;
+
+const HeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  max-width: 480px;
+  height: 8%;
+  background-color: white;
+  z-index: 2;
+`;
+
+const HeaderWrapper = styled.div`
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
