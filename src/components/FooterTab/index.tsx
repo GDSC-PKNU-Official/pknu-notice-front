@@ -43,18 +43,19 @@ const FooterTab = () => {
 const Footer = styled.div`
   // Footer 스타일 컴포넌트 수정
   max-width: 480px;
-  padding: 10px;
   position: fixed;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
   width: 100%;
 
-  height: 5vh;
+  height: 8%;
 
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 2;
+  background-color: white;
 `;
 
 const IconContainer = styled.div`
