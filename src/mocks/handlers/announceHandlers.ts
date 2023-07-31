@@ -4,7 +4,29 @@ import { RequestHandler, rest } from 'msw';
 export const announceHandlers: RequestHandler[] = [
   rest.get(`${SERVER_URL}/api/announcement`, (req, res, ctx) => {
     const query = req.url.searchParams;
-    if (query.get('major') === '컴퓨터인공지능학부') {
+    if (query.get('major') === 'undefined') {
+      return res(
+        ctx.status(200),
+        ctx.json([
+          {
+            title:
+              '★대학원생 취·창업 역량 강화 프로그램★ 4단계 BK21 대학원혁신지원사업',
+            path: 'https://www.pknu.ac.kr/main/163?action=view&no=711472&cd=10001',
+            date: '2023-07-17',
+          },
+          {
+            title: '2023-2학기 재(복)학생, 재입학생 등록금 납부 안내',
+            path: 'https://www.pknu.ac.kr/main/163?action=view&no=711433&cd=10001',
+            date: '2023-07-14',
+          },
+          {
+            title: '2023-2학기 재(복)학생 등록금 분할납부 신청 안내',
+            path: 'https://www.pknu.ac.kr/main/163?action=view&no=711431&cd=10001',
+            date: '2023-07-14',
+          },
+        ]),
+      );
+    } else if (query.get('major') === '컴퓨터인공지능학부') {
       return res(
         ctx.status(200),
         ctx.json([
