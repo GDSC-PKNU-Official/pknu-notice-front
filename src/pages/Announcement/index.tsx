@@ -70,7 +70,11 @@ const Announcement = () => {
         </Button>
       </div>
       <Suspense fallback={<AnnounceCardSkeleton length={30} />}>
-        <AnnounceList resource={fetchAnnounceList(announceKeyword)} />
+        <AnnounceList
+          resource={fetchAnnounceList(
+            announceKeyword !== 'undefined' ? announceKeyword : '',
+          )}
+        />
       </Suspense>
     </>
   );
