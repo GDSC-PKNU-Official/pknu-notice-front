@@ -1,9 +1,19 @@
+import Icon from '@components/Icon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
 
-const AnnounceCard = ({ title, link, uploadDate }: AnnounceItem) => {
+interface AnnounceCardProps extends AnnounceItem {
+  pinned?: boolean;
+}
+
+const AnnounceCard = ({
+  title,
+  link,
+  uploadDate,
+  pinned = false,
+}: AnnounceCardProps) => {
   const onClick = () => {
     window.location.href = link;
   };
@@ -15,6 +25,7 @@ const AnnounceCard = ({ title, link, uploadDate }: AnnounceItem) => {
           align-items: center;
         `}
       >
+        {pinned && <Icon kind="speaker" color={THEME.PRIMARY} />}
         <span>{title}</span>
         <div
           css={css`

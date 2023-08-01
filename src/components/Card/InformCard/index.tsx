@@ -10,24 +10,29 @@ import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
 import { setSize } from '@utils/styles/size';
 
+// TODO: InformCard 컴포넌트 Props 및 로직 수정
+
 interface InformCardProps {
   icon: IconKind & ('school' | 'notification');
   title: string;
-  path: string;
+  majorRequired: boolean;
+  onClick: () => void;
 }
 
-const InformCard = ({ icon, title, path }: InformCardProps) => {
+const InformCard = ({
+  icon,
+  title,
+  majorRequired,
+  onClick,
+}: InformCardProps) => {
   const { major } = useMajor();
-
   const { routerTo } = useRouter();
-  const routerToPath = (path: string) => routerTo(path);
   const routerToMajorDecision = () => routerTo('/major-decision');
-
   const { openModal, closeModal } = useModals();
 
   const handleMajorModal = () => {
-    if (major) {
-      routerToPath(path);
+    if (!majorRequired || major) {
+      onClick();
       return;
     }
     openModal(AlertModal, {

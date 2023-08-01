@@ -1,7 +1,9 @@
 import http from '@apis/http';
 import Icon from '@components/Icon';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
+import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useState, useEffect } from 'react';
 
 const CollegeList = () => {
@@ -18,8 +20,6 @@ const CollegeList = () => {
   };
 
   const onClick: React.MouseEventHandler<HTMLElement> = (e) => {
-    if (e.target !== e.currentTarget) return;
-
     const collegeName = e.currentTarget.textContent;
 
     if (collegeName === null) routerTo('/major-decision');
@@ -30,12 +30,20 @@ const CollegeList = () => {
     <ListContainer>
       <Title>단과대 선택하기</Title>
       {collegeList.map((college) => (
-        <ListWrapper key={college} onClick={onClick}>
-          {college}
-          <IconWrapper>
-            <Icon kind="right" />
-          </IconWrapper>
-        </ListWrapper>
+        <div
+          key={college}
+          css={css`
+            width: 100%;
+          `}
+          onClick={onClick}
+        >
+          <ListWrapper>
+            {college}
+            <IconWrapper>
+              <Icon kind="right" />
+            </IconWrapper>
+          </ListWrapper>
+        </div>
       ))}
     </ListContainer>
   ) : (
@@ -49,7 +57,10 @@ const ListContainer = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  padding: 3% 3% 3% 1%;
+  padding: 8% 6% 8% 6%;
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 1px solid ${THEME.BUTTON.GRAY};
 `;
 
 const IconWrapper = styled.div`
@@ -57,7 +68,9 @@ const IconWrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 3%;
+  padding-left: 5%;
 `;
 
 export default CollegeList;

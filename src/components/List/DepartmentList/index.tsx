@@ -4,6 +4,7 @@ import Icon from '@components/Icon';
 import AlertModal from '@components/Modal/AlertModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useModals from '@hooks/useModals';
@@ -39,8 +40,9 @@ const DepartmentList = () => {
 
   const handlerMajorSetModal = () => {
     closeModal(ConfirmModal);
-    localStorage.setItem('major', selected);
-    setMajor(selected);
+    const afterSpace = selected.substring(selected.indexOf(' ') + 1);
+    localStorage.setItem('major', afterSpace);
+    setMajor(afterSpace);
 
     openModal(AlertModal, {
       message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
@@ -68,15 +70,22 @@ const DepartmentList = () => {
     <ListContainer>
       <Title>학과 선택하기</Title>
       {departmentList.map((department) => (
-        <ListWrapper key={department} onClick={onClick}>
-          {department}
-          <IconWrapper>
+        <div
+          key={department}
+          css={css`
+            width: 100%;
+          `}
+          onClick={onClick}
+        >
+          <ListWrapper>
+            {department}
             <Icon
               kind={selected === department ? 'checkedRadio' : 'uncheckedRadio'}
               color={selected === department ? THEME.PRIMARY : THEME.TEXT.GRAY}
+              size="24"
             />
-          </IconWrapper>
-        </ListWrapper>
+          </ListWrapper>
+        </div>
       ))}
       <ButtonContainer>
         <Button disabled={buttonDisable} onClick={handleMajorConfirmModal}>
@@ -91,7 +100,10 @@ const DepartmentList = () => {
 
 const ButtonContainer = styled.div`
   position: fixed;
-  bottom: 100px;
+  bottom: 7%;
+  z-index: 3;
+  width: 80%;
+  max-width: 480px;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -108,18 +120,24 @@ const ButtonContainer = styled.div`
 const ListContainer = styled.div`
   padding-top: 2%;
   padding-left: 2%;
+  padding-bottom: 15%;
+  overflow: auto;
 `;
 
 const Title = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 3%;
+  padding-left: 5%;
 `;
 
 const ListWrapper = styled.div`
-  padding: 3% 3% 3% 1%;
-`;
-
-const IconWrapper = styled.div`
-  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 1px solid ${THEME.BUTTON.GRAY};
+  padding: 8% 6% 8% 6%;
 `;
 
 export default DepartmentList;

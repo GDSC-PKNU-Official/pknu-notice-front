@@ -12,4 +12,5 @@ export type IconKind =
   | 'right'
   | 'checkedRadio'
   | 'uncheckedRadio'
-  | 'cancel';
+  | 'cancel'
+  | 'speaker';
