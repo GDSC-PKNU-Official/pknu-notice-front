@@ -1,9 +1,13 @@
 import { AnnounceItemList } from '@type/announcement';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 import AnnounceCard from '..';
 
-type Resource = AnnounceItemList | AxiosError | null;
+type Resource =
+  | AxiosResponse<AnnounceItemList>
+  | AnnounceItemList
+  | AxiosError
+  | null;
 
 interface AnnounceListProps {
   resource: {
