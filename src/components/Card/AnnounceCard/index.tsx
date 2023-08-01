@@ -1,3 +1,4 @@
+import Icon from '@components/Icon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -18,13 +19,13 @@ const AnnounceCard = ({
   };
   return (
     <Card onClick={onClick} data-testid="card">
-      {pinned && <div>고정</div>}
       <div
         css={css`
           display: flex;
           align-items: center;
         `}
       >
+        {pinned && <Icon kind="speaker" color={THEME.PRIMARY} />}
         <span>{title}</span>
         <div
           css={css`
