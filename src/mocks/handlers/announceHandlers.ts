@@ -4,7 +4,7 @@ import { RequestHandler, rest } from 'msw';
 export const announceHandlers: RequestHandler[] = [
   rest.get(`${SERVER_URL}/api/announcement`, (req, res, ctx) => {
     const query = req.url.searchParams;
-    if (query.get('major') === '') {
+    if (!query.get('major')) {
       return res(
         ctx.status(200),
         ctx.json({
