@@ -1,9 +1,13 @@
-import { AnnounceItem } from '@type/announcement';
+import { AnnounceItemList } from '@type/announcement';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import AnnounceCard from '..';
 
-type Resource = AxiosResponse<AnnounceItem[]> | AxiosError | null;
+type Resource =
+  | AxiosResponse<AnnounceItemList>
+  | AnnounceItemList
+  | AxiosError
+  | null;
 
 interface AnnounceListProps {
   resource: {
@@ -14,15 +18,23 @@ interface AnnounceListProps {
 const AnnounceList = ({ resource }: AnnounceListProps) => {
   const announceList: Resource = resource.read();
 
+  if (announceList === null || announceList instanceof Error) {
+    return null;
+  }
+  const { 고정: pinned, 일반: normal } = announceList as AnnounceItemList;
+
   return (
     <>
-      {Array.isArray(announceList)
-        ? announceList.map((announce, idx) => (
-            <div key={idx}>
-              <AnnounceCard {...announce} />
-            </div>
-          ))
-        : null}
+      {pinned.map((announce, idx) => (
+        <div key={idx}>
+          <AnnounceCard {...announce} pinned={true} />
+        </div>
+      ))}
+      {normal.map((announce, idx) => (
+        <div key={idx}>
+          <AnnounceCard {...announce} />
+        </div>
+      ))}
     </>
   );
 };

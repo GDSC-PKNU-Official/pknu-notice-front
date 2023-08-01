@@ -1,9 +1,13 @@
+type AnnounceItemType = '고정' | '일반';
+
 export interface AnnounceItem {
   id: number;
-  major: string;
   title: string;
   link: string;
   content: string;
   uploadDate: string;
-  graduate: string | null;
 }
+
+export type AnnounceItemList = {
+  [key in AnnounceItemType]: AnnounceItem[];
+};

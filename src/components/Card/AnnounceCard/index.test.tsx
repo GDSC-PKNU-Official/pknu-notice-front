@@ -1,7 +1,7 @@
 import http from '@apis/http';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AnnounceItem } from '@type/announcement';
+import { AnnounceItemList } from '@type/announcement';
 import { MemoryRouter } from 'react-router-dom';
 
 import AnnounceCard from '.';
@@ -29,16 +29,18 @@ describe('공지사항 카드 컴포넌트 테스트', () => {
     const axiosResult = await http.get(
       '/api/announcement?major=컴퓨터인공지능학부',
     );
-    const announceList: AnnounceItem[] = axiosResult.data;
+    const announceList: AnnounceItemList = axiosResult.data;
 
-    announceList.forEach(async (annouce) => {
+    const { 고정, 일반 } = announceList;
+
+    일반.forEach(async (annouce) => {
       render(<AnnounceCard {...annouce} />, { wrapper: MemoryRouter });
     });
 
     const annouceCards = screen.getAllByTestId('card');
     annouceCards.forEach(async (card, idx) => {
       await userEvent.click(card);
-      expect(window.location.href).toBe(announceList[idx].link);
+      expect(window.location.href).toBe(일반[idx].link);
     });
   });
 });
