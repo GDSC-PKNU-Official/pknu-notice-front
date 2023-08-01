@@ -3,12 +3,22 @@ import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
 
-const AnnounceCard = ({ title, link, uploadDate }: AnnounceItem) => {
+interface AnnounceCardProps extends AnnounceItem {
+  pinned?: boolean;
+}
+
+const AnnounceCard = ({
+  title,
+  link,
+  uploadDate,
+  pinned = false,
+}: AnnounceCardProps) => {
   const onClick = () => {
     window.location.href = link;
   };
   return (
     <Card onClick={onClick} data-testid="card">
+      {pinned && <div>고정</div>}
       <div
         css={css`
           display: flex;
