@@ -34,11 +34,13 @@ const Home = () => {
         <InformCard
           icon="notification"
           title="공지사항"
+          majorRequired={false}
           onClick={() => routerTo('/announcement')}
         />
         <InformCard
           icon="school"
           title="졸업요건"
+          majorRequired={true}
           onClick={() => routerToGraduationRequired()}
         />
       </div>

@@ -97,6 +97,7 @@ describe('InformCard 컴포넌트 테스트', () => {
             icon={INFORM_CARD['ANNOUNCEMENT'].icon}
             title={INFORM_CARD['ANNOUNCEMENT'].title}
             onClick={INFORM_CARD['ANNOUNCEMENT'].onClick}
+            majorRequired={true}
           />
         </ModalsProvider>
       </MajorContext.Provider>,
@@ -121,6 +122,7 @@ describe('InformCard 컴포넌트 테스트', () => {
             icon={INFORM_CARD['ANNOUNCEMENT'].icon}
             title={INFORM_CARD['ANNOUNCEMENT'].title}
             onClick={INFORM_CARD['ANNOUNCEMENT'].onClick}
+            majorRequired={true}
           />
         </ModalsProvider>
       </MajorContext.Provider>,
@@ -151,6 +153,7 @@ describe('InformCard 컴포넌트 테스트', () => {
             icon={INFORM_CARD['GRADUATION'].icon}
             title={INFORM_CARD['GRADUATION'].title}
             onClick={INFORM_CARD['GRADUATION'].onClick}
+            majorRequired={true}
           />
         </ModalsProvider>
       </MajorContext.Provider>,

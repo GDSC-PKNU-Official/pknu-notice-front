@@ -15,17 +15,23 @@ import { setSize } from '@utils/styles/size';
 interface InformCardProps {
   icon: IconKind & ('school' | 'notification');
   title: string;
+  majorRequired: boolean;
   onClick: () => void;
 }
 
-const InformCard = ({ icon, title, onClick }: InformCardProps) => {
+const InformCard = ({
+  icon,
+  title,
+  majorRequired,
+  onClick,
+}: InformCardProps) => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
   const routerToMajorDecision = () => routerTo('/major-decision');
   const { openModal, closeModal } = useModals();
 
   const handleMajorModal = () => {
-    if (major) {
+    if (!majorRequired || major) {
       onClick();
       return;
     }
