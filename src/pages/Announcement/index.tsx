@@ -15,8 +15,8 @@ const Announcement = () => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
   const { openModal, closeModal } = useModals();
-  const announceKeyword = decodeURI(window.location.pathname.split('/')[2]);
   const routerToMajorDecision = () => routerTo('/major-decision');
+  const announceKeyword = decodeURI(window.location.pathname.split('/')[2]);
 
   const handleMajorAnnouncements = () => {
     if (!major) {
@@ -35,6 +35,8 @@ const Announcement = () => {
     routerTo(`${major}`);
   };
 
+  const isKeywordUndefined = () => announceKeyword === 'undefined';
+
   return (
     <>
       <div
@@ -45,8 +47,11 @@ const Announcement = () => {
         <Button
           onClick={() => routerTo('')}
           css={css`
-            background-color: ${announceKeyword !== 'undefined' &&
-            THEME.BUTTON.GRAY};
+            border-bottom: ${isKeywordUndefined() &&
+            `3px solid ${THEME.PRIMARY}`};
+            border-radius: 0px;
+            background-color: ${THEME.TEXT.WHITE};
+            color: ${isKeywordUndefined() ? THEME.PRIMARY : THEME.TEXT.BLACK};
           `}
         >
           학교 공지사항
@@ -54,8 +59,11 @@ const Announcement = () => {
         <Button
           onClick={() => handleMajorAnnouncements()}
           css={css`
-            background-color: ${announceKeyword === 'undefined' &&
-            THEME.BUTTON.GRAY};
+            border-bottom: ${!isKeywordUndefined() &&
+            `3px solid ${THEME.PRIMARY}`};
+            border-radius: 0px;
+            background-color: ${THEME.TEXT.WHITE};
+            color: ${isKeywordUndefined() ? THEME.TEXT.BLACK : THEME.PRIMARY};
           `}
         >
           학과 공지사항
