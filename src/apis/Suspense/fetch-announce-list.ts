@@ -6,7 +6,7 @@ import http from '../http';
 
 const fetchAnnounceList = <T>(major: Major) => {
   const promise: Promise<AxiosResponse<T>> = http
-    .get(`/api/announcement?major=${major}`)
+    .get(major ? `/api/announcement?major=${major}` : `/api/announcement`)
     .then((res) => res.data);
 
   return wrapPromise<T>(promise);
