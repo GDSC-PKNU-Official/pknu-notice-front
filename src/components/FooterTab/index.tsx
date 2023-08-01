@@ -55,7 +55,7 @@ const Footer = styled.div`
   justify-content: space-around;
   align-items: center;
   z-index: 2;
-  background-color: white;
+  background-color: ${THEME.TEXT.WHITE};
 `;
 
 const IconContainer = styled.div`

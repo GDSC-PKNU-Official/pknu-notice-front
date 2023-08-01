@@ -1,6 +1,7 @@
 import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import useRoter from '@hooks/useRouter';
+import { THEME } from '@styles/ThemeProvider/theme';
 
 const Header = () => {
   const { routerTo, goBack } = useRoter();
@@ -34,7 +35,7 @@ const HeaderContainer = styled.div`
   justify-content: center;
   max-width: 480px;
   height: 8%;
-  background-color: white;
+  background-color: ${THEME.TEXT.WHITE};
   z-index: 2;
 `;
 
