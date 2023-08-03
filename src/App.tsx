@@ -33,5 +33,5 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  padding: 17% 0 17% 0;
+  padding: 12.5% 0 17% 0;
 `;
