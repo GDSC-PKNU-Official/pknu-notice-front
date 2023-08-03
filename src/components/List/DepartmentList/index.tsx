@@ -69,24 +69,34 @@ const DepartmentList = () => {
   return departmentList ? (
     <ListContainer>
       <Title>학과 선택하기</Title>
-      {departmentList.map((department) => (
-        <div
-          key={department}
-          css={css`
-            width: 100%;
-          `}
-          onClick={onClick}
-        >
-          <ListWrapper>
-            {department}
-            <Icon
-              kind={selected === department ? 'checkedRadio' : 'uncheckedRadio'}
-              color={selected === department ? THEME.PRIMARY : THEME.TEXT.GRAY}
-              size="24"
-            />
-          </ListWrapper>
-        </div>
-      ))}
+      <div
+        css={css`
+          height: 60vh;
+        `}
+      >
+        {departmentList.map((department) => (
+          <div
+            key={department}
+            css={css`
+              width: 100%;
+            `}
+            onClick={onClick}
+          >
+            <ListWrapper>
+              {department}
+              <Icon
+                kind={
+                  selected === department ? 'checkedRadio' : 'uncheckedRadio'
+                }
+                color={
+                  selected === department ? THEME.PRIMARY : THEME.TEXT.GRAY
+                }
+                size="24"
+              />
+            </ListWrapper>
+          </div>
+        ))}
+      </div>
       <ButtonContainer>
         <Button disabled={buttonDisable} onClick={handleMajorConfirmModal}>
           선택완료
@@ -100,7 +110,7 @@ const DepartmentList = () => {
 
 const ButtonContainer = styled.div`
   position: fixed;
-  bottom: 7%;
+  bottom: 4%;
   z-index: 3;
   width: 80%;
   max-width: 480px;
