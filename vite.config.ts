@@ -25,6 +25,16 @@ export default defineConfig({
               },
             },
           },
+          {
+            urlPattern: new RegExp('^/api/announcement'),
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'announcement-cache',
+              expiration: {
+                maxAgeSeconds: 60 * 60 * 24, // 24시간
+              },
+            },
+          },
         ],
       },
       includeAssets: ['**/*'],
