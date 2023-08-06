@@ -9,7 +9,7 @@ const Header = () => {
     <HeaderContainer>
       <HeaderWrapper>
         <Icon kind="arrowBack" onClick={goBack} />
-        <Logo onClick={() => routerTo('/')}>Logo</Logo>
+        <Logo onClick={() => routerTo('/')}>burimi</Logo>
         <Icon kind="menu" />
       </HeaderWrapper>
     </HeaderContainer>
