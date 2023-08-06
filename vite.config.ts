@@ -2,11 +2,34 @@ import { resolve } from 'path';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    VitePWA({
+      workbox: {
+        globPatterns: ['**/*'],
+        runtimeCaching: [
+          {
+            urlPattern: new RegExp('^/api/majorDecision'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'api-major-decision-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 15, // 15일
+              },
+            },
+          },
+        ],
+      },
+      includeAssets: ['**/*'],
+    }),
+  ],
   resolve: {
     alias: [
       {
