@@ -32,7 +32,7 @@ const Map = () => {
   return (
     <div
       css={css`
-        height: calc(90vh - 40px);
+        height: calc(100vh - 16vh);
         display: flex;
         justify-content: center;
         align-items: center;

@@ -10,7 +10,7 @@ import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
   return (
-    <Container>
+    <>
       <Header />
       <Body>
         <Routes>
@@ -22,16 +22,13 @@ const App = () => {
         </Routes>
       </Body>
       <FooterTab />
-    </Container>
+    </>
   );
 };
 
 export default App;
 
-const Container = styled.div`
-  height: 100vh;
-`;
-
 const Body = styled.div`
-  padding: 8.5vh 0 8.5vh 0;
+  height: calc(100vh - 16vh);
+  padding: 8vh 0 8vh 0;
 `;
