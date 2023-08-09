@@ -34,7 +34,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: center;
   max-width: 480px;
-  height: 6%;
+  height: 8vh;
   background-color: ${THEME.TEXT.WHITE};
   z-index: 2;
 `;
