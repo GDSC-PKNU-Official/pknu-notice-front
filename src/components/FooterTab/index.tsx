@@ -49,7 +49,7 @@ const Footer = styled.div`
   transform: translateX(-50%);
   width: 100%;
 
-  height: 8%;
+  height: 8vh;
 
   display: flex;
   justify-content: space-around;
