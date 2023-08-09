@@ -15,7 +15,7 @@ const AnnounceCard = ({
   pinned = false,
 }: AnnounceCardProps) => {
   const onClick = () => {
-    window.location.href = link;
+    window.open(link, '_blank');
   };
   return (
     <Card onClick={onClick} data-testid="card">
