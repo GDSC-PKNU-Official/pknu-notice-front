@@ -15,7 +15,8 @@ export default defineConfig({
         name: '부림이',
         short_name: '부림이',
         start_url: '/',
-        display: 'standalone',
+        display: 'fullscreen',
+        orientation: 'portrait',
         background_color: '#ffffff',
         theme_color: '#ffffff',
         icons: [
