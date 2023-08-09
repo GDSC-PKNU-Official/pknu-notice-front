@@ -27,7 +27,7 @@ const MapboundaryObserver = ({ map, centerLocation }: MapBounds) => {
         map.setLevel(4);
         map.setCenter(centerLocation);
         openModal(AlertModal, {
-          message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
+          message: MODAL_MESSAGE.ALERT.OVER_MAP_BOUNDARY,
           buttonMessage: '닫기',
           onClose: () => closeModal(AlertModal),
         });
