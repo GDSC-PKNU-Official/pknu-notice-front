@@ -6,21 +6,23 @@ import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
 import Map from '@pages/Map';
 import My from '@pages/My';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 const App = () => {
+  const location = useLocation();
   return (
     <>
-      <Header />
-      <Body>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/announcement/*" element={<Announcement />} />
-          <Route path="/my" element={<My />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/major-decision/*" element={<MajorDecision />} />
-        </Routes>
-      </Body>
+      {location.pathname !== '/map' && <Header />}
+      {/* <Body> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/announcement/*" element={<Announcement />} />
+        <Route path="/my" element={<My />} />
+        <Route path="/major-decision/*" element={<MajorDecision />} />
+        <Route path="/map" element={<Map />} />
+      </Routes>
+      {/* </Body> */}
+
       <FooterTab />
     </>
   );
