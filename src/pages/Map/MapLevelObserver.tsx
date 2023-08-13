@@ -2,7 +2,6 @@ import AlertModal from '@components/Modal/AlertModal';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_MAP_LIMIT } from '@constants/pknu-map';
 import useModals from '@hooks/useModals';
-import React, { useEffect } from 'react';
 
 interface MapLevelObserverProps {
   map: any;

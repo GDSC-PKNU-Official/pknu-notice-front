@@ -41,23 +41,28 @@ const Map = () => {
   }, []);
 
   return (
-    <div
-      css={css`
-        height: calc(100vh - 16vh);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      `}
-    >
-      <KakaoMap id="map" />
-      <UserLocation map={map} />
-      <PknuBuildingNumbers map={map} />
-      <MapLevelObserver map={map} centerLocation={PKNU_MAP_CENTER_LOCATION} />
-      <MapboundaryObserver
-        map={map}
-        centerLocation={PKNU_MAP_CENTER_LOCATION}
-      />
-    </div>
+    <>
+      <div>hello</div>
+      <div>hello</div>
+      <div>hello</div>
+      <div
+        css={css`
+          height: calc(100vh - 16vh);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+        `}
+      >
+        <KakaoMap id="map" />
+        <UserLocation map={map} />
+        <PknuBuildingNumbers map={map} />
+        <MapLevelObserver map={map} centerLocation={PKNU_MAP_CENTER_LOCATION} />
+        <MapboundaryObserver
+          map={map}
+          centerLocation={PKNU_MAP_CENTER_LOCATION}
+        />
+      </div>
+    </>
   );
 };
 
