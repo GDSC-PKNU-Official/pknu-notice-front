@@ -2,16 +2,15 @@ import AlertModal from '@components/Modal/AlertModal';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_MAP_LIMIT } from '@constants/pknu-map';
 import useModals from '@hooks/useModals';
-import React, { useEffect } from 'react';
 
-interface MapBounds {
+interface MapBoundsProps {
   map: any;
   centerLocation: any;
 }
 
 // ! useEffect 훅이 두번 호출되는 문제 해결
 
-const MapboundaryObserver = ({ map, centerLocation }: MapBounds) => {
+const MapboundaryObserver = ({ map, centerLocation }: MapBoundsProps) => {
   if (!map) {
     return null;
   }
@@ -39,7 +38,5 @@ const MapboundaryObserver = ({ map, centerLocation }: MapBounds) => {
 
   return null;
 };
-
-MapboundaryObserver.__isStatic = true;
 
 export default MapboundaryObserver;
