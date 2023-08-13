@@ -13,32 +13,23 @@ const MapLevelObserver = ({ map, centerLocation }: MapLevelObserverProps) => {
   if (!map) {
     return null;
   }
-
   const { openModal, closeModal } = useModals();
-  useEffect(() => {
-    const levelLimitHandler = () => {
-      if (map.getLevel() <= PKNU_MAP_LIMIT.LEVEL) {
-        return;
-      }
-      map.setLevel(PKNU_MAP_LIMIT.LEVEL);
-      map.setCenter(centerLocation);
-      openModal(AlertModal, {
-        message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
-        buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
-      });
-    };
-    window.kakao.maps.event.addListener(map, 'zoom_changed', levelLimitHandler);
-    return () => {
-      window.kakao.maps.event.removeListener(
-        map,
-        'zoom_changed',
-        levelLimitHandler,
-      );
-    };
-  });
 
-  return <></>;
+  const levelLimitHandler = () => {
+    if (map.getLevel() <= PKNU_MAP_LIMIT.LEVEL) {
+      return;
+    }
+    map.setLevel(PKNU_MAP_LIMIT.LEVEL);
+    map.setCenter(centerLocation);
+    openModal(AlertModal, {
+      message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
+      buttonMessage: '닫기',
+      onClose: () => closeModal(AlertModal),
+    });
+  };
+  window.kakao.maps.event.addListener(map, 'zoom_changed', levelLimitHandler);
+
+  return null;
 };
 
 export default MapLevelObserver;
