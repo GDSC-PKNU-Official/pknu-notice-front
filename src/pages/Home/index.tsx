@@ -49,4 +49,5 @@ const Container = styled.div`
   width: 85%;
   text-aligb: center;
   margin: 0 auto;
+  padding-top: 5%;
 `;
