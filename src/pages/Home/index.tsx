@@ -1,6 +1,6 @@
 import http from '@apis/http';
 import InformCard from '@components/Card/InformCard';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useRouter from '@hooks/useRouter';
 import { useEffect, useState } from 'react';
@@ -24,28 +24,29 @@ const Home = () => {
   }, [major]);
 
   return (
-    <>
-      <div
-        css={css`
-          display: flex;
-          justify-content: center;
-        `}
-      >
-        <InformCard
-          icon="notification"
-          title="공지사항"
-          majorRequired={false}
-          onClick={() => routerTo('/announcement')}
-        />
-        <InformCard
-          icon="school"
-          title="졸업요건"
-          majorRequired={true}
-          onClick={() => routerToGraduationRequired()}
-        />
-      </div>
-    </>
+    <Container>
+      <InformCard
+        icon="notification"
+        title="공지사항"
+        majorRequired={false}
+        onClick={() => routerTo('/announcement')}
+      />
+      <InformCard
+        icon="school"
+        title="졸업요건"
+        majorRequired={true}
+        onClick={() => routerToGraduationRequired()}
+      />
+    </Container>
   );
 };
 
 export default Home;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  text-aligb: center;
+  margin: 0 auto;
+`;
