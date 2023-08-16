@@ -56,6 +56,7 @@ const Footer = styled.div`
   align-items: center;
   z-index: 2;
   background-color: ${THEME.TEXT.WHITE};
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
 
 const IconContainer = styled.div`

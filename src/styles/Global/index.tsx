@@ -108,6 +108,7 @@ const resetCss = css`
     max-width: 480px;
     margin: 0 auto;
     min-height: 100vh;
+    background-color: #fffef9;
   }
   ol,
   ul {

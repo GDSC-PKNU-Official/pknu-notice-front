@@ -29,6 +29,5 @@ const App = () => {
 export default App;
 
 const Body = styled.div`
-  height: calc(100vh - 16vh);
-  padding: 8vh 0 8vh 0;
+  padding: 8.5vh 0 8.5vh 0;
 `;
