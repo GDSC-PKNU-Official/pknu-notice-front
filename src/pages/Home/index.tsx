@@ -38,7 +38,7 @@ const Home = () => {
         icon="school"
         title="졸업요건"
         majorRequired={true}
-        onClick={() => routerToGraduationRequired()}
+        onClick={() => routerToGraduationRequiredPage(graduationLink)}
       />
     </Container>
   );
@@ -53,3 +53,8 @@ const Container = styled.div`
   text-aligb: center;
   margin: 0 auto;
 `;
+
+interface GraduationLink {
+  department: string;
+  link: string | null;
+}
