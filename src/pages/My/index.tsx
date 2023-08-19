@@ -2,6 +2,7 @@ import http from '@apis/http';
 import Button from '@components/Button';
 import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
+import AlertModal from '@components/Modal/AlertModal';
 import SuggestionModal from '@components/Modal/SuggestionModal';
 import { SERVER_URL } from '@config/index';
 import styled from '@emotion/styled';
@@ -11,20 +12,6 @@ import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { MouseEventHandler, useState } from 'react';
-
-const subscribe = async () => {
-  if (!('serviceWorker' in navigator)) return;
-
-  const registration = await navigator.serviceWorker.ready;
-  const subscription = await registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(
-      import.meta.env.VITE_PUBLIC_VAPID_KEY,
-    ),
-  });
-
-  await http.post(`${SERVER_URL}/api/subscription`, { data: subscription });
-};
 
 const My = () => {
   const [isToggleOn, setIsToggleOn] = useState(false);
@@ -42,9 +29,36 @@ const My = () => {
     });
   };
 
-  const onClickToggle: MouseEventHandler<HTMLElement> = () => {
-    subscribe();
-    setIsToggleOn(!isToggleOn);
+  const subscribe: MouseEventHandler<HTMLElement> = async () => {
+    if (!('serviceWorker' in navigator)) return;
+    if (!major) {
+      openModal(AlertModal, {
+        message: '학과를 선택해주세요',
+        buttonMessage: '확인',
+        onClose: () => closeModal(AlertModal),
+        routerTo: () => {
+          closeModal(AlertModal);
+          routerTo('/major-decision');
+        },
+      });
+    }
+
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          import.meta.env.VITE_PUBLIC_VAPID_KEY,
+        ),
+      });
+
+      const res = await http.post(`${SERVER_URL}/api/subscription`, {
+        data: subscription,
+      });
+      if (res.status === 200) setIsToggleOn(!isToggleOn);
+    } catch (error) {
+      return;
+    }
   };
 
   return (
@@ -63,7 +77,7 @@ const My = () => {
           </CardList>
           <CardList>
             <span>공지사항 알림받기</span>
-            <ToggleButton isOn={isToggleOn} changeState={onClickToggle} />
+            <ToggleButton isOn={isToggleOn} changeState={subscribe} />
           </CardList>
         </MajorCard>
       </Major>
