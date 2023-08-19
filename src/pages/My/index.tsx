@@ -1,12 +1,28 @@
+import http from '@apis/http';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import SuggestionModal from '@components/Modal/SuggestionModal';
+import { SERVER_URL } from '@config/index';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
 import useMajor from '@hooks/useMajor';
 import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
+const subscribe = async () => {
+  if (!('serviceWorker' in navigator)) return;
+
+  const registration = await navigator.serviceWorker.ready;
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(
+      import.meta.env.VITE_PUBLIC_VAPID_KEY,
+    ),
+  });
+
+  await http.post(`${SERVER_URL}/api/subscription`, { data: subscription });
+};
 
 const My = () => {
   const { major } = useMajor();
@@ -42,6 +58,9 @@ const My = () => {
             data-testid="edit"
           />
         </div>
+        <Button data-testid="modal" onClick={subscribe}>
+          구독!
+        </Button>
       </Major>
       <Suggestion>
         <Button data-testid="modal" onClick={handleSuggestionModal}>
