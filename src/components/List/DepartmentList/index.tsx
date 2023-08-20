@@ -44,8 +44,9 @@ const DepartmentList = () => {
     const storedSubscribe = localStorage.getItem('subscribe');
     if (major && storedSubscribe) {
       http.delete(`${SERVER_URL}/api/subscription/major`, {
-        data: { storedSubscribe, major },
+        data: { subscription: JSON.parse(storedSubscribe), major },
       });
+      localStorage.removeItem('subscribe');
     }
     const afterSpace = selected.substring(selected.indexOf(' ') + 1);
     localStorage.setItem('major', afterSpace);

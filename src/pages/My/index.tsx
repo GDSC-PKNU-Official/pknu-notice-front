@@ -40,10 +40,11 @@ const My = () => {
         message: '알림을 그만 받을까요?',
         onConfirmButtonClick: async () => {
           await http.delete(`${SERVER_URL}/api/subscription/major`, {
-            data: { subscribe, major },
+            data: { subscription: subscribe, major },
           });
           setSubscribe(null);
           closeModal(ConfirmModal);
+          localStorage.removeItem('subscribe');
         },
         onCancelButtonClick: () => {
           closeModal(ConfirmModal);
