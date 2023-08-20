@@ -38,8 +38,8 @@ const My = () => {
       openModal(ConfirmModal, {
         message: '알림을 그만 받을까요?',
         onConfirmButtonClick: async () => {
-          await http.post(`${SERVER_URL}/api/subscription/`, {
-            data: subscribe,
+          await http.delete(`${SERVER_URL}/api/subscription`, {
+            data: { subscribe, major },
           });
           setSubscribe(null);
           closeModal(ConfirmModal);
