@@ -68,11 +68,11 @@ const My = () => {
 
     try {
       const registration = await navigator.serviceWorker.ready;
+      const VAPID_PUBLIC_KEY =
+        'BMTktqZlaL5Bqx7rR2h_fbqBsWROO4k2RnXxwbJXDsP99RSaihgNEkA3JT1iQVT2XRQMRHYMJUyDQS7_r8S5BMc';
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          import.meta.env.VITE_PUBLIC_VAPID_KEY,
-        ),
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
       });
 
       const res = await http.post(`${SERVER_URL}/api/subscription`, {

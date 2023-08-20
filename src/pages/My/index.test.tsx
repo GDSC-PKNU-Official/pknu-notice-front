@@ -62,7 +62,7 @@ describe('마이 페이지 동작 테스트', () => {
       { wrapper: MemoryRouter },
     );
 
-    const majorEditButton = screen.getByTestId('edit');
+    const majorEditButton = screen.getByText('학과 선택하러가기');
     await userEvent.click(majorEditButton);
     expect(mockRouterTo).toHaveBeenCalledWith('/major-decision');
   });
