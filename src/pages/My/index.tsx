@@ -33,7 +33,7 @@ const My = () => {
   };
 
   const subscribeTopic: MouseEventHandler<HTMLElement> = async () => {
-    if (animation) setAnimation(true); // 토글 버튼 클릭 애니메이션을 위해 사용
+    if (!animation) setAnimation(true); // 토글 버튼 클릭 애니메이션을 위해 사용
 
     if (subscribe) {
       openModal(ConfirmModal, {
