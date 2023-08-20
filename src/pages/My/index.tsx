@@ -83,6 +83,11 @@ const My = () => {
     }
   };
 
+  useEffect(() => {
+    const storedSubscribe = localStorage.getItem('subscribe');
+    if (storedSubscribe) setSubscribe(JSON.parse(storedSubscribe));
+  }, []);
+
   return (
     <>
       <Title>마이페이지</Title>
