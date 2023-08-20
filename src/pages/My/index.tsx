@@ -75,7 +75,10 @@ const My = () => {
       });
 
       const res = await http.post(`${SERVER_URL}/api/subscription`, {
-        data: subscription,
+        data: {
+          subscription,
+          major,
+        },
       });
       if (res.status === 200) {
         localStorage.setItem('subscribe', JSON.stringify(subscription));
