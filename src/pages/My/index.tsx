@@ -6,6 +6,7 @@ import AlertModal from '@components/Modal/AlertModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import SuggestionModal from '@components/Modal/SuggestionModal';
 import { SERVER_URL } from '@config/index';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
 import useMajor from '@hooks/useMajor';
@@ -100,16 +101,30 @@ const My = () => {
       <Major>
         <MajorCard>
           <CardList>
-            <div>{major}</div>
-            <Icon
-              kind="edit"
-              onClick={routerToMajorDecision}
-              color={THEME.TEXT.GRAY}
-              data-testid="edit"
-            />
+            {major ? (
+              <>
+                <div>{major}</div>
+                <Icon
+                  kind="edit"
+                  onClick={routerToMajorDecision}
+                  color={THEME.TEXT.GRAY}
+                  data-testid="edit"
+                />{' '}
+              </>
+            ) : (
+              <div
+                onClick={() => routerToMajorDecision()}
+                css={css`
+                  opacity: 0.5;
+                  width: 100%;
+                `}
+              >
+                학과 선택하러가기
+              </div>
+            )}
           </CardList>
           <CardList>
-            <span>공지사항 알림받기</span>
+            <span>학과 공지사항 알림받기</span>
             <ToggleButton
               isOn={Boolean(subscribe)}
               changeState={subscribeTopic}
