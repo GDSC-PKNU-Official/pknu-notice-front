@@ -43,7 +43,7 @@ const DepartmentList = () => {
     closeModal(ConfirmModal);
     const storedSubscribe = localStorage.getItem('subscribe');
     if (major && storedSubscribe) {
-      http.delete(`${SERVER_URL}/api/subscription`, {
+      http.delete(`${SERVER_URL}/api/subscription/major`, {
         data: { storedSubscribe, major },
       });
     }

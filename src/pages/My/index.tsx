@@ -39,7 +39,7 @@ const My = () => {
       openModal(ConfirmModal, {
         message: '알림을 그만 받을까요?',
         onConfirmButtonClick: async () => {
-          await http.delete(`${SERVER_URL}/api/subscription`, {
+          await http.delete(`${SERVER_URL}/api/subscription/major`, {
             data: { subscribe, major },
           });
           setSubscribe(null);
@@ -75,7 +75,7 @@ const My = () => {
         applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
       });
 
-      const res = await http.post(`${SERVER_URL}/api/subscription`, {
+      const res = await http.post(`${SERVER_URL}/api/subscription/major`, {
         data: {
           subscription,
           major,
