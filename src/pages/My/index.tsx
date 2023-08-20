@@ -3,6 +3,7 @@ import Button from '@components/Button';
 import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
 import AlertModal from '@components/Modal/AlertModal';
+import ConfirmModal from '@components/Modal/ConfirmModal';
 import SuggestionModal from '@components/Modal/SuggestionModal';
 import { SERVER_URL } from '@config/index';
 import styled from '@emotion/styled';
@@ -11,10 +12,10 @@ import useMajor from '@hooks/useMajor';
 import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
 const My = () => {
-  const [isToggleOn, setIsToggleOn] = useState(false);
+  const [subscribe, setSubscribe] = useState<PushSubscription | null>(null);
 
   const { major } = useMajor();
   const { routerTo } = useRouter();
@@ -29,7 +30,24 @@ const My = () => {
     });
   };
 
-  const subscribe: MouseEventHandler<HTMLElement> = async () => {
+  const subscribeTopic: MouseEventHandler<HTMLElement> = async () => {
+    if (subscribe) {
+      openModal(ConfirmModal, {
+        message: '알림을 그만 받을까요?',
+        onConfirmButtonClick: async () => {
+          await http.post(`${SERVER_URL}/api/subscription/`, {
+            data: subscribe,
+          });
+          setSubscribe(null);
+          closeModal(ConfirmModal);
+        },
+        onCancelButtonClick: () => {
+          closeModal(ConfirmModal);
+        },
+      });
+      return;
+    }
+
     if (!('serviceWorker' in navigator)) return;
     if (!major) {
       openModal(AlertModal, {
@@ -38,9 +56,10 @@ const My = () => {
         onClose: () => closeModal(AlertModal),
         routerTo: () => {
           closeModal(AlertModal);
-          routerTo('/major-decision');
+          routerToMajorDecision();
         },
       });
+      return;
     }
 
     try {
@@ -55,7 +74,10 @@ const My = () => {
       const res = await http.post(`${SERVER_URL}/api/subscription`, {
         data: subscription,
       });
-      if (res.status === 200) setIsToggleOn(!isToggleOn);
+      if (res.status === 200) {
+        localStorage.setItem('subscribe', JSON.stringify(subscription));
+        setSubscribe(subscription);
+      }
     } catch (error) {
       return;
     }
@@ -77,7 +99,10 @@ const My = () => {
           </CardList>
           <CardList>
             <span>공지사항 알림받기</span>
-            <ToggleButton isOn={isToggleOn} changeState={subscribe} />
+            <ToggleButton
+              isOn={Boolean(subscribe)}
+              changeState={subscribeTopic}
+            />
           </CardList>
         </MajorCard>
       </Major>
