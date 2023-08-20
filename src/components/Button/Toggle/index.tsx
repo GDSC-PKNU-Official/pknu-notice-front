@@ -5,18 +5,20 @@ import { MouseEventHandler } from 'react';
 interface Props {
   isOn: boolean;
   changeState: MouseEventHandler<HTMLElement>;
+  animation: boolean;
 }
 
 interface Circle {
   isOn: boolean;
+  animation: boolean;
 }
 
 const ToggleButton = (props: Props) => {
-  const { isOn, changeState } = props;
+  const { isOn, changeState, animation } = props;
 
   return (
-    <Button onClick={changeState} isOn={isOn}>
-      <Circle isOn={isOn} />
+    <Button onClick={changeState} isOn={isOn} animation={animation}>
+      <Circle isOn={isOn} animation={animation} />
     </Button>
   );
 };
@@ -28,7 +30,8 @@ const Button = styled.button<Circle>`
   border: none;
   width: 3.2rem;
   height: 1.8rem;
-  transition: all 0.3s ease-in-out;
+
+  transition: ${(prop) => (prop.animation ? 'all 0.3s ease-in-out' : 'none')};
 
   background-color: ${(prop) => (prop.isOn ? THEME.PRIMARY : THEME.BACKGROUND)};
   border-radius: 1rem;
@@ -39,7 +42,7 @@ const Circle = styled.div<Circle>`
   border-radius: 50%;
   width: 1.2rem;
   height: 1.2rem;
-  transition: all 0.3s ease-in-out;
+  transition: ${(prop) => (prop.animation ? 'all 0.3s ease-in-out' : 'none')};
 
   background-color: #f5f5f5;
   top: 0.3rem;

@@ -16,6 +16,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 
 const My = () => {
   const [subscribe, setSubscribe] = useState<PushSubscription | null>(null);
+  const [animation, setAnimation] = useState(false);
 
   const { major } = useMajor();
   const { routerTo } = useRouter();
@@ -31,6 +32,8 @@ const My = () => {
   };
 
   const subscribeTopic: MouseEventHandler<HTMLElement> = async () => {
+    if (animation) setAnimation(true); // 토글 버튼 클릭 애니메이션을 위해 사용
+
     if (subscribe) {
       openModal(ConfirmModal, {
         message: '알림을 그만 받을까요?',
@@ -107,6 +110,7 @@ const My = () => {
             <ToggleButton
               isOn={Boolean(subscribe)}
               changeState={subscribeTopic}
+              animation={animation}
             />
           </CardList>
         </MajorCard>
