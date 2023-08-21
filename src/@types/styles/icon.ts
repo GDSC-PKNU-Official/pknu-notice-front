@@ -13,4 +13,7 @@ export type IconKind =
   | 'checkedRadio'
   | 'uncheckedRadio'
   | 'cancel'
-  | 'speaker';
+  | 'speaker'
+  | 'reset'
+  | 'myLocation'
+  | 'search';
