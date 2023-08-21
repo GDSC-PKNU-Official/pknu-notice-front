@@ -1,32 +1,32 @@
 import { PKNU_MAP_CENTER } from '@constants/pknu-map';
-import { useMemo, useState } from 'react';
-
-interface UserLocation {
-  latitude: number;
-  longitude: number;
-}
+import { Location } from '@type/map';
+import { useEffect, useState } from 'react';
 
 const useUserLocation = () => {
-  const [location, setLocation] = useState<UserLocation | string>('');
+  const [location, setLocation] = useState<Location | null>(null);
 
   const success = (position: any) => {
     setLocation({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
+      LAT: position.coords.latitude,
+      LNG: position.coords.longitude,
     });
   };
   const failed = () => {
     setLocation({
-      latitude: PKNU_MAP_CENTER.LAT,
-      longitude: PKNU_MAP_CENTER.LNG,
+      LAT: PKNU_MAP_CENTER.LAT,
+      LNG: PKNU_MAP_CENTER.LNG,
     });
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, failed);
+      navigator.geolocation.getCurrentPosition(success, failed, {
+        enableHighAccuracy: true,
+        timeout: 1000 * 10, // 10초안에 위치 정보를 가져오지 못하면 고정 위치로 설정함
+        maximumAge: 1000 * 60 * 2, // 가져온 위치 정보가 유효한 시간 2분
+      });
     }
-  }, [navigator.geolocation.getCurrentPosition]);
+  }, []);
 
   return location;
 };
