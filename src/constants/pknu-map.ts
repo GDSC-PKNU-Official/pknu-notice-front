@@ -266,3 +266,8 @@ export const PKNU_MAP_CENTER: Location = {
   LAT: 35.132990223842,
   LNG: 129.1052030382,
 } as const;
+
+export const NO_PROVIDE_LOCATION: Location = {
+  LAT: -1,
+  LNG: -1,
+} as const;
