@@ -1,5 +1,6 @@
+import AlertModal from '@components/Modal/AlertModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
-import { PKNU_BUILDINGS } from '@constants/pknu-map';
+import { NO_PROVIDE_LOCATION, PKNU_BUILDINGS } from '@constants/pknu-map';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location, PKNUBuilding } from '@type/map';
 import { ComponentProps, FunctionComponent } from 'react';
@@ -38,13 +39,19 @@ class NumberOverlay {
       ? ''
       : `https://map.kakao.com/link/from/내위치,${this.userLocation.LAT},${this.userLocation.LNG}/to/${buildingName},${lat},${lng}`;
 
-    this.openModal(ConfirmModal, {
-      message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
-      onConfirmButtonClick: () => {
-        window.open(routeUrl, '_blank'), this.closeModal(ConfirmModal);
-      },
-      onCancelButtonClick: () => this.closeModal(ConfirmModal),
-    });
+    JSON.stringify(this.userLocation) !== JSON.stringify(NO_PROVIDE_LOCATION)
+      ? this.openModal(ConfirmModal, {
+          message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
+          onConfirmButtonClick: () => {
+            window.open(routeUrl, '_blank'), this.closeModal(ConfirmModal);
+          },
+          onCancelButtonClick: () => this.closeModal(ConfirmModal),
+        })
+      : this.openModal(AlertModal, {
+          message: '위치정보를 제공하지 않아 길찾기 기능을 사용할 수 없어요!',
+          buttonMessage: '닫기',
+          onClose: () => this.closeModal(AlertModal),
+        });
   }
 
   private createOverlayContent(buildingType: BuildingType, index: number) {
