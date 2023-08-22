@@ -19,6 +19,7 @@ import {
   MdOutlineRestartAlt,
   MdOutlineLocationOn,
   MdOutlineSearch,
+  MdOutlineLocationOff,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -38,7 +39,8 @@ const ICON: { [key in IconKind]: IconType } = {
   cancel: MdOutlineCancel,
   speaker: MdCampaign,
   reset: MdOutlineRestartAlt,
-  myLocation: MdOutlineLocationOn,
+  locationOn: MdOutlineLocationOn,
+  locationOff: MdOutlineLocationOff,
   search: MdOutlineSearch,
 };
 
