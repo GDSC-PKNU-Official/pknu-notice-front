@@ -1,7 +1,11 @@
 import Icon from '@components/Icon';
 import AlertModal from '@components/Modal/AlertModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
-import { PKNU_BUILDINGS, PKNU_MAP_CENTER } from '@constants/pknu-map';
+import {
+  NO_PROVIDE_LOCATION,
+  PKNU_BUILDINGS,
+  PKNU_MAP_CENTER,
+} from '@constants/pknu-map';
 import styled from '@emotion/styled';
 import useModals from '@hooks/useModals';
 import useUserLocation from '@hooks/useUserLocation';
@@ -69,11 +73,19 @@ const MapHeader = ({ map }: MapHeaderProps) => {
   };
   const routeHandler = () => {
     const routeUrl = getRouteUrl();
-    openModal(ConfirmModal, {
-      message: `목적지(${buildingInfo?.buildingName})로 길찾기를 시작할까요?`,
-      onConfirmButtonClick: () => window.open(routeUrl, '_blank'),
-      onCancelButtonClick: () => closeModal(ConfirmModal),
-    });
+    JSON.stringify(userLocation) !== JSON.stringify(NO_PROVIDE_LOCATION)
+      ? openModal(ConfirmModal, {
+          message: `목적지(${buildingInfo?.buildingNumber})로 길찾기를 시작할까요?`,
+          onConfirmButtonClick: () => {
+            window.open(routeUrl, '_blank'), closeModal(ConfirmModal);
+          },
+          onCancelButtonClick: () => closeModal(ConfirmModal),
+        })
+      : openModal(AlertModal, {
+          message: '위치정보를 제공하지 않아 길찾기 기능을 사용할 수 없어요!',
+          buttonMessage: '닫기',
+          onClose: () => closeModal(AlertModal),
+        });
   };
 
   const searchHandler = () => {
@@ -136,17 +148,20 @@ const MapHeader = ({ map }: MapHeaderProps) => {
         )}
       </SearchContainer>
       <IconContainer>
-        {userLocation &&
-          distanceHandler(userLocation.LAT, userLocation.LNG) && (
-            <Icon
-              kind="myLocation"
-              color={THEME.PRIMARY}
-              onClick={() => setCenterHandler(userLocation)}
-            />
-          )}
+        {userLocation && distanceHandler(userLocation.LAT, userLocation.LNG) ? (
+          <Icon
+            kind="locationOn"
+            color={THEME.PRIMARY}
+            size="32"
+            onClick={() => setCenterHandler(userLocation)}
+          />
+        ) : (
+          <Icon kind="locationOff" color={THEME.PRIMARY} size="32" />
+        )}
         <Icon
           kind="reset"
           color={THEME.PRIMARY}
+          size="32"
           onClick={() => setCenterHandler(PKNU_MAP_CENTER)}
         />
       </IconContainer>
@@ -157,11 +172,12 @@ const MapHeader = ({ map }: MapHeaderProps) => {
 export default memo(MapHeader);
 
 const HeaderContainer = styled.div`
-  height: 12vh;
+  position: relative;
+  height: 8vh;
 `;
 
 const SearchContainer = styled.div`
-  height: 65%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,9 +223,8 @@ const BuildingInfo = styled.div`
 `;
 
 const IconContainer = styled.div`
-  height: 35%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-left: 10px;
+  position: absolute;
+  right: 5px;
+  bottom: -76vh;
+  z-index: 999;
 `;
