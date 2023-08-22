@@ -103,6 +103,9 @@ const resetCss = css`
   section {
     display: block;
   }
+  * {
+    user-select: none;
+  }
   body {
     line-height: 1;
     max-width: 480px;

@@ -1,14 +1,24 @@
+import http from '@apis/http';
 import Button from '@components/Button';
+import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
+import AlertModal from '@components/Modal/AlertModal';
+import ConfirmModal from '@components/Modal/ConfirmModal';
 import SuggestionModal from '@components/Modal/SuggestionModal';
+import { SERVER_URL } from '@config/index';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
 import useMajor from '@hooks/useMajor';
 import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
 const My = () => {
+  const [subscribe, setSubscribe] = useState<PushSubscription | null>(null);
+  const [animation, setAnimation] = useState(false);
+
   const { major } = useMajor();
   const { routerTo } = useRouter();
   const routerToMajorDecision = () => routerTo('/major-decision');
@@ -22,26 +32,107 @@ const My = () => {
     });
   };
 
+  const subscribeTopic: MouseEventHandler<HTMLElement> = async () => {
+    if (!animation) setAnimation(true); // 토글 버튼 클릭 애니메이션을 위해 사용
+
+    if (subscribe) {
+      openModal(ConfirmModal, {
+        message: '알림을 그만 받을까요?',
+        onConfirmButtonClick: async () => {
+          await http.delete(`${SERVER_URL}/api/subscription/major`, {
+            data: { subscription: subscribe, major },
+          });
+          setSubscribe(null);
+          closeModal(ConfirmModal);
+          localStorage.removeItem('subscribe');
+        },
+        onCancelButtonClick: () => {
+          closeModal(ConfirmModal);
+        },
+      });
+      return;
+    }
+
+    if (!('serviceWorker' in navigator)) return;
+    if (!major) {
+      openModal(AlertModal, {
+        message: '학과를 선택해주세요',
+        buttonMessage: '확인',
+        onClose: () => closeModal(AlertModal),
+        routerTo: () => {
+          closeModal(AlertModal);
+          routerToMajorDecision();
+        },
+      });
+      return;
+    }
+
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const VAPID_PUBLIC_KEY =
+        'BMTktqZlaL5Bqx7rR2h_fbqBsWROO4k2RnXxwbJXDsP99RSaihgNEkA3JT1iQVT2XRQMRHYMJUyDQS7_r8S5BMc';
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      });
+
+      const res = await http.post(`${SERVER_URL}/api/subscription/major`, {
+        data: {
+          subscription,
+          major,
+        },
+      });
+      if (res.status === 200) {
+        localStorage.setItem('subscribe', JSON.stringify(subscription));
+        setSubscribe(subscription);
+      }
+    } catch (error) {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    const storedSubscribe = localStorage.getItem('subscribe');
+    if (storedSubscribe) setSubscribe(JSON.parse(storedSubscribe));
+  }, []);
+
   return (
     <>
-      <h1>마이페이지</h1>
+      <Title>마이페이지</Title>
       <Major>
-        <span>전공</span>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          `}
-        >
-          <span>{major}</span>
-          <Icon
-            kind="edit"
-            onClick={routerToMajorDecision}
-            color={THEME.TEXT.GRAY}
-            data-testid="edit"
-          />
-        </div>
+        <MajorCard>
+          <CardList>
+            {major ? (
+              <>
+                <div>{major}</div>
+                <Icon
+                  kind="edit"
+                  onClick={routerToMajorDecision}
+                  color={THEME.TEXT.GRAY}
+                  data-testid="edit"
+                />{' '}
+              </>
+            ) : (
+              <div
+                onClick={() => routerToMajorDecision()}
+                css={css`
+                  opacity: 0.5;
+                  width: 100%;
+                `}
+              >
+                학과 선택하러가기
+              </div>
+            )}
+          </CardList>
+          <CardList>
+            <span>학과 공지사항 알림받기</span>
+            <ToggleButton
+              isOn={Boolean(subscribe)}
+              changeState={subscribeTopic}
+              animation={animation}
+            />
+          </CardList>
+        </MajorCard>
       </Major>
       <Suggestion>
         <Button data-testid="modal" onClick={handleSuggestionModal}>
@@ -55,6 +146,14 @@ const My = () => {
 
 export default My;
 
+const Title = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-top: 5%;
+  padding-left: 4%;
+  margin-bottom: 5%;
+`;
+
 const Major = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,4 +166,22 @@ const Suggestion = styled.div`
   bottom: 100px;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const MajorCard = styled.div`
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  align-items: center;
+  font-size: 1rem;
+`;
+
+const CardList = styled.div`
+  padding: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
