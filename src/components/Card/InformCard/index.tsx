@@ -8,7 +8,6 @@ import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
-import { setSize } from '@utils/styles/size';
 
 // TODO: InformCard 컴포넌트 Props 및 로직 수정
 
@@ -50,18 +49,26 @@ const InformCard = ({
   return (
     <>
       <Card data-testid="card" icon={icon} onClick={handleMajorModal}>
-        <Icon
-          kind={icon}
-          color={icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE}
-        />
-        <span
+        <div
           css={css`
-            font-size: 18px;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
           `}
         >
-          {title}
-        </span>
+          <Icon
+            kind={icon}
+            color={icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE}
+          />
+          <span
+            css={css`
+              font-size: 18px;
+              font-weight: bold;
+              margin-left: 10px;
+            `}
+          >
+            {title}
+          </span>
+        </div>
         <span
           css={css`
             font-size: 16px;
@@ -84,16 +91,19 @@ const Card = styled.div<CardProps>(({ icon }) => {
     display: 'flex',
     flexDirection: 'column',
     padding: '15px',
+    marginBottom: '5%',
 
     borderRadius: '15px',
 
     backgroundColor: icon === 'school' ? THEME.BACKGROUND : THEME.PRIMARY,
     color: icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE,
+    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+
+    height: '90px',
 
     '& > svg': {
       margin: '10px 0',
     },
-    ...setSize(200, 150),
     cursor: 'pointer',
   };
 });

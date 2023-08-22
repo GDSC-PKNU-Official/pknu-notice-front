@@ -3,6 +3,7 @@ import Button from '@components/Button';
 import Icon from '@components/Icon';
 import AlertModal from '@components/Modal/AlertModal';
 import ConfirmModal from '@components/Modal/ConfirmModal';
+import { SERVER_URL } from '@config/index';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -18,7 +19,7 @@ const DepartmentList = () => {
   const [selected, setSelected] = useState<string>('');
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
   const { routerTo, goBack } = useRouter();
-  const { setMajor } = useMajor();
+  const { major, setMajor } = useMajor();
   const { college } = useParams();
   const { openModal, closeModal } = useModals();
 
@@ -40,6 +41,13 @@ const DepartmentList = () => {
 
   const handlerMajorSetModal = () => {
     closeModal(ConfirmModal);
+    const storedSubscribe = localStorage.getItem('subscribe');
+    if (major && storedSubscribe) {
+      http.delete(`${SERVER_URL}/api/subscription/major`, {
+        data: { subscription: JSON.parse(storedSubscribe), major },
+      });
+      localStorage.removeItem('subscribe');
+    }
     const afterSpace = selected.substring(selected.indexOf(' ') + 1);
     localStorage.setItem('major', afterSpace);
     setMajor(afterSpace);

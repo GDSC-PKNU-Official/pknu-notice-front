@@ -103,11 +103,15 @@ const resetCss = css`
   section {
     display: block;
   }
+  * {
+    user-select: none;
+  }
   body {
     line-height: 1;
     max-width: 480px;
     margin: 0 auto;
     min-height: 100vh;
+    background-color: #fffef9;
   }
   ol,
   ul {
