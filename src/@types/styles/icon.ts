@@ -15,5 +15,6 @@ export type IconKind =
   | 'cancel'
   | 'speaker'
   | 'reset'
-  | 'myLocation'
+  | 'locationOn'
+  | 'locationOff'
   | 'search';
