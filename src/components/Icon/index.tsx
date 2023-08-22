@@ -16,6 +16,10 @@ import {
   MdRadioButtonChecked,
   MdOutlineCancel,
   MdCampaign,
+  MdOutlineRestartAlt,
+  MdOutlineLocationOn,
+  MdOutlineSearch,
+  MdOutlineLocationOff,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -34,6 +38,10 @@ const ICON: { [key in IconKind]: IconType } = {
   uncheckedRadio: MdRadioButtonUnchecked,
   cancel: MdOutlineCancel,
   speaker: MdCampaign,
+  reset: MdOutlineRestartAlt,
+  locationOn: MdOutlineLocationOn,
+  locationOff: MdOutlineLocationOff,
+  search: MdOutlineSearch,
 };
 
 interface IconProps {
