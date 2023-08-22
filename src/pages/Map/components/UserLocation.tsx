@@ -1,3 +1,4 @@
+import { NO_PROVIDE_LOCATION } from '@constants/pknu-map';
 import styled from '@emotion/styled';
 import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -13,12 +14,19 @@ const UserLocation = ({ map }: UserLocationProps) => {
   const userLocation = useUserLocation();
   const [roadAddress, setRoadAddress] = useState<string | null>(null);
 
-  const marker = new window.kakao.maps.Marker({
-    position:
-      userLocation &&
-      new window.kakao.maps.LatLng(userLocation.LAT, userLocation.LNG),
-  });
-  marker.setMap(map);
+  if (
+    userLocation &&
+    JSON.stringify(userLocation) !== JSON.stringify(NO_PROVIDE_LOCATION) &&
+    distanceHandler(userLocation.LAT, userLocation.LNG)
+  ) {
+    const marker = new window.kakao.maps.Marker({
+      position: new window.kakao.maps.LatLng(
+        userLocation.LAT,
+        userLocation.LNG,
+      ),
+    });
+    marker.setMap(map);
+  }
 
   function getAddr() {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -36,24 +44,35 @@ const UserLocation = ({ map }: UserLocationProps) => {
   }
 
   useEffect(() => {
-    getAddr();
+    if (
+      userLocation &&
+      JSON.stringify(userLocation) !== JSON.stringify(NO_PROVIDE_LOCATION)
+    ) {
+      getAddr();
+    }
   });
 
   return (
     <LocationMessage>
-      {!userLocation ? (
-        <span>위치 정보를 가져오고 있어요!</span>
-      ) : (
-        !distanceHandler(userLocation.LAT, userLocation.LNG) && (
-          <div>
+      {!userLocation && <span>위치 정보를 가져오고 있어요!</span>}
+
+      <div>
+        {userLocation &&
+        JSON.stringify(userLocation) === JSON.stringify(NO_PROVIDE_LOCATION) ? (
+          <span>
+            위치정보를 제공하지 않아 길찾기 기능을 이용할 수 없습니다.
+          </span>
+        ) : (
+          userLocation &&
+          !distanceHandler(userLocation.LAT, userLocation.LNG) && (
             <span>
               현재 학교 외부에 있어요! <br />
               길찾기 기능을 이용해보세요 <br />
               {roadAddress && <>현재 주소 : {roadAddress}</>}
             </span>
-          </div>
-        )
-      )}
+          )
+        )}
+      </div>
     </LocationMessage>
   );
 };
