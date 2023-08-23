@@ -61,8 +61,5 @@
     "vite-plugin-pwa": "^0.16.4",
     "vite-tsconfig-paths": "^4.0.7"
   },
-  "types": "module",
-  "msw": {
-    "workerDirectory": "public"
-  }
+  "types": "module"
 }

@@ -9,6 +9,14 @@ import { worker } from 'src/mocks/browser';
 
 import App from './App';
 
+if ('serviceWorker' in navigator) {
+  if (process.env.NODE_ENV === 'development') {
+    navigator.serviceWorker.register('/mockServiceWorker.js');
+  } else {
+    navigator.serviceWorker.register('/sw.js');
+  }
+}
+
 if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
