@@ -8,7 +8,7 @@
  * - Please do NOT serve this file on production.
  */
 
-importScripts('./sw.js');
+importScripts('./serviceWorker.js');
 
 const INTEGRITY_CHECKSUM = '3d6b9f06410d179a7f7404d4bf4c3c70';
 const activeClientIds = new Set();
