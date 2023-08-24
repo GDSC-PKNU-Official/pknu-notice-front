@@ -6,10 +6,13 @@ import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
 import Map from '@pages/Map';
 import My from '@pages/My';
+import RouteChangeTracker from '@utils/routeChangeTracker';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 const App = () => {
   const location = useLocation();
+  RouteChangeTracker();
+
   return (
     <>
       {location.pathname !== '/map' && <Header />}
