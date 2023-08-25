@@ -10,7 +10,8 @@ const Header = () => {
       <HeaderWrapper>
         <Icon kind="arrowBack" onClick={goBack} />
         <Logo onClick={() => routerTo('/')}>burimi</Logo>
-        <Icon kind="menu" />
+        <div></div>
+        {/* <Icon kind="menu" /> */}
       </HeaderWrapper>
     </HeaderContainer>
   );
