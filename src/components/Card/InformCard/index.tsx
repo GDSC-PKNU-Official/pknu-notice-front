@@ -49,34 +49,39 @@ const InformCard = ({
   return (
     <>
       <Card data-testid="card" icon={icon} onClick={handleMajorModal}>
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-          `}
-        >
-          <Icon
-            kind={icon}
-            color={icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE}
-          />
+        <Wrapper>
+          <div
+            css={css`
+              display: flex;
+              border-radius: 50%;
+              background-color: ${THEME.PRIMARY};
+              height: 45px;
+              width: 45px;
+              justify-content: center;
+              align-items: center;
+            `}
+          >
+            <Icon kind={icon} color={THEME.TEXT.WHITE} />
+          </div>
+        </Wrapper>
+        <Wrapper>
           <span
             css={css`
-              font-size: 18px;
-              font-weight: bold;
-              margin-left: 10px;
+              font-size: 13px;
             `}
           >
             {title}
           </span>
-        </div>
-        <span
-          css={css`
-            font-size: 16px;
-            margin: auto 0;
-          `}
-        >
-          {title} 보러가기!
-        </span>
+          <span
+            css={css`
+              font-size: 15px;
+              margin: auto 0;
+              font-weight: bold;
+            `}
+          >
+            {title} 보러가기!
+          </span>
+        </Wrapper>
       </Card>
     </>
   );
@@ -89,17 +94,14 @@ type CardProps = Pick<InformCardProps, 'icon'>;
 const Card = styled.div<CardProps>(({ icon }) => {
   return {
     display: 'flex',
-    flexDirection: 'column',
-    padding: '15px',
-    marginBottom: '5%',
+    flexDirection: 'row',
+    padding: '3% 1% 2% 0',
 
-    borderRadius: '15px',
+    // backgroundColor: THEME.BACKGROUND,
+    color: THEME.TEXT.GRAY,
+    // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
 
-    backgroundColor: icon === 'school' ? THEME.BACKGROUND : THEME.PRIMARY,
-    color: icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE,
-    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
-
-    height: '90px',
+    height: '70px',
 
     '& > svg': {
       margin: '10px 0',
@@ -107,3 +109,16 @@ const Card = styled.div<CardProps>(({ icon }) => {
     cursor: 'pointer',
   };
 });
+
+const Wrapper = styled.div`
+  &: first-child {
+    display: flex;
+    align-items: center;
+  }
+
+  &: nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0 10px 10px;
+  }
+`;
