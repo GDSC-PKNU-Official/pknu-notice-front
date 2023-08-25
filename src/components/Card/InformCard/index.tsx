@@ -91,15 +91,13 @@ export default InformCard;
 
 type CardProps = Pick<InformCardProps, 'icon'>;
 
-const Card = styled.div<CardProps>(({ icon }) => {
+const Card = styled.div<CardProps>(() => {
   return {
     display: 'flex',
     flexDirection: 'row',
     padding: '3% 1% 2% 0',
 
-    // backgroundColor: THEME.BACKGROUND,
     color: THEME.TEXT.GRAY,
-    // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
 
     height: '70px',
 

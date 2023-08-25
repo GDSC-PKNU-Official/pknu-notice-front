@@ -3,7 +3,6 @@ import InformCard from '@components/Card/InformCard';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useRouter from '@hooks/useRouter';
-import { THEME } from '@styles/ThemeProvider/theme';
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
