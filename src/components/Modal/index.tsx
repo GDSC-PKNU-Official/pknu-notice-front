@@ -53,6 +53,9 @@ const ModalContent = styled.div`
 
   animation: ${modalIn} 0.3s ease-out;
   width: 80%;
+  max-width: 480px;
+  max-height: 70vh;
+  overflow: auto;
   padding: 30px;
   border-radius: 15px;
   background-color: ${THEME.TEXT.WHITE};
