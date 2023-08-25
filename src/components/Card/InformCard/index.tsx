@@ -91,7 +91,7 @@ export default InformCard;
 
 const Card = styled.div`
   display: flex;
-  flexDirection: row;
+  flexdirection: row;
   padding: 3% 1% 2% 0;
 
   color: THEME.TEXT.GRAY;
@@ -100,12 +100,15 @@ const Card = styled.div`
 
   & > svg: {
     margin: 10px 0;
-  };
+  }
   cursor: pointer;
 
-  &: active: {
+  transition: all 0.2s ease-in-out;
+
+  &: active {
+    transform: scale(0.95);
     opacity: 0.6;
-  };
+  }
 `;
 
 const Wrapper = styled.div`
@@ -117,6 +120,6 @@ const Wrapper = styled.div`
   &: nth-child(2) {
     display: flex;
     flex-direction: column;
-    padding: 15px 0 10px 10px;
+    padding: 4% 0 3% 3%;
   }
 `;
