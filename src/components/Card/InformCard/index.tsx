@@ -48,7 +48,7 @@ const InformCard = ({
 
   return (
     <>
-      <Card data-testid="card" icon={icon} onClick={handleMajorModal}>
+      <Card data-testid="card" onClick={handleMajorModal}>
         <Wrapper>
           <div
             css={css`
@@ -89,24 +89,24 @@ const InformCard = ({
 
 export default InformCard;
 
-type CardProps = Pick<InformCardProps, 'icon'>;
+const Card = styled.div`
+  display: flex;
+  flexDirection: row;
+  padding: 3% 1% 2% 0;
 
-const Card = styled.div<CardProps>(() => {
-  return {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: '3% 1% 2% 0',
+  color: THEME.TEXT.GRAY;
 
-    color: THEME.TEXT.GRAY,
+  height: 70px;
 
-    height: '70px',
-
-    '& > svg': {
-      margin: '10px 0',
-    },
-    cursor: 'pointer',
+  & > svg: {
+    margin: 10px 0;
   };
-});
+  cursor: pointer;
+
+  &: active: {
+    opacity: 0.6;
+  };
+`;
 
 const Wrapper = styled.div`
   &: first-child {
