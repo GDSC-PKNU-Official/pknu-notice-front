@@ -17,4 +17,5 @@ export const THEME: Theme = {
   },
 
   MODAL_BACKGROUND: 'rgba(0, 0, 0, 0.6)',
+  IVORY: '#fffff0',
 };

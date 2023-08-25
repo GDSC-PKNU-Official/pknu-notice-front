@@ -17,5 +17,6 @@ declare module '@emotion/react' {
     };
 
     MODAL_BACKGROUND: string;
+    IVORY: string;
   }
 }

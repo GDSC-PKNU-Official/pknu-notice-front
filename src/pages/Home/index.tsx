@@ -3,6 +3,7 @@ import InformCard from '@components/Card/InformCard';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useRouter from '@hooks/useRouter';
+import { THEME } from '@styles/ThemeProvider/theme';
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -61,7 +62,7 @@ const InformCardWrapper = styled.div`
   overflow: hidden;
   border-radius: 15px;
   padding: 5%;
-  background-color: #fffff0;
+  background-color: ${THEME.IVORY};
   margin-top: 5%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
