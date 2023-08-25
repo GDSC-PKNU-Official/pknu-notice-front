@@ -79,7 +79,7 @@ const InformCard = ({
               font-weight: bold;
             `}
           >
-            {title} 보러가기!
+            {title} 보러가기
           </span>
         </Wrapper>
       </Card>
