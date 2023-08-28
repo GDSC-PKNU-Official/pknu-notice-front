@@ -1,6 +1,14 @@
 import { css, Global as GlobalStyle } from '@emotion/react';
 
 const resetCss = css`
+  @font-face {
+    font-family: Spoqa;
+    src: local('Spoqa Han Sans Neo'),
+      url('../fonts/SpoqaHanSansNeo-Regular.eot'),
+      url('../fonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
+      url('../fonts/SpoqaHanSansNeo-Regular.woff') format('woff'),
+      url('../fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+  }
   html,
   body,
   div,
@@ -89,7 +97,6 @@ const resetCss = css`
     font: inherit;
     vertical-align: baseline;
   }
-  /* HTML5 display-role reset for older browsers */
   article,
   aside,
   details,
@@ -112,6 +119,7 @@ const resetCss = css`
     margin: 0 auto;
     min-height: 100vh;
     background-color: #fffef9;
+    font-family: Spoqa, sans-serif;
   }
   ol,
   ul {
