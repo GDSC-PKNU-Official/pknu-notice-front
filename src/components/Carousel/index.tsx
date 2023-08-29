@@ -21,16 +21,13 @@ const Carousel = ({ images }: CarouselProps) => {
   return (
     <CarouselContainer>
       <Slider {...settings}>
-        {images.map((image, index) => (
-          <>
-            <SliderWrapper
-              key={index}
-              onClick={() => window.open(image.link, '_blank')}
-            >
+        {images.map((image) => (
+          <div key={image.src}>
+            <SliderWrapper onClick={() => window.open(image.link, '_blank')}>
               <img src={image.src} width="100%" height={200} />
             </SliderWrapper>
             {image.title}
-          </>
+          </div>
         ))}
       </Slider>
     </CarouselContainer>
