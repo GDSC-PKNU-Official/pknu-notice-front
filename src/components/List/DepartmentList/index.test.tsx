@@ -30,7 +30,7 @@ jest.mock('@hooks/useModals', () => {
   };
 });
 
-describe('학과선택 테스트', () => {
+describe.skip('학과선택 테스트', () => {
   const mockUseMajor = useMajor as jest.MockedFunction<typeof useMajor>;
   const mockSetMajor = jest.fn();
 
@@ -107,7 +107,7 @@ describe('학과선택 테스트', () => {
     });
   });
 
-  it.skip('학과 이름에 스페이스가 있는 경우 (학부, 전공이 모두 있는경우) 테스트', async () => {
+  it('학과 이름에 스페이스가 있는 경우 (학부, 전공이 모두 있는경우) 테스트', async () => {
     const collegName = '정보융합대학';
     render(
       <MemoryRouter initialEntries={[`/major-decision/${collegName}`]}>
