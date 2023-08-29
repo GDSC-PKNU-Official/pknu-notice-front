@@ -48,7 +48,7 @@ const Home = () => {
       </InformCardWrapper>
       <InformCardWrapper>
         <InformTitle>비교과</InformTitle>
-        <Carousel title={carouselInfo.title} images={carouselInfo.images} />
+        <Carousel images={carouselInfo.images} />
       </InformCardWrapper>
     </Container>
   );
