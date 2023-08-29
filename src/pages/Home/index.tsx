@@ -3,6 +3,7 @@ import InformCard from '@components/Card/InformCard';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useRouter from '@hooks/useRouter';
+import { THEME } from '@styles/ThemeProvider/theme';
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -28,18 +29,21 @@ const Home = () => {
 
   return (
     <Container>
-      <InformCard
-        icon="notification"
-        title="공지사항"
-        majorRequired={false}
-        onClick={() => routerTo('/announcement')}
-      />
-      <InformCard
-        icon="school"
-        title="졸업요건"
-        majorRequired={true}
-        onClick={() => routerToGraduationRequiredPage(graduationLink)}
-      />
+      <InformCardWrapper>
+        <InformTitle>학교</InformTitle>
+        <InformCard
+          icon="notification"
+          title="공지사항"
+          majorRequired={false}
+          onClick={() => routerTo('/announcement')}
+        />
+        <InformCard
+          icon="school"
+          title="졸업요건"
+          majorRequired={true}
+          onClick={() => routerToGraduationRequiredPage(graduationLink)}
+        />
+      </InformCardWrapper>
     </Container>
   );
 };
@@ -52,6 +56,19 @@ const Container = styled.div`
   width: 85%;
   text-aligb: center;
   margin: 0 auto;
+`;
+
+const InformCardWrapper = styled.div`
+  overflow: hidden;
+  border-radius: 15px;
+  padding: 5%;
+  background-color: ${THEME.IVORY};
+  margin-top: 5%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+const InformTitle = styled.div`
+  font-size: 25px;
 `;
 
 interface GraduationLink {
