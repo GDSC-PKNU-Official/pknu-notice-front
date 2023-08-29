@@ -1,5 +1,7 @@
 import http from '@apis/http';
 import InformCard from '@components/Card/InformCard';
+import Carousel from '@components/Carousel';
+import { carouselInfo } from '@constants/carouselInfo';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useRouter from '@hooks/useRouter';
@@ -44,6 +46,10 @@ const Home = () => {
           onClick={() => routerToGraduationRequiredPage(graduationLink)}
         />
       </InformCardWrapper>
+      <InformCardWrapper>
+        <InformTitle>비교과</InformTitle>
+        <Carousel title={carouselInfo.title} images={carouselInfo.images} />
+      </InformCardWrapper>
     </Container>
   );
 };
@@ -68,7 +74,8 @@ const InformCardWrapper = styled.div`
 `;
 
 const InformTitle = styled.div`
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 interface GraduationLink {
