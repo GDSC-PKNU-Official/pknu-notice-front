@@ -3,11 +3,12 @@ import { css, Global as GlobalStyle } from '@emotion/react';
 const resetCss = css`
   @font-face {
     font-family: Spoqa;
+    font-display: swap;
     src: local('Spoqa Han Sans Neo'),
-      url('../fonts/SpoqaHanSansNeo-Regular.eot'),
-      url('../fonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
-      url('../fonts/SpoqaHanSansNeo-Regular.woff') format('woff'),
-      url('../fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+      url('src/styles/fonts/SpoqaHanSansNeo-Regular.eot'),
+      url('src/styles/fonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
+      url('src/styles/fonts/SpoqaHanSansNeo-Regular.woff') format('woff'),
+      url('src/styles/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
   }
   html,
   body,
