@@ -112,12 +112,12 @@ const Card = styled.div`
 `;
 
 const Wrapper = styled.div`
-  &: first-child {
+  &: first-of-type {
     display: flex;
     align-items: center;
   }
 
-  &: nth-child(2) {
+  &: nth-of-type(2) {
     display: flex;
     flex-direction: column;
     padding: 4% 0 3% 3%;

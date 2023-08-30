@@ -1,15 +1,14 @@
+import { ImageInfo } from '@constants/carouselInfo';
 import styled from '@emotion/styled';
-import { ImageProps } from '@type/styles/image';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 interface CarouselProps {
-  title: string;
-  images: ImageProps[];
+  images: ImageInfo[];
 }
 
-const Carousel = ({ title, images }: CarouselProps) => {
+const Carousel = ({ images }: CarouselProps) => {
   const settings = {
     dots: true,
     slidesToShow: 1,
@@ -21,11 +20,13 @@ const Carousel = ({ title, images }: CarouselProps) => {
 
   return (
     <CarouselContainer>
-      <h2>{title}</h2>
       <Slider {...settings}>
-        {images.map((image, index) => (
-          <div key={index}>
-            <img src={image.src} />
+        {images.map((image) => (
+          <div key={image.src}>
+            <SliderWrapper onClick={() => window.open(image.link, '_blank')}>
+              <img src={image.src} width="100%" height={200} />
+            </SliderWrapper>
+            {image.title}
           </div>
         ))}
       </Slider>
@@ -33,10 +34,15 @@ const Carousel = ({ title, images }: CarouselProps) => {
   );
 };
 
+export default Carousel;
+
 const CarouselContainer = styled.div`
+  padding: 1rem 0 1rem;
   width: 100%;
   margin: 0 auto;
-  padding: 30px;
 `;
 
-export default Carousel;
+const SliderWrapper = styled.div`
+  overflow: hidden;
+  padding-bottom: 10px;
+`;
