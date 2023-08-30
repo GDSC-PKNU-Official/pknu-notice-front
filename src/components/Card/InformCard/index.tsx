@@ -48,35 +48,40 @@ const InformCard = ({
 
   return (
     <>
-      <Card data-testid="card" icon={icon} onClick={handleMajorModal}>
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-          `}
-        >
-          <Icon
-            kind={icon}
-            color={icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE}
-          />
+      <Card data-testid="card" onClick={handleMajorModal}>
+        <Wrapper>
+          <div
+            css={css`
+              display: flex;
+              border-radius: 50%;
+              background-color: ${THEME.PRIMARY};
+              height: 45px;
+              width: 45px;
+              justify-content: center;
+              align-items: center;
+            `}
+          >
+            <Icon kind={icon} color={THEME.TEXT.WHITE} />
+          </div>
+        </Wrapper>
+        <Wrapper>
           <span
             css={css`
-              font-size: 18px;
-              font-weight: bold;
-              margin-left: 10px;
+              font-size: 13px;
             `}
           >
             {title}
           </span>
-        </div>
-        <span
-          css={css`
-            font-size: 16px;
-            margin: auto 0;
-          `}
-        >
-          {title} 보러가기!
-        </span>
+          <span
+            css={css`
+              font-size: 15px;
+              margin: auto 0;
+              font-weight: bold;
+            `}
+          >
+            {title} 보러가기
+          </span>
+        </Wrapper>
       </Card>
     </>
   );
@@ -84,26 +89,37 @@ const InformCard = ({
 
 export default InformCard;
 
-type CardProps = Pick<InformCardProps, 'icon'>;
+const Card = styled.div`
+  display: flex;
+  flexdirection: row;
+  padding: 3% 1% 2% 0;
 
-const Card = styled.div<CardProps>(({ icon }) => {
-  return {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '15px',
-    marginBottom: '5%',
+  color: THEME.TEXT.GRAY;
 
-    borderRadius: '15px',
+  height: 70px;
 
-    backgroundColor: icon === 'school' ? THEME.BACKGROUND : THEME.PRIMARY,
-    color: icon === 'school' ? THEME.TEXT.GRAY : THEME.TEXT.WHITE,
-    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+  & > svg: {
+    margin: 10px 0;
+  }
+  cursor: pointer;
 
-    height: '90px',
+  transition: all 0.2s ease-in-out;
 
-    '& > svg': {
-      margin: '10px 0',
-    },
-    cursor: 'pointer',
-  };
-});
+  &: active {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+`;
+
+const Wrapper = styled.div`
+  &: first-of-type {
+    display: flex;
+    align-items: center;
+  }
+
+  &: nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    padding: 4% 0 3% 3%;
+  }
+`;

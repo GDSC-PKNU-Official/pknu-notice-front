@@ -110,7 +110,7 @@ const SuggestionArea = styled.textarea`
   line-height: 1.5;
   padding: 10px;
   resize: none;
-  overflow-y: hidden;
+  overflow-y: scoll;
 
   font-size: 16px;
   font-weight: bold;

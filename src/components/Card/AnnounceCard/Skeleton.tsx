@@ -10,19 +10,19 @@ const AnnounceCardSkeleton = ({ length }: AnnounceCardSkeletonProps) => {
   return (
     <>
       {Array.from({ length }, (_, idx) => (
-        <div key={idx}>
-          <Wrapper>
-            <Title></Title>
+        <Card key={idx}>
+          <ContentContainer>
+            <AnnounceTitle></AnnounceTitle>
             <div
               css={css`
                 border-left: 1px solid gray;
                 height: 12px;
-                margin: 0 10px;
+                margin: 0 5px;
               `}
             />
-            <Date></Date>
-          </Wrapper>
-        </div>
+            <AnnounceDate></AnnounceDate>
+          </ContentContainer>
+        </Card>
       ))}
     </>
   );
@@ -30,20 +30,25 @@ const AnnounceCardSkeleton = ({ length }: AnnounceCardSkeletonProps) => {
 
 export default AnnounceCardSkeleton;
 
-const Wrapper = styled.div`
-  display: flex;
+const Card = styled.div`
+  height: 28px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
   align-items: center;
 `;
 
-const Title = styled(SkeletomItem)`
+const AnnounceTitle = styled(SkeletomItem)`
   flex: 9;
-  width: 100%;
-  height: 30px;
 `;
 
-const Date = styled(SkeletomItem)`
+const AnnounceDate = styled(SkeletomItem)`
   flex: 1;
-  width: 100%;
-  height: 20px;
+  height: 10px;
+  justify-content: flex-end;
 `;
