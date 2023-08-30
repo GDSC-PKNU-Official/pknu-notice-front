@@ -11,7 +11,7 @@ import DepartmentSkeleton from '../Skeleton/department';
 const DepartmentList = () => {
   const { college } = useParams();
   return (
-    <>
+    <ListContainer>
       <Title>학과 선택하기</Title>
       <Suspense
         fallback={
@@ -20,9 +20,16 @@ const DepartmentList = () => {
       >
         <DepartmentItem resource={fetchMajorList<string[]>(college)} />
       </Suspense>
-    </>
+    </ListContainer>
   );
 };
+
+const ListContainer = styled.div`
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-bottom: 15%;
+  overflow: auto;
+`;
 
 const Title = styled.h2`
   font-size: 24px;

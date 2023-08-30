@@ -46,6 +46,6 @@ const ListWrapper = styled.div`
 
   width: 90%;
   margin: 0 auto;
-  padding: 8% 6% 8% 6%;
+  padding: 8% 4% 8% 4%;
   border-bottom: 1px solid ${THEME.BUTTON.GRAY};
 `;

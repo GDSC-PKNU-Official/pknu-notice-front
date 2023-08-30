@@ -105,7 +105,7 @@ const ListWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 6% 4% 6% 4%;
+  padding: 8% 4% 8% 4%;
   width: 90%;
   margin: 0 auto;
   border-bottom: 1px solid ${THEME.BUTTON.GRAY};
