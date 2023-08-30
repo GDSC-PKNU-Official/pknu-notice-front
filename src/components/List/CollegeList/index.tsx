@@ -8,14 +8,19 @@ import CollegeSkeleton from '../Skeleton/college';
 
 const CollegeList = () => {
   return (
-    <>
+    <ListContainer>
       <Title>단과대 선택하기</Title>
       <Suspense fallback={<CollegeSkeleton length={10} />}>
         <CollegeItem resource={fetchMajorList<string[]>()} />
       </Suspense>
-    </>
+    </ListContainer>
   );
 };
+
+const ListContainer = styled.div`
+  padding-top: 2%;
+  padding-left: 2%;
+`;
 
 const Title = styled.h2`
   font-size: 24px;

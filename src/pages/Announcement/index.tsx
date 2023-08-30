@@ -55,13 +55,13 @@ const Announcement = () => {
   };
 
   return (
-    <>
+    <Container>
       <div
         css={css`
-          width: inherit;
+          width: 100%;
           display: flex;
           position: relative;
-          overflow-x: hidden;
+          overflow-x: none;
         `}
       >
         <Button
@@ -95,11 +95,15 @@ const Announcement = () => {
           />
         </Suspense>
       </AnnounceContainer>
-    </>
+    </Container>
   );
 };
 
 export default Announcement;
+
+const Container = styled.div`
+  overflow-x: hidden;
+`;
 
 const BottomBar = styled.span<{ getAnimationType: GetAnimationType }>`
   position: absolute;
@@ -114,6 +118,7 @@ const BottomBar = styled.span<{ getAnimationType: GetAnimationType }>`
 
 const AnnounceContainer = styled.div<{ getAnimationType: GetAnimationType }>`
   width: 100%;
+  overflow: hidden;
   animation: ${({ getAnimationType }) => getAnimationType('announce')} 0.3s
     forwards;
 `;
@@ -139,7 +144,6 @@ const BottomBarSlideLeft = keyframes`
 const AnnounceSlideRight = keyframes`
   from {
     transform: translateX(-100%);
-    display: none;
   }
   to {
     transform: translateX(0%);
@@ -148,8 +152,7 @@ const AnnounceSlideRight = keyframes`
 
 const AnnounceSlideLeft = keyframes`
   from {
-    transform: translateX(200%);
-    display: none;
+    transform: translateX(100%);
   }
   to {
     transform: translateX(0%);
