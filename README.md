@@ -1,14 +1,14 @@
-<p style="text-align: center; font-size: 28px;">부림이 (BURIMI)</p>
-<p style="text-align: center;">
+<div align=center>
+<p style="font-size: 28px;">부림이 (BURIMI)</p>
 <img src='https://www.pknu.ac.kr/upload/raonkeditordata/2022/08/18/20220818_102123489_18337.png' width=200px height=200px />
-</p>
+</div>
 
-# <p style="text-align: center; font-size: 28px;">부림이의 탄생 배경</p>
+<div align=center>
+<p style="font-size: 28px;">부림이의 탄생 배경</p>
 
-<p style="text-align: center; font-size: 24px; font-weight: bold">More Information, More 
-Convenience</p>
-
-<p style="text-align: center; font-size: 18px;">부림이는 부경대학교 학생들이 대학 생활을 더 알차게 할 수 있는 정보들을 모아서 보여주고, 새로운 공지사항이나 정보가 생길 경우 알림을 제공해 주는 서비스에요</p>
+<p><b style='font-size:28px'>More Information, More Convenience</b></p>
+<p><b>부림이는 부경대학교 학생들이 대학 생활을 더 알차게 할 수 있는 정보들을 모아서 보여주고, 새로운 공지사항이나 정보가 생길 경우 알림을 제공해 주는 서비스에요</b></p>
+</div>
 
 <br />
 <br />
@@ -49,7 +49,7 @@ Convenience</p>
 
 # 기술 스택
 
-<div style="text-align: center;">
+<div align=center>
     <div style="display: flex; flex-direction:column ;">
         <span style="font-size:24px; font-weight:bold;">FE</span>
         <div>
@@ -85,6 +85,9 @@ Convenience</p>
         </div>
     </div>    
 </div>
+
+<br />
+<br />
 
 # 아키텍쳐
 
