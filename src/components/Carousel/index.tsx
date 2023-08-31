@@ -22,8 +22,13 @@ const Carousel = ({ images }: CarouselProps) => {
     <CarouselContainer>
       <Slider {...settings}>
         {images.map((image) => (
-          <div key={image.src}>
-            <SliderWrapper onClick={() => window.open(image.link, '_blank')}>
+          <div
+            key={image.src}
+            onClick={() =>
+              window.open('https://whalebe.pknu.ac.kr/main', '_blank')
+            }
+          >
+            <SliderWrapper>
               <img src={image.src} width="100%" height={200} />
             </SliderWrapper>
             {image.title}
@@ -40,6 +45,9 @@ const CarouselContainer = styled.div`
   padding: 1rem 0 1rem;
   width: 100%;
   margin: 0 auto;
+  &: hover {
+    cursor: pointer;
+  }
 `;
 
 const SliderWrapper = styled.div`
