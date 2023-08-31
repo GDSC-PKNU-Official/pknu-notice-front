@@ -1,12 +1,12 @@
 <div align=center>
-<p style="font-size: 28px;">부림이 (BURIMI)</p>
+<h3 align=center style="text-align: center; font-size: 3em border:none">부림이(BURIMI)</h2>
 <img src='https://www.pknu.ac.kr/upload/raonkeditordata/2022/08/18/20220818_102123489_18337.png' width=200px height=200px />
 </div>
 
 <div align=center>
-<p style="font-size: 28px;">부림이의 탄생 배경</p>
+<h2 align=center style="text-align: center; font-size: 1.5em">부림이의 탄생배경</h2>
 
-<p><b style='font-size:28px'>More Information, More Convenience</b></p>
+<p><b style='font-size:28px'>📣More Information, More Convenience🔎</b></p>
 <p><b>부림이는 부경대학교 학생들이 대학 생활을 더 알차게 할 수 있는 정보들을 모아서 보여주고, 새로운 공지사항이나 정보가 생길 경우 알림을 제공해 주는 서비스에요</b></p>
 </div>
 
@@ -51,7 +51,7 @@
 
 <div align=center>
     <div style="display: flex; flex-direction:column ;">
-        <span style="font-size:24px; font-weight:bold;">FE</span>
+        <h3 align=center style="text-align: center; font-size: 3em border:none">FE</h2>
         <div>
             <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=ffffff">
             <img src="https://img.shields.io/badge/React-61DAFB?logo=React&logoColor=ffffff">
@@ -61,7 +61,7 @@
         </div>
     </div>
     <div style="display: flex; flex-direction:column ;">
-        <span style="font-size:24px; font-weight:bold;">BE</span>
+        <h3 align=center style="text-align: center; font-size: 3em border:none">BE</h2>
         <div>
             <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=ffffff">
             <img src="https://img.shields.io/badge/NodeJS-6ad147?logo=node.js&locoColor=000000">
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div style="display: flex; flex-direction:column ;">
-        <span style="font-size:24px; font-weight:bold;">HOSTING</span>
+        <h3 align=center style="text-align: center; font-size: 3em border:none">HOSTING</h2>
         <div>
             <img src="https://img.shields.io/badge/Amplify-f2be8a?&logo=awsamplify&locoColor=ffffff">
             <img src="https://img.shields.io/badge/EC2-f2be8a?&logo=amazonec2&locoColor=ffffff">
@@ -78,7 +78,7 @@
         </div>
     </div>
         <div style="display: flex; flex-direction:column ;">
-        <span style="font-size:24px; font-weight:bold;">CI/CD</span>
+        <h3 align=center style="text-align: center; font-size: 3em border:none">CI/CD</h2>
         <div>
             <img src="https://img.shields.io/badge/Docker-ffffff?logo=docker">
             <img src="https://img.shields.io/badge/Github Actions-ffffff?logo=githubactions">
