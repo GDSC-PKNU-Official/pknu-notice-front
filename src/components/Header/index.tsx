@@ -1,4 +1,5 @@
 import Icon from '@components/Icon';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useRoter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -9,8 +10,12 @@ const Header = () => {
     <HeaderContainer>
       <HeaderWrapper>
         <Icon kind="arrowBack" onClick={goBack} />
-        <Logo onClick={() => routerTo('/')}>burimi</Logo>
-        <div></div>
+        <Logo onClick={() => routerTo('/')}>부림이</Logo>
+        <div
+          css={css`
+            width: 28px;
+          `}
+        ></div>
         {/* <Icon kind="menu" /> */}
       </HeaderWrapper>
     </HeaderContainer>
