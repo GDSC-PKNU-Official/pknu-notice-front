@@ -271,3 +271,8 @@ export const NO_PROVIDE_LOCATION: Location = {
   LAT: -1,
   LNG: -1,
 } as const;
+
+export const PKNU_MAP_CENTER_LOCATION = new window.kakao.maps.LatLng(
+  PKNU_MAP_CENTER.LAT,
+  PKNU_MAP_CENTER.LNG,
+);
