@@ -32,6 +32,11 @@ const PknuBuildingNumbers = ({
 
   return (
     <>
+      {Object.keys(buildingOverlays).forEach((buildingType) => {
+        buildingOverlays[buildingType as BuildingType]?.forEach((overlay) => {
+          overlay.setMap(map);
+        });
+      })}
       {Object.keys(PKNU_BUILDINGS).forEach((buildingType) => {
         if (!buildingTypes.includes(buildingType as BuildingType)) {
           if (!isOverlayInMap(buildingType as BuildingType)) return;
@@ -45,7 +50,7 @@ const PknuBuildingNumbers = ({
 
         const overlays: any[] = [];
         PKNU_BUILDINGS[buildingType as BuildingType].buildings.forEach(
-          (PKNU_BUILDING, index) => {
+          (PKNU_BUILDING) => {
             const buildingNumberOverlay = new NumberOverlay(
               PKNU_BUILDING,
               openModal,
