@@ -1,35 +1,49 @@
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import useModals from '@hooks/useModals';
-import useUserLocation from '@hooks/useUserLocation';
-import { BuildingType } from '@type/map';
+import { BuildingType, Location } from '@type/map';
+import { memo } from 'react';
 
 import NumberOverlay from '../handlers/overlay-handler';
 
 interface BuildingNumbersProps {
   buildingTypes: BuildingType[];
   map: any;
+  location: Location | null;
 }
 
-const PknuBuildingNumbers = ({ map, buildingTypes }: BuildingNumbersProps) => {
-  if (!map) {
-    return null;
+type BuildingOverlay = {
+  [key in BuildingType]?: any[];
+};
+const buildingOverlays: BuildingOverlay = {};
+
+const PknuBuildingNumbers = ({
+  map,
+  buildingTypes,
+  location,
+}: BuildingNumbersProps) => {
+  if (!map || !location) {
+    return <></>;
   }
-  const location = useUserLocation();
+
   const { openModal, closeModal } = useModals();
+  const isOverlayInMap = (type: BuildingType) => {
+    return Object.prototype.hasOwnProperty.call(buildingOverlays, type);
+  };
 
   return (
     <>
       {Object.keys(PKNU_BUILDINGS).forEach((buildingType) => {
         if (!buildingTypes.includes(buildingType as BuildingType)) {
-          const removeElements = document.querySelectorAll(
-            `[class^=${buildingType}]`,
+          if (!isOverlayInMap(buildingType as BuildingType)) return;
+          buildingOverlays[buildingType as BuildingType]?.forEach((overlay) =>
+            overlay.setMap(null),
           );
-          removeElements.forEach((removeElement) => {
-            removeElement.remove();
-          });
+          delete buildingOverlays[buildingType as BuildingType];
           return;
         }
+        if (isOverlayInMap(buildingType as BuildingType)) return;
 
+        const overlays: any[] = [];
         PKNU_BUILDINGS[buildingType as BuildingType].buildings.forEach(
           (PKNU_BUILDING, index) => {
             const buildingNumberOverlay = new NumberOverlay(
@@ -37,14 +51,15 @@ const PknuBuildingNumbers = ({ map, buildingTypes }: BuildingNumbersProps) => {
               openModal,
               closeModal,
               location,
-            ).createOverlay(buildingType as BuildingType, index);
-
+            ).createOverlay(buildingType as BuildingType);
+            overlays.push(buildingNumberOverlay);
             buildingNumberOverlay.setMap(map);
           },
         );
+        buildingOverlays[buildingType as BuildingType] = overlays;
       })}
     </>
   );
 };
 
-export default PknuBuildingNumbers;
+export default memo(PknuBuildingNumbers);
