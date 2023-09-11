@@ -9,10 +9,10 @@ import Modal from '..';
 
 interface AlertModalProps {
   message: string;
-  buttonMessage: string;
+  buttonMessage?: string;
   open: boolean;
   iconKind?: IconKind;
-  onClose: () => void;
+  onClose?: () => void;
   routerTo?: () => void;
 }
 
@@ -21,7 +21,7 @@ const AlertModal = ({
   buttonMessage,
   open,
   iconKind,
-  onClose,
+  onClose = () => undefined,
   routerTo = onClose,
 }: AlertModalProps) => {
   return (
@@ -31,18 +31,25 @@ const AlertModal = ({
           <>
             <span
               css={css`
+                white-space: pre-line;
                 color: ${THEME.TEXT.GRAY};
                 font-weight: bold;
                 margin: 0 auto;
-                margin-bottom: 15px;
               `}
             >
               {message}
             </span>
-            <Button onClick={routerTo}>
-              {iconKind && <Icon kind={iconKind} color={THEME.TEXT.WHITE} />}
-              {buttonMessage}
-            </Button>
+            {buttonMessage && (
+              <Button
+                onClick={routerTo}
+                css={css`
+                  margin-top: 15px;
+                `}
+              >
+                {iconKind && <Icon kind={iconKind} color={THEME.TEXT.WHITE} />}
+                {buttonMessage}
+              </Button>
+            )}
           </>
         </Modal>
       )}
