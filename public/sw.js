@@ -20,3 +20,14 @@ self.addEventListener('push', (e) => {
     icon: data.icon,
   });
 });
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close(); // 알림 닫기
+  const major = event.notification.title.split(' ')[0];
+
+  event.waitUntil(
+    self.clients.openWindow(
+      'https://main.d1xmrqbiduo1fa.amplifyapp.com/announcement/' + major,
+    ),
+  );
+});
