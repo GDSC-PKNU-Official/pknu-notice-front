@@ -3,7 +3,7 @@ import { PKNU_MAP_CENTER } from '@constants/pknu-map';
 const deg2rad = (deg: number) => deg * (Math.PI / 180);
 
 const haversineDistance = (lat: number, lng: number) => {
-  const R = 6371000; // 지구 반지름 (단위: m)
+  const R = 6371000;
 
   const dLat = deg2rad(PKNU_MAP_CENTER.LAT - lat);
   const dLon = deg2rad(PKNU_MAP_CENTER.LNG - lng);
@@ -20,9 +20,9 @@ const haversineDistance = (lat: number, lng: number) => {
   return R * angularDistance;
 };
 
-const distanceHandler = (lat: number, lng: number) => {
+const isUserInSchool = (lat: number, lng: number) => {
   const maxDistance = 450;
   return haversineDistance(lat, lng) <= maxDistance;
 };
 
-export default distanceHandler;
+export default isUserInSchool;

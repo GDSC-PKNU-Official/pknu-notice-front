@@ -1,19 +1,26 @@
-import { PKNU_BUILDINGS } from '@constants/pknu-map';
-import { css } from '@emotion/react';
+import Icon from '@components/Icon';
+import { PKNU_BUILDINGS, PKNU_MAP_CENTER } from '@constants/pknu-map';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { BuildingType } from '@type/map';
-import React, { CSSProperties, SetStateAction, useState } from 'react';
+import { BuildingType, Location } from '@type/map';
+import React, { CSSProperties, SetStateAction, memo, useState } from 'react';
+
+import isUserInSchool from '../handlers/distance-handler';
 
 interface BuildingFilterButtonsProps {
+  map: any;
+  location: Location | null;
   buildingTypes: BuildingType[];
   setBuildingTypes: React.Dispatch<SetStateAction<BuildingType[]>>;
 }
 
 const BuildingFilterButtons = ({
+  map,
+  location,
   buildingTypes,
   setBuildingTypes,
 }: BuildingFilterButtonsProps) => {
+  if (!map) return <></>;
   const [activeButtons, setActiveButtons] = useState<
     Record<BuildingType, boolean>
   >({
@@ -23,6 +30,13 @@ const BuildingFilterButtons = ({
     D: false,
     E: false,
   });
+
+  const setCenterHandler = (location: Location | null) => {
+    map.setCenter(
+      location && new window.kakao.maps.LatLng(location.LAT, location.LNG),
+    );
+    map.setLevel(4);
+  };
 
   const buildingTypesHandler = (type: BuildingType) => {
     setActiveButtons((prevActiceButtons) => {
@@ -51,34 +65,65 @@ const BuildingFilterButtons = ({
   };
 
   return (
-    <div
-      onClick={buttonClickHandler}
-      css={css`
-        flex: 5;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-      `}
-    >
-      {Object.keys(activeButtons).map((type) => (
-        <FilterButton
-          key={type}
-          isActive={activeButtons[type as BuildingType]}
-          activeColor={PKNU_BUILDINGS[type as BuildingType].activeColor}
-        >
-          <span>{type}</span>
-        </FilterButton>
-      ))}
-    </div>
+    <Containter>
+      <ButtonContainer onClick={buttonClickHandler}>
+        {Object.keys(activeButtons).map((type) => (
+          <FilterButton
+            key={type}
+            isActive={activeButtons[type as BuildingType]}
+            activeColor={PKNU_BUILDINGS[type as BuildingType].activeColor}
+          >
+            <span>{type}</span>
+          </FilterButton>
+        ))}
+      </ButtonContainer>
+      <IconContainer>
+        {location && isUserInSchool(location.LAT, location.LNG) ? (
+          <Icon
+            kind="locationOn"
+            color={THEME.PRIMARY}
+            size="32"
+            onClick={() => setCenterHandler(location)}
+          />
+        ) : (
+          <Icon kind="locationOff" color={THEME.PRIMARY} size="32" />
+        )}
+        <Icon
+          kind="reset"
+          color={THEME.PRIMARY}
+          size="32"
+          onClick={() => setCenterHandler(PKNU_MAP_CENTER)}
+        />
+      </IconContainer>
+    </Containter>
   );
 };
 
-export default BuildingFilterButtons;
+export default memo(BuildingFilterButtons);
 
 interface FilterButtonProps {
   isActive: boolean;
   activeColor: CSSProperties['color'];
 }
+
+const Containter = styled.section`
+  height: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+  align-items: center;
+
+  position: absolute;
+  top: -50px;
+  z-index: 999;
+`;
 
 const FilterButton = styled.button<FilterButtonProps>`
   background-color: ${({ activeColor }) => activeColor};
@@ -104,4 +149,15 @@ const FilterButton = styled.button<FilterButtonProps>`
     transform: translateY(${({ isActive }) => (isActive ? '0' : '2px')});
     transition: transform 0.2s ease-in-out;
   }
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  width: 20%;
+  justify-content: flex-end;
+
+  position: absolute;
+  top: -50px;
+  z-index: 999;
+  right: 5px;
 `;

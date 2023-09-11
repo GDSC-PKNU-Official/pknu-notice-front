@@ -1,15 +1,15 @@
-import { PKNU_MAP_CENTER } from '@constants/pknu-map';
-import { css } from '@emotion/react';
+import { PKNU_MAP_CENTER_LOCATION } from '@constants/pknu-map';
 import styled from '@emotion/styled';
+import useLocationHandler from '@hooks/useLocationHandler';
 import useModals from '@hooks/useModals';
+import useUserLocation from '@hooks/useUserLocation';
 import { BuildingType } from '@type/map';
 import { useEffect, useState } from 'react';
 
 import BuildingFilterButtons from './components/BuildingFilterButtons';
 import MapHeader from './components/MapHeader';
 import PknuBuildingNumbers from './components/PknuBuildingNumbers';
-import UserLocation from './components/UserLocation';
-import { mapBoundaryHandler, mapLevelHandler } from './handlers/limit-handler';
+import mapLimitHandler from './handlers/limit-handler';
 
 declare global {
   interface Window {
@@ -18,14 +18,12 @@ declare global {
 }
 
 const Map = () => {
-  const { openModal, closeModal } = useModals();
   const [map, setMap] = useState(null);
   const [buildingTypes, setBuildingTypes] = useState<BuildingType[]>(['A']);
+  const { openModal, closeModal } = useModals();
+  const location = useUserLocation();
+  useLocationHandler(map, openModal, closeModal);
 
-  const PKNU_MAP_CENTER_LOCATION = new window.kakao.maps.LatLng(
-    PKNU_MAP_CENTER.LAT,
-    PKNU_MAP_CENTER.LNG,
-  );
   useEffect(() => {
     const container = document.getElementById('map');
     const options = {
@@ -35,36 +33,34 @@ const Map = () => {
     const map = new window.kakao.maps.Map(container as HTMLDivElement, options);
     setMap(map);
   }, []);
-  mapLevelHandler(map, PKNU_MAP_CENTER_LOCATION, openModal, closeModal);
-  mapBoundaryHandler(map, PKNU_MAP_CENTER_LOCATION, openModal, closeModal);
+  mapLimitHandler.levelHandler(map, openModal, closeModal);
+  mapLimitHandler.boundaryHandler(map, openModal, closeModal, location);
 
   return (
-    <div
-      css={css`
-        height: calc(100vh - 8vh);
-        display: flex;
-        flex-direction: column;
-      `}
-    >
+    <Container>
       <MapHeader map={map} />
       <KakaoMap id="map" />
-      <PknuBuildingNumbers map={map} buildingTypes={buildingTypes} />
-      <MapFooter>
-        <BuildingFilterButtons
-          buildingTypes={buildingTypes}
-          setBuildingTypes={setBuildingTypes}
-        />
-        <UserLocation map={map} />
-      </MapFooter>
-    </div>
+      <PknuBuildingNumbers
+        map={map}
+        buildingTypes={buildingTypes}
+        location={location}
+      />
+      <BuildingFilterButtons
+        map={map}
+        location={location}
+        buildingTypes={buildingTypes}
+        setBuildingTypes={setBuildingTypes}
+      />
+    </Container>
   );
 };
 
 export default Map;
 
-const MapFooter = styled.div`
-  height: 8vh;
+const Container = styled.section`
+  height: calc(100vh - 8vh);
   display: flex;
+  flex-direction: column;
 `;
 
 const KakaoMap = styled.div`

@@ -1,11 +1,11 @@
 import AlertModal from '@components/Modal/AlertModal';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
-import { PKNU_MAP_LIMIT } from '@constants/pknu-map';
+import { PKNU_MAP_CENTER_LOCATION, PKNU_MAP_LIMIT } from '@constants/pknu-map';
+import { Location } from '@type/map';
 import { ComponentProps, FunctionComponent } from 'react';
 
 type MapLimitHandler = (
   map: any,
-  centerLocation: any,
   openModal: (
     Component: FunctionComponent<any>,
     props: Omit<ComponentProps<any>, 'open'>,
@@ -13,12 +13,7 @@ type MapLimitHandler = (
   closeModal: (Component: FunctionComponent<any>) => void,
 ) => void;
 
-export const mapLevelHandler: MapLimitHandler = (
-  map,
-  centerLocation,
-  openModal,
-  closeModal,
-) => {
+const levelHandler: MapLimitHandler = (map, openModal, closeModal) => {
   if (!map) {
     return null;
   }
@@ -28,7 +23,7 @@ export const mapLevelHandler: MapLimitHandler = (
       return;
     }
     map.setLevel(PKNU_MAP_LIMIT.LEVEL);
-    map.setCenter(centerLocation);
+    map.setCenter(PKNU_MAP_CENTER_LOCATION);
     openModal(AlertModal, {
       message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
       buttonMessage: '닫기',
@@ -39,13 +34,16 @@ export const mapLevelHandler: MapLimitHandler = (
   return null;
 };
 
-export const mapBoundaryHandler: MapLimitHandler = (
-  map,
-  centerLocation,
-  openModal,
-  closeModal,
+const boundaryHandler = (
+  map: any,
+  openModal: (
+    Component: FunctionComponent<any>,
+    props: Omit<ComponentProps<any>, 'open'>,
+  ) => void,
+  closeModal: (Component: FunctionComponent<any>) => void,
+  location: Location | null,
 ) => {
-  if (!map) {
+  if (!map || !location) {
     return null;
   }
 
@@ -58,7 +56,7 @@ export const mapBoundaryHandler: MapLimitHandler = (
       La <= PKNU_MAP_LIMIT.LEFT
     ) {
       map.setLevel(4);
-      map.setCenter(centerLocation);
+      map.setCenter(PKNU_MAP_CENTER_LOCATION);
       openModal(AlertModal, {
         message: MODAL_MESSAGE.ALERT.OVER_MAP_BOUNDARY,
         buttonMessage: '닫기',
@@ -69,3 +67,10 @@ export const mapBoundaryHandler: MapLimitHandler = (
 
   window.kakao.maps.event.addListener(map, 'dragend', boundayLimitHandler);
 };
+
+const mapLimitHandler = {
+  levelHandler,
+  boundaryHandler,
+};
+
+export default mapLimitHandler;
