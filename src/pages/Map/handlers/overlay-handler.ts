@@ -43,7 +43,8 @@ class NumberOverlay {
       ? this.openModal(ConfirmModal, {
           message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
           onConfirmButtonClick: () => {
-            window.open(routeUrl, '_blank'), this.closeModal(ConfirmModal);
+            window.open(routeUrl, '_blank');
+            this.closeModal(ConfirmModal);
           },
           onCancelButtonClick: () => this.closeModal(ConfirmModal),
         })
@@ -54,7 +55,7 @@ class NumberOverlay {
         });
   }
 
-  private createOverlayContent(buildingType: BuildingType, index: number) {
+  private createOverlayContent(buildingType: BuildingType) {
     const content = document.createElement('span') as HTMLSpanElement;
     Object.assign(content.style, {
       backgroundColor: `${PKNU_BUILDINGS[buildingType].activeColor}`,
@@ -64,7 +65,6 @@ class NumberOverlay {
       fontSize: '10px',
       fontWeight: 'bold',
     });
-    content.classList.add(`${buildingType}-${index}`);
     const buildingNumber = document.createTextNode(
       this.PKNU_BUILDING.buildingNumber,
     );
@@ -74,8 +74,8 @@ class NumberOverlay {
     return content;
   }
 
-  createOverlay(buildingType: BuildingType, index: number) {
-    const overlayContent = this.createOverlayContent(buildingType, index);
+  createOverlay(buildingType: BuildingType) {
+    const overlayContent = this.createOverlayContent(buildingType);
     return new window.kakao.maps.CustomOverlay({
       position: new window.kakao.maps.LatLng(
         this.PKNU_BUILDING.latlng[0],
