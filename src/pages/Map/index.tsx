@@ -64,7 +64,8 @@ const Container = styled.section`
 `;
 
 const KakaoMap = styled.div`
-  height: 100%;
+  height: calc(100vh - 8vh - 90px);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   width: 100%;
-  border-radius: 15px;
 `;
