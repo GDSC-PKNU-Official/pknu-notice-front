@@ -5,14 +5,12 @@ import { SERVER_URL } from '@config/index';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { areaResize } from '@utils/styles/textarea-resize';
 import React, { useRef, useState } from 'react';
 
 import Modal from '..';
-import AlertModal from '../AlertModal';
-import ConfirmModal from '../ConfirmModal';
 
 interface SuggestionModalProps {
   title: string;
@@ -46,19 +44,19 @@ const SuggestionModal = ({
   const handleSuggestionPostModal = () => {
     postSuggestion();
     onClose();
-    closeModal(ConfirmModal);
-    openModal(AlertModal, {
+    closeModal(modals.confirm);
+    openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.SUCCEED.POST_SUGGESTION,
       buttonMessage: '확인',
-      onClose: () => closeModal(AlertModal),
+      onClose: () => closeModal(modals.alert),
     });
   };
 
   const handleSuggestionConfirmModal = () => {
-    openModal(ConfirmModal, {
+    openModal(modals.confirm, {
       message: MODAL_MESSAGE.CONFIRM.POST_SUGGESTION,
       onConfirmButtonClick: () => handleSuggestionPostModal(),
-      onCancelButtonClick: () => closeModal(ConfirmModal),
+      onCancelButtonClick: () => closeModal(modals.confirm),
     });
   };
 

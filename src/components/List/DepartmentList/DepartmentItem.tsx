@@ -1,14 +1,12 @@
 import http from '@apis/http';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
-import AlertModal from '@components/Modal/AlertModal';
-import ConfirmModal from '@components/Modal/ConfirmModal';
 import { SERVER_URL } from '@config/index';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -33,7 +31,7 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
 
   const routerToHome = () => {
-    closeModal(AlertModal);
+    closeModal(modals.alert);
     routerTo('/');
   };
   const handleMajorClick: React.MouseEventHandler<HTMLElement> = (e) => {
@@ -43,7 +41,7 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
   };
 
   const handlerMajorSetModal = () => {
-    closeModal(ConfirmModal);
+    closeModal(modals.confirm);
 
     const storedSubscribe = localStorage.getItem('subscribe');
     if (major && storedSubscribe) {
@@ -56,7 +54,7 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
     localStorage.setItem('major', afterSpace);
     setMajor(afterSpace);
 
-    openModal(AlertModal, {
+    openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
       buttonMessage: '홈으로 이동하기',
       onClose: () => routerToHome(),
@@ -64,10 +62,10 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
     });
   };
   const handleMajorConfirmModal = () => {
-    openModal(ConfirmModal, {
+    openModal<typeof modals.confirm>(modals.confirm, {
       message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
       onConfirmButtonClick: () => handlerMajorSetModal(),
-      onCancelButtonClick: () => closeModal(ConfirmModal),
+      onCancelButtonClick: () => closeModal(modals.confirm),
     });
   };
 

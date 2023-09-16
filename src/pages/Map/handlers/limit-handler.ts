@@ -1,16 +1,12 @@
-import AlertModal from '@components/Modal/AlertModal';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_MAP_CENTER_LOCATION, PKNU_MAP_LIMIT } from '@constants/pknu-map';
+import { CloseModal, OpenModal, modals } from '@hooks/useModals';
 import { Location } from '@type/map';
-import { ComponentProps, FunctionComponent } from 'react';
 
 type MapLimitHandler = (
   map: any,
-  openModal: (
-    Component: FunctionComponent<any>,
-    props: Omit<ComponentProps<any>, 'open'>,
-  ) => void,
-  closeModal: (Component: FunctionComponent<any>) => void,
+  openModal: OpenModal,
+  closeModal: CloseModal,
 ) => void;
 
 const levelHandler: MapLimitHandler = (map, openModal, closeModal) => {
@@ -24,10 +20,10 @@ const levelHandler: MapLimitHandler = (map, openModal, closeModal) => {
     }
     map.setLevel(PKNU_MAP_LIMIT.LEVEL);
     map.setCenter(PKNU_MAP_CENTER_LOCATION);
-    openModal(AlertModal, {
+    openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
       buttonMessage: '닫기',
-      onClose: () => closeModal(AlertModal),
+      onClose: () => closeModal(modals.alert),
     });
   };
   window.kakao.maps.event.addListener(map, 'zoom_changed', levelLimitHandler);
@@ -36,11 +32,8 @@ const levelHandler: MapLimitHandler = (map, openModal, closeModal) => {
 
 const boundaryHandler = (
   map: any,
-  openModal: (
-    Component: FunctionComponent<any>,
-    props: Omit<ComponentProps<any>, 'open'>,
-  ) => void,
-  closeModal: (Component: FunctionComponent<any>) => void,
+  openModal: OpenModal,
+  closeModal: CloseModal,
   location: Location | null,
 ) => {
   if (!map || !location) {
@@ -57,10 +50,10 @@ const boundaryHandler = (
     ) {
       map.setLevel(4);
       map.setCenter(PKNU_MAP_CENTER_LOCATION);
-      openModal(AlertModal, {
+      openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.OVER_MAP_BOUNDARY,
         buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
+        onClose: () => closeModal(modals.alert),
       });
     }
   };
