@@ -1,14 +1,15 @@
-import useModals from '@hooks/useModals';
-import React from 'react';
+import ModalContext from '@contexts/modals';
+import React, { Fragment, useContext } from 'react';
 
 const Modals = () => {
-  const { modals } = useModals();
+  const modals = useContext(ModalContext.ModalState);
 
   return (
     <>
-      {modals.map(({ Component, props }, idx) => {
-        return <Component key={idx} {...props} />;
-      })}
+      {modals &&
+        modals.map(({ Component, props }, idx) => {
+          return <Component key={idx} {...(props as any)} />;
+        })}
     </>
   );
 };
