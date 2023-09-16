@@ -56,7 +56,7 @@ const Announcement = () => {
 
   return (
     <Container>
-      <div
+      <ButtonContainer
         css={css`
           width: 100%;
           display: flex;
@@ -67,6 +67,8 @@ const Announcement = () => {
         <Button
           onClick={() => routerTo('')}
           css={css`
+            margin: 0px;
+            height: 55px;
             border-radius: 0px;
             background-color: ${THEME.TEXT.WHITE};
             color: ${isKeywordUndefined() ? THEME.PRIMARY : THEME.TEXT.BLACK};
@@ -77,6 +79,8 @@ const Announcement = () => {
         <Button
           onClick={() => handleMajorAnnouncements()}
           css={css`
+            margin: 0px;
+            height: 55px;
             border-radius: 0px;
             background-color: ${THEME.TEXT.WHITE};
             color: ${isKeywordUndefined() ? THEME.TEXT.BLACK : THEME.PRIMARY};
@@ -84,8 +88,8 @@ const Announcement = () => {
         >
           학과 공지사항
         </Button>
-        <BottomBar getAnimationType={getAnimationType} />
-      </div>
+        <ButtonBottomBar getAnimationType={getAnimationType} />
+      </ButtonContainer>
       <AnnounceContainer getAnimationType={getAnimationType}>
         <Suspense fallback={<AnnounceCardSkeleton length={30} />}>
           <AnnounceList
@@ -105,7 +109,14 @@ const Container = styled.div`
   overflow-x: hidden;
 `;
 
-const BottomBar = styled.span<{ getAnimationType: GetAnimationType }>`
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  position: relative;
+  overflow-x: none;
+`;
+
+const ButtonBottomBar = styled.span<{ getAnimationType: GetAnimationType }>`
   position: absolute;
   bottom: 0;
   left: 0;
