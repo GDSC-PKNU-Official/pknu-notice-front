@@ -18,6 +18,7 @@ const FooterTab = () => {
     <Footer>
       {footerTabs.map(({ kind, label, path }) => (
         <TabButton
+          role="button"
           key={kind}
           onClick={() => routerTo(path)}
           active={isUserInPath(path)}
