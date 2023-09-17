@@ -2,7 +2,7 @@ import fetchAnnounceList from '@apis/Suspense/fetch-announce-list';
 import Button from '@components/Button';
 import AnnounceList from '@components/Card/AnnounceCard/AnnounceList';
 import AnnounceCardSkeleton from '@components/Card/AnnounceCard/Skeleton';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
@@ -37,7 +37,7 @@ const Announcement = () => {
     if (!major) {
       openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-        buttonMessage: '전공선택하러 가기',
+        buttonMessage: MODAL_BUTTON_MESSAGE.SET_MAJOR,
         iconKind: 'plus',
         onClose: () => closeModal(modals.alert),
         routerTo: () => {

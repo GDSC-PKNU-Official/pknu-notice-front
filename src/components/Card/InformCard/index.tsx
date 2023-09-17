@@ -1,15 +1,12 @@
 import Icon from '@components/Icon';
-import AlertModal from '@components/Modal/AlertModal';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
-
-// TODO: InformCard 컴포넌트 Props 및 로직 수정
 
 interface InformCardProps {
   icon: IconKind & ('school' | 'notification');
@@ -34,13 +31,13 @@ const InformCard = ({
       onClick();
       return;
     }
-    openModal(AlertModal, {
+    openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-      buttonMessage: '전공선택하러 가기',
+      buttonMessage: MODAL_BUTTON_MESSAGE.SET_MAJOR,
       iconKind: 'plus',
-      onClose: () => closeModal(AlertModal),
+      onClose: () => closeModal(modals.alert),
       routerTo: () => {
-        closeModal(AlertModal);
+        closeModal(modals.alert);
         routerToMajorDecision();
       },
     });
@@ -91,33 +88,31 @@ export default InformCard;
 
 const Card = styled.div`
   display: flex;
-  flexdirection: row;
+  flex-direction: row;
   padding: 3% 1% 2% 0;
-
-  color: THEME.TEXT.GRAY;
-
+  color: ${THEME.TEXT.GRAY};
   height: 70px;
 
-  & > svg: {
+  & > svg {
     margin: 10px 0;
   }
   cursor: pointer;
 
   transition: all 0.2s ease-in-out;
 
-  &: active {
+  &:active {
     transform: scale(0.95);
     opacity: 0.6;
   }
 `;
 
 const Wrapper = styled.div`
-  &: first-of-type {
+  &:first-of-type {
     display: flex;
     align-items: center;
   }
 
-  &: nth-of-type(2) {
+  &:nth-of-type(2) {
     display: flex;
     flex-direction: column;
     padding: 4% 0 3% 3%;

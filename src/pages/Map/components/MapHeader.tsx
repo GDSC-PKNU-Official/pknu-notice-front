@@ -1,9 +1,9 @@
 import Icon from '@components/Icon';
-import AlertModal from '@components/Modal/AlertModal';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location, PKNUBuilding } from '@type/map';
@@ -52,18 +52,18 @@ const MapHeader = ({ map }: MapHeaderProps) => {
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputRef.current || inputRef.current.value.length < 1) {
-      return openModal(AlertModal, {
-        message: '검색어를 입력해주세요!',
-        buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.NO_SEARCH_KEYWORD,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
       });
     }
     const searchResult = searchBuildingInfo(inputRef.current?.value);
     if (searchResult === -1) {
-      return openModal(AlertModal, {
-        message: '찾으시는 건물이 존재하지 않아요! 검색어를 다시 확인해주세요.',
-        buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.SEARCH_FAILED,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
       });
     }
     const [buildingType, index] = searchResult;

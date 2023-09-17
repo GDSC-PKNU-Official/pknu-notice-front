@@ -3,6 +3,7 @@ import Button from '@components/Button';
 import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
 import { SERVER_URL } from '@config/index';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
@@ -23,18 +24,18 @@ const My = () => {
 
   const handleSuggestionModal = () => {
     openModal<typeof modals.suggestion>(modals.suggestion, {
-      title: '건의사항',
-      buttonMessage: '보내기',
+      title: MODAL_MESSAGE.SUGGESTION_TITLE,
+      buttonMessage: MODAL_BUTTON_MESSAGE.SEND_SUGGESTION,
       onClose: () => closeModal(modals.suggestion),
     });
   };
 
   const handleSubscribeTopic: MouseEventHandler<HTMLElement> = async () => {
-    if (!animation) setAnimation(true); // 토글 버튼 클릭 애니메이션을 위해 사용
+    if (!animation) setAnimation(true);
 
     if (subscribe) {
       openModal<typeof modals.confirm>(modals.confirm, {
-        message: '알림을 그만 받을까요?',
+        message: MODAL_MESSAGE.CONFIRM.ALARM,
         onConfirmButtonClick: async () => {
           await http.delete(`${SERVER_URL}/api/subscription/major`, {
             data: { subscription: subscribe, major },
@@ -53,8 +54,8 @@ const My = () => {
     if (!('serviceWorker' in navigator)) return;
     if (!major) {
       openModal<typeof modals.alert>(modals.alert, {
-        message: '학과를 선택해주세요',
-        buttonMessage: '확인',
+        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
         onClose: () => closeModal(modals.alert),
         routerTo: () => {
           closeModal(modals.alert);

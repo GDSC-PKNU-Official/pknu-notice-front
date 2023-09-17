@@ -1,18 +1,16 @@
-import AlertModal from '@components/Modal/AlertModal';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { NO_PROVIDE_LOCATION } from '@constants/pknu-map';
 import isUserInSchool from '@pages/Map/handlers/distance-handler';
 import { Location } from '@type/map';
-import { ComponentProps, FunctionComponent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { CloseModal, OpenModal, modals } from './useModals';
 import useUserLocation from './useUserLocation';
 
 type UserLocationHandler = (
   map: any,
-  openModal: (
-    Component: FunctionComponent<any>,
-    props: Omit<ComponentProps<any>, 'open'>,
-  ) => void,
-  closeModal: (Component: FunctionComponent<any>) => void,
+  openModal: OpenModal,
+  closeModal: CloseModal,
 ) => void;
 
 const hasLocationPermission = (location: Location | null) => {
@@ -46,28 +44,27 @@ const useLocationHandler: UserLocationHandler = (
   useEffect(() => {
     if (!map) return;
     if (!location) {
-      return openModal(AlertModal, {
-        message: '위치 정보를 가져오는 중입니다...',
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.GET_LOCATION,
       });
     }
-    closeModal(AlertModal);
+    closeModal(modals.alert);
 
     if (!hasLocationPermission(location)) {
-      return openModal(AlertModal, {
-        message:
-          '위치정보를 제공하지 않아 \n길찾기 기능을 이용하실 수 없습니다.',
-        buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.NO_LOCATION_PERMISSON,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
       });
     }
 
     location && getUserRoadAddress();
     if (location && !isUserInSchool(location.LAT, location.LNG)) {
       if (roadAddress) {
-        return openModal(AlertModal, {
-          message: `학교 외부에 있어요!\n 길찾기 기능을 이용해주세요.\n 현재주소 : ${roadAddress}`,
-          buttonMessage: '닫기',
-          onClose: () => closeModal(AlertModal),
+        return openModal<typeof modals.alert>(modals.alert, {
+          message: `${MODAL_MESSAGE.ALERT.OUTSIDE_SCHOOL} : ${roadAddress}`,
+          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+          onClose: () => closeModal(modals.alert),
         });
       }
     }

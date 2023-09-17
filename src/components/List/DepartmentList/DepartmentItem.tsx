@@ -2,7 +2,7 @@ import http from '@apis/http';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { SERVER_URL } from '@config/index';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
@@ -56,7 +56,7 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
 
     openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
-      buttonMessage: '홈으로 이동하기',
+      buttonMessage: MODAL_BUTTON_MESSAGE.GO_HOME,
       onClose: () => routerToHome(),
       routerTo: () => routerToHome(),
     });

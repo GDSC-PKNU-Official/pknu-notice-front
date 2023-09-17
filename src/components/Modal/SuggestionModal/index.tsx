@@ -2,7 +2,7 @@ import http from '@apis/http';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { SERVER_URL } from '@config/index';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useModals, { modals } from '@hooks/useModals';
@@ -47,7 +47,7 @@ const SuggestionModal = ({
     closeModal(modals.confirm);
     openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.SUCCEED.POST_SUGGESTION,
-      buttonMessage: '확인',
+      buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
       onClose: () => closeModal(modals.alert),
     });
   };

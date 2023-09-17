@@ -1,4 +1,4 @@
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_MAP_CENTER_LOCATION, PKNU_MAP_LIMIT } from '@constants/pknu-map';
 import { CloseModal, OpenModal, modals } from '@hooks/useModals';
 import { Location } from '@type/map';
@@ -22,7 +22,7 @@ const levelHandler: MapLimitHandler = (map, openModal, closeModal) => {
     map.setCenter(PKNU_MAP_CENTER_LOCATION);
     openModal<typeof modals.alert>(modals.alert, {
       message: MODAL_MESSAGE.ALERT.OVER_MAP_LEVEL,
-      buttonMessage: '닫기',
+      buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
       onClose: () => closeModal(modals.alert),
     });
   };
@@ -52,7 +52,7 @@ const boundaryHandler = (
       map.setCenter(PKNU_MAP_CENTER_LOCATION);
       openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.OVER_MAP_BOUNDARY,
-        buttonMessage: '닫기',
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
         onClose: () => closeModal(modals.alert),
       });
     }

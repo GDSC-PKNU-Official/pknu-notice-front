@@ -1,3 +1,4 @@
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { NO_PROVIDE_LOCATION, PKNU_BUILDINGS } from '@constants/pknu-map';
 import { CloseModal, OpenModal, modals } from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -41,8 +42,8 @@ class NumberOverlay {
           onCancelButtonClick: () => this.closeModal(modals.confirm),
         })
       : this.openModal<typeof modals.alert>(modals.alert, {
-          message: '위치정보를 제공하지 않아 길찾기 기능을 사용할 수 없어요!',
-          buttonMessage: '닫기',
+          message: MODAL_MESSAGE.ALERT.NO_LOCATION_PERMISSON,
+          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
           onClose: () => this.closeModal(modals.alert),
         });
   }
