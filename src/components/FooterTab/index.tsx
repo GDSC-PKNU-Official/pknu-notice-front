@@ -2,69 +2,69 @@ import Icon from '@components/Icon';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { IconKind } from '@type/styles/icon';
 
-const footerIcons = [
-  { kind: 'map', path: '/map' },
-  { kind: 'home', path: '/' },
-  { kind: 'accountCircle', path: '/my' },
+const footerTabs = [
+  { kind: 'map', label: '지도', path: '/map' },
+  { kind: 'home', label: '홈', path: '/' },
+  { kind: 'accountCircle', label: '마이', path: '/my' },
 ] as const;
 
 const FooterTab = () => {
   const { routerTo } = useRouter();
 
-  const handleIconClick = (kind: IconKind, path: string) => {
-    routerTo(path);
-  };
+  const isUserInPath = (path: string) => window.location.pathname === path;
 
   return (
     <Footer>
-      {footerIcons.map(({ kind, path }) => (
-        <IconContainer
-          key={kind}
+      {footerTabs.map(({ kind, label, path }) => (
+        <TabButton
           role="button"
-          onClick={() => handleIconClick(kind, path)}
+          key={kind}
+          onClick={() => routerTo(path)}
+          active={isUserInPath(path)}
         >
-          <Icon
-            key={kind}
-            kind={kind}
-            color={
-              window.location.pathname === path
-                ? THEME.PRIMARY
-                : THEME.TEXT.BLACK
-            }
-          />
-        </IconContainer>
+          <Icon kind={kind} size="24" />
+          <Label active={isUserInPath(path)}>{label}</Label>
+        </TabButton>
       ))}
     </Footer>
   );
 };
 
 const Footer = styled.div`
-  // Footer 스타일 컴포넌트 수정
-  max-width: 480px;
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 100%;
-
-  height: 8vh;
-
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 2;
-  background-color: ${THEME.TEXT.WHITE};
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-`;
 
-const IconContainer = styled.div`
+  max-width: 480px;
   width: 100%;
-  text-align: center;
-  &:hover {
-    cursor: pointer;
-  }
+  height: 60px;
+  padding: 15px 0px 15px 0px;
+  background-color: ${THEME.TEXT.WHITE};
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+
+  box-shadow: 0px -2px 6px rgba(99, 99, 99, 0.2);
 `;
 
+const TabButton = styled.div<{ active: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 100%;
+
+  transition: color 0.3s ease;
+  color: ${({ active }) => (active ? THEME.PRIMARY : THEME.TEXT.BLACK)};
+`;
+
+const Label = styled.span<{ active: boolean }>`
+  margin-top: 4px;
+  font-size: 12px;
+
+  opacity: ${({ active }) => (active ? 1 : 0.6)};
+  transition: opacity 0.2s ease;
+`;
 export default FooterTab;

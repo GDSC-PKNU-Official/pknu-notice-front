@@ -111,7 +111,7 @@ const ListWrapper = styled.div`
 
 const ButtonContainer = styled.div`
   position: fixed;
-  bottom: 4%;
+  bottom: 8%;
   z-index: 3;
   width: 80%;
   max-width: 480px;
