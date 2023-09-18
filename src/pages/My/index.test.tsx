@@ -1,7 +1,6 @@
 import MajorProvider from '@components/MajorProvider';
-import SuggestionModal from '@components/Modal/SuggestionModal';
 import ModalsProvider from '@components/ModalsProvider';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
@@ -17,13 +16,15 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('@hooks/useModals', () => {
   const modalsMock = {
-    modals: [],
     openModal: jest.fn(),
     closeModal: jest.fn(),
   };
+  const modalsActual = jest.requireActual('@hooks/useModals');
+
   return {
-    __esModule: true,
+    ...modalsActual,
     default: () => modalsMock,
+    modals: modalsActual.modals,
   };
 });
 
@@ -45,7 +46,7 @@ describe('마이 페이지 동작 테스트', () => {
       await userEvent.click(modalButton);
     });
 
-    expect(useModals().openModal).toHaveBeenCalledWith(SuggestionModal, {
+    expect(useModals().openModal).toHaveBeenCalledWith(modals.suggestion, {
       title: '건의사항',
       buttonMessage: '보내기',
       onClose: expect.any(Function),

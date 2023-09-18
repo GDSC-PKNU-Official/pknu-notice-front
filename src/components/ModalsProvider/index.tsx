@@ -9,9 +9,11 @@ interface ModalsProviderProps {
 const ModalsProvider = ({ children }: ModalsProviderProps) => {
   const [modals, setModals] = useState<Modals>([]);
   return (
-    <ModalsContext.Provider value={{ modals, setModals }}>
-      {children}
-    </ModalsContext.Provider>
+    <ModalsContext.ModalState.Provider value={modals}>
+      <ModalsContext.ModalDispatch.Provider value={setModals}>
+        {children}
+      </ModalsContext.ModalDispatch.Provider>
+    </ModalsContext.ModalState.Provider>
   );
 };
 

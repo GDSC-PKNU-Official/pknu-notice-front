@@ -2,12 +2,11 @@ import fetchAnnounceList from '@apis/Suspense/fetch-announce-list';
 import Button from '@components/Button';
 import AnnounceList from '@components/Card/AnnounceCard/AnnounceList';
 import AnnounceCardSkeleton from '@components/Card/AnnounceCard/Skeleton';
-import AlertModal from '@components/Modal/AlertModal';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { Suspense, useState } from 'react';
@@ -36,17 +35,16 @@ const Announcement = () => {
 
   const handleMajorAnnouncements = () => {
     if (!major) {
-      openModal(AlertModal, {
+      openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-        buttonMessage: '전공선택하러 가기',
+        buttonMessage: MODAL_BUTTON_MESSAGE.SET_MAJOR,
         iconKind: 'plus',
-        onClose: () => closeModal(AlertModal),
+        onClose: () => closeModal(modals.alert),
         routerTo: () => {
-          closeModal(AlertModal);
+          closeModal(modals.alert);
           routerToMajorDecision();
         },
       });
-      return;
     }
     if (!activeAnimation) {
       setActiveAnimation((prev) => !prev);

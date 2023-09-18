@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
+import { modals } from '@hooks/useModals';
 
 export type Modals =
   | Array<{
-      Component: FunctionComponent<any>;
+      Component: (typeof modals)[keyof typeof modals];
       props: object;
     }>
   | [];

@@ -2,15 +2,13 @@ import http from '@apis/http';
 import Button from '@components/Button';
 import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
-import AlertModal from '@components/Modal/AlertModal';
-import ConfirmModal from '@components/Modal/ConfirmModal';
-import SuggestionModal from '@components/Modal/SuggestionModal';
 import { SERVER_URL } from '@config/index';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
 import useMajor from '@hooks/useMajor';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { MouseEventHandler, useEffect, useState } from 'react';
@@ -18,36 +16,36 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 const My = () => {
   const [subscribe, setSubscribe] = useState<PushSubscription | null>(null);
   const [animation, setAnimation] = useState(false);
-
   const { major } = useMajor();
   const { routerTo } = useRouter();
-  const routerToMajorDecision = () => routerTo('/major-decision');
   const { openModal, closeModal } = useModals();
 
+  const routerToMajorDecision = () => routerTo('/major-decision');
+
   const handleSuggestionModal = () => {
-    openModal(SuggestionModal, {
-      title: '건의사항',
-      buttonMessage: '보내기',
-      onClose: () => closeModal(SuggestionModal),
+    openModal<typeof modals.suggestion>(modals.suggestion, {
+      title: MODAL_MESSAGE.SUGGESTION_TITLE,
+      buttonMessage: MODAL_BUTTON_MESSAGE.SEND_SUGGESTION,
+      onClose: () => closeModal(modals.suggestion),
     });
   };
 
-  const subscribeTopic: MouseEventHandler<HTMLElement> = async () => {
-    if (!animation) setAnimation(true); // 토글 버튼 클릭 애니메이션을 위해 사용
+  const handleSubscribeTopic: MouseEventHandler<HTMLElement> = async () => {
+    if (!animation) setAnimation(true);
 
     if (subscribe) {
-      openModal(ConfirmModal, {
-        message: '알림을 그만 받을까요?',
+      openModal<typeof modals.confirm>(modals.confirm, {
+        message: MODAL_MESSAGE.CONFIRM.ALARM,
         onConfirmButtonClick: async () => {
           await http.delete(`${SERVER_URL}/api/subscription/major`, {
             data: { subscription: subscribe, major },
           });
           setSubscribe(null);
-          closeModal(ConfirmModal);
+          closeModal(modals.confirm);
           localStorage.removeItem('subscribe');
         },
         onCancelButtonClick: () => {
-          closeModal(ConfirmModal);
+          closeModal(modals.confirm);
         },
       });
       return;
@@ -55,12 +53,12 @@ const My = () => {
 
     if (!('serviceWorker' in navigator)) return;
     if (!major) {
-      openModal(AlertModal, {
-        message: '학과를 선택해주세요',
-        buttonMessage: '확인',
-        onClose: () => closeModal(AlertModal),
+      openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
+        onClose: () => closeModal(modals.alert),
         routerTo: () => {
-          closeModal(AlertModal);
+          closeModal(modals.alert);
           routerToMajorDecision();
         },
       });
@@ -128,7 +126,7 @@ const My = () => {
             <span>학과 공지사항 알림받기</span>
             <ToggleButton
               isOn={Boolean(subscribe)}
-              changeState={subscribeTopic}
+              changeState={handleSubscribeTopic}
               animation={animation}
             />
           </CardList>
