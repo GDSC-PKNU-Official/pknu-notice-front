@@ -1,6 +1,7 @@
 import http from '@apis/http';
 import { SERVER_URL } from '@config/index';
 import styled from '@emotion/styled';
+import { THEME } from '@styles/ThemeProvider/theme';
 import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -49,7 +50,9 @@ const Carousel = () => {
               <SliderWrapper>
                 <img src={data.imgUrl} width="100%" height={200} />
               </SliderWrapper>
-              {data.title}
+              <Title>{data.title}</Title>
+              <Date>모집기간: ~{data.date}</Date>
+              <Button>자세히보기</Button>
             </div>
           ))}
       </Slider>
@@ -71,4 +74,27 @@ const CarouselContainer = styled.div`
 const SliderWrapper = styled.div`
   overflow: hidden;
   padding-bottom: 10px;
+`;
+
+const Title = styled.div`
+  font-weight: bold;
+`;
+
+const Date = styled.div`
+  color: ${THEME.TEXT.GRAY};
+  margin-top: 2rem;
+`;
+
+const Button = styled.button`
+  border: 1px solid ${THEME.PRIMARY};
+  color: ${THEME.PRIMARY};
+  background: none;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+
+  &: hover {
+    cursor: pointer;
+  }
 `;
