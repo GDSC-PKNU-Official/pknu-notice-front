@@ -107,6 +107,16 @@ const ListWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
   border-bottom: 1px solid ${THEME.BUTTON.GRAY};
+
+  transition: 0.3s;
+  &:active {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+
+  &: hover {
+    cursor: pointer;
+  }
 `;
 
 const ButtonContainer = styled.div`
