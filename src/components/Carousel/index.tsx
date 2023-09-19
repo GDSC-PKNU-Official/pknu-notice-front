@@ -18,7 +18,7 @@ const Carousel = () => {
 
   const fetchData = async () => {
     const res = await http.get<WhalebeData[]>(
-      `${SERVER_URL}/api/subscription/whalebe`,
+      `${SERVER_URL}/api/announcement/whalebe`,
     );
     setCarouselData(res.data);
   };
