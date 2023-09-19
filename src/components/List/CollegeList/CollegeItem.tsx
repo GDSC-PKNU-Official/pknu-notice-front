@@ -48,4 +48,14 @@ const ListWrapper = styled.div`
   margin: 0 auto;
   padding: 8% 4% 8% 4%;
   border-bottom: 1px solid ${THEME.BUTTON.GRAY};
+
+  transition: 0.3s;
+  &:active {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+
+  &: hover {
+    cursor: pointer;
+  }
 `;

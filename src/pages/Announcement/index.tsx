@@ -2,95 +2,79 @@ import fetchAnnounceList from '@apis/Suspense/fetch-announce-list';
 import Button from '@components/Button';
 import AnnounceList from '@components/Card/AnnounceCard/AnnounceList';
 import AnnounceCardSkeleton from '@components/Card/AnnounceCard/Skeleton';
-import AlertModal from '@components/Modal/AlertModal';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { Suspense, useState } from 'react';
-
-type AnimationType = 'bottomBar' | 'announce';
-type GetAnimationType = (type: AnimationType) => string;
+import { Suspense } from 'react';
 
 const Announcement = () => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
   const { openModal, closeModal } = useModals();
-  const [activeAnimation, setActiveAnimation] = useState<boolean>(false);
-
-  const routerToMajorDecision = () => routerTo('/major-decision');
 
   const announceKeyword = decodeURI(window.location.pathname.split('/')[2]);
-  const isKeywordUndefined = () => announceKeyword === 'undefined';
+  const isActiveSchoolAnnouncement = () => announceKeyword === 'undefined';
 
-  const getAnimationType: GetAnimationType = (type) => {
-    if (!activeAnimation) return 'none';
-    if (type === 'bottomBar') {
-      return !isKeywordUndefined() ? BottomBarSlideRight : BottomBarSlideLeft;
-    }
-    return !isKeywordUndefined() ? AnnounceSlideRight : AnnounceSlideLeft;
-  };
-
-  const handleMajorAnnouncements = () => {
+  const routerToMajorDecision = () => routerTo('/major-decision');
+  const routerToSchoolAnnouncement = () => routerTo('');
+  const routerToMajorAnnouncement = () => {
     if (!major) {
-      openModal(AlertModal, {
+      openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-        buttonMessage: '전공선택하러 가기',
+        buttonMessage: MODAL_BUTTON_MESSAGE.SET_MAJOR,
         iconKind: 'plus',
-        onClose: () => closeModal(AlertModal),
+        onClose: () => closeModal(modals.alert),
         routerTo: () => {
-          closeModal(AlertModal);
+          closeModal(modals.alert);
           routerToMajorDecision();
         },
       });
-      return;
-    }
-    if (!activeAnimation) {
-      setActiveAnimation((prev) => !prev);
     }
     routerTo(`${major}`);
   };
 
   return (
     <Container>
-      <div
-        css={css`
-          width: 100%;
-          display: flex;
-          position: relative;
-          overflow-x: none;
-        `}
-      >
+      <ButtonContainer>
         <Button
-          onClick={() => routerTo('')}
+          onClick={routerToSchoolAnnouncement}
           css={css`
+            margin: 0px;
+            height: 55px;
             border-radius: 0px;
             background-color: ${THEME.TEXT.WHITE};
-            color: ${isKeywordUndefined() ? THEME.PRIMARY : THEME.TEXT.BLACK};
+            color: ${isActiveSchoolAnnouncement()
+              ? THEME.PRIMARY
+              : THEME.TEXT.BLACK};
           `}
         >
           학교 공지사항
         </Button>
         <Button
-          onClick={() => handleMajorAnnouncements()}
+          onClick={() => routerToMajorAnnouncement()}
           css={css`
+            margin: 0px;
+            height: 55px;
             border-radius: 0px;
             background-color: ${THEME.TEXT.WHITE};
-            color: ${isKeywordUndefined() ? THEME.TEXT.BLACK : THEME.PRIMARY};
+            color: ${isActiveSchoolAnnouncement()
+              ? THEME.TEXT.BLACK
+              : THEME.PRIMARY};
           `}
         >
           학과 공지사항
         </Button>
-        <BottomBar getAnimationType={getAnimationType} />
-      </div>
-      <AnnounceContainer getAnimationType={getAnimationType}>
+        <ButtonBottomBar isActiveSchool={isActiveSchoolAnnouncement()} />
+      </ButtonContainer>
+      <AnnounceContainer isActiveSchool={isActiveSchoolAnnouncement()}>
         <Suspense fallback={<AnnounceCardSkeleton length={30} />}>
           <AnnounceList
             resource={fetchAnnounceList(
-              announceKeyword !== 'undefined' ? announceKeyword : '',
+              isActiveSchoolAnnouncement() ? '' : announceKeyword,
             )}
           />
         </Suspense>
@@ -105,40 +89,32 @@ const Container = styled.div`
   overflow-x: hidden;
 `;
 
-const BottomBar = styled.span<{ getAnimationType: GetAnimationType }>`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50%;
-  height: 3px;
-  background-color: ${THEME.PRIMARY};
-  animation: ${({ getAnimationType }) => getAnimationType('bottomBar')} 0.3s
-    forwards;
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  position: relative;
+  overflow-x: none;
 `;
 
-const AnnounceContainer = styled.div<{ getAnimationType: GetAnimationType }>`
+const ButtonBottomBar = styled.span<{ isActiveSchool: boolean }>`
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: ${({ isActiveSchool }) => (isActiveSchool ? '0' : '50%')};
+    width: 50%;
+    height: 3px;
+    background-color: ${THEME.PRIMARY};
+    transition: left 0.3s ease-in-out;
+  }
+`;
+
+const AnnounceContainer = styled.div<{ isActiveSchool: boolean }>`
   width: 100%;
   overflow: hidden;
-  animation: ${({ getAnimationType }) => getAnimationType('announce')} 0.3s
-    forwards;
-`;
-
-const BottomBarSlideRight = keyframes`
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
-`;
-
-const BottomBarSlideLeft = keyframes`
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0%);
-  }
+  animation: ${({ isActiveSchool }) =>
+      isActiveSchool ? AnnounceSlideLeft : AnnounceSlideRight}
+    0.3s forwards;
 `;
 
 const AnnounceSlideRight = keyframes`

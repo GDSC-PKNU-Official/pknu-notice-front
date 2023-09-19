@@ -60,13 +60,16 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('@hooks/useModals', () => {
   const modalsMock = {
-    modals: [],
     openModal: jest.fn(),
     closeModal: jest.fn(),
   };
+
+  const modalActuals = jest.requireActual('@hooks/useModals');
+
   return {
-    __esModule: true,
+    ...modalActuals,
     default: () => modalsMock,
+    modals: modalActuals.modals,
   };
 });
 

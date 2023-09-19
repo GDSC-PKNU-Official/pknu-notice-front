@@ -1,26 +1,19 @@
-import AlertModal from '@components/Modal/AlertModal';
-import ConfirmModal from '@components/Modal/ConfirmModal';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { NO_PROVIDE_LOCATION, PKNU_BUILDINGS } from '@constants/pknu-map';
+import { CloseModal, OpenModal, modals } from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location, PKNUBuilding } from '@type/map';
-import { ComponentProps, FunctionComponent } from 'react';
 
 class NumberOverlay {
   private PKNU_BUILDING: PKNUBuilding;
-  private openModal: (
-    Component: FunctionComponent<any>,
-    props: Omit<ComponentProps<any>, 'open'>,
-  ) => void;
-  private closeModal: (Component: FunctionComponent<any>) => void;
+  private openModal: OpenModal;
+  private closeModal: CloseModal;
   private userLocation: Location | null;
 
   constructor(
     PKNU_BUILDING: PKNUBuilding,
-    openModal: (
-      Component: FunctionComponent<any>,
-      props: Omit<ComponentProps<any>, 'open'>,
-    ) => void,
-    closeModal: (Component: FunctionComponent<any>) => void,
+    openModal: OpenModal,
+    closeModal: CloseModal,
     userLocation: Location | null,
   ) {
     this.PKNU_BUILDING = PKNU_BUILDING;
@@ -40,18 +33,18 @@ class NumberOverlay {
       : `https://map.kakao.com/link/from/내위치,${this.userLocation.LAT},${this.userLocation.LNG}/to/${buildingName},${lat},${lng}`;
 
     JSON.stringify(this.userLocation) !== JSON.stringify(NO_PROVIDE_LOCATION)
-      ? this.openModal(ConfirmModal, {
+      ? this.openModal<typeof modals.confirm>(modals.confirm, {
           message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
           onConfirmButtonClick: () => {
             window.open(routeUrl, '_blank');
-            this.closeModal(ConfirmModal);
+            this.closeModal(modals.confirm);
           },
-          onCancelButtonClick: () => this.closeModal(ConfirmModal),
+          onCancelButtonClick: () => this.closeModal(modals.confirm),
         })
-      : this.openModal(AlertModal, {
-          message: '위치정보를 제공하지 않아 길찾기 기능을 사용할 수 없어요!',
-          buttonMessage: '닫기',
-          onClose: () => this.closeModal(AlertModal),
+      : this.openModal<typeof modals.alert>(modals.alert, {
+          message: MODAL_MESSAGE.ALERT.NO_LOCATION_PERMISSON,
+          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+          onClose: () => this.closeModal(modals.alert),
         });
   }
 

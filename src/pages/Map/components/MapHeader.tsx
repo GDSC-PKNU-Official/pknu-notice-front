@@ -1,9 +1,9 @@
 import Icon from '@components/Icon';
-import AlertModal from '@components/Modal/AlertModal';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useModals from '@hooks/useModals';
+import useModals, { modals } from '@hooks/useModals';
 import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location, PKNUBuilding } from '@type/map';
@@ -52,18 +52,18 @@ const MapHeader = ({ map }: MapHeaderProps) => {
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputRef.current || inputRef.current.value.length < 1) {
-      return openModal(AlertModal, {
-        message: '검색어를 입력해주세요!',
-        buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.NO_SEARCH_KEYWORD,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
       });
     }
     const searchResult = searchBuildingInfo(inputRef.current?.value);
     if (searchResult === -1) {
-      return openModal(AlertModal, {
-        message: '찾으시는 건물이 존재하지 않아요! 검색어를 다시 확인해주세요.',
-        buttonMessage: '닫기',
-        onClose: () => closeModal(AlertModal),
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.SEARCH_FAILED,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
       });
     }
     const [buildingType, index] = searchResult;
@@ -98,14 +98,10 @@ const MapHeader = ({ map }: MapHeaderProps) => {
           type="text"
           placeholder="건물번호 또는 건물이름을 검색해주세요"
         />
-        <button
-          css={css`
-            background-color: transparent;
-          `}
-          onClick={() => searchHandler}
-        >
-          <Icon kind="search" color={THEME.PRIMARY} />
-        </button>
+        <StyledButton onClick={() => searchHandler}>
+          <Icon kind="search" size="24" color={THEME.TEXT.WHITE} />
+          <StyledText>Search</StyledText>
+        </StyledButton>
       </StyledForm>
     </HeaderContainer>
   );
@@ -114,36 +110,59 @@ const MapHeader = ({ map }: MapHeaderProps) => {
 export default memo(MapHeader);
 
 const HeaderContainer = styled.div`
-  height: 8vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  z-index: 3;
 `;
 
 const StyledForm = styled.form`
   width: 100%;
-
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 `;
 
 const StyledInput = styled.input`
-  border: 0;
-  border-bottom: 2px solid ${THEME.TEXT.GRAY};
-  background-color: transparent;
-  border-radius: 0px;
+  -webkit-appearance: none;
+  appearance: none;
 
+  width: 75%;
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  background-color: ${THEME.TEXT.WHITE};
   font-size: 14px;
-  width: 60%;
+  text-indent: 5px;
 
   &::placeholder {
     color: ${THEME.TEXT.GRAY};
     font-size: 14px;
+    font-weight: bold;
   }
-
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   &:focus {
-    border-bottom: 2px solid ${THEME.PRIMARY};
     outline: none;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
   }
+`;
+
+const StyledButton = styled.button`
+  background-color: ${THEME.PRIMARY};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  height: 42px;
+  width: 42px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+`;
+
+const StyledText = styled.span`
+  font-size: 10px;
+  color: ${THEME.TEXT.WHITE};
 `;

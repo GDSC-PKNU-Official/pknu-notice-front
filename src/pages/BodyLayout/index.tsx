@@ -13,7 +13,7 @@ const BodyLayout = () => {
 export default BodyLayout;
 
 const StyledBodyLayout = styled.div`
-  height: calc(100vh - 17vh);
-  padding: 8.5vh 0 8.5vh 0;
+  height: calc(100vh - 8vh - 90px);
+  padding: 8vh 0 8vh 0;
   overflow-y: scroll;
 `;

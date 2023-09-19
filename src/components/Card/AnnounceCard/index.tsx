@@ -64,6 +64,16 @@ const AnnounceTitle = styled.span<{ pinned: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  &: hover {
+    cursor: pointer;
+  }
+
+  transition: 0.3s;
+  &:active {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
 `;
 
 const VertialSeparator = styled.div`

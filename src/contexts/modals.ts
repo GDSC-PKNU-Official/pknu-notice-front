@@ -1,11 +1,13 @@
 import { Modals } from '@type/modals';
-import { createContext } from 'react';
+import { SetStateAction, createContext } from 'react';
 
-interface ModalState {
-  modals: Modals;
-  setModals: React.Dispatch<React.SetStateAction<Modals>>;
-}
+type Dispatch = React.Dispatch<SetStateAction<Modals>>;
+const ModalState = createContext<Modals | null>(null);
+const ModalDispatch = createContext<Dispatch | null>(null);
 
-const ModalsContext = createContext<ModalState | null>(null);
+const ModalContext = {
+  ModalState,
+  ModalDispatch,
+};
 
-export default ModalsContext;
+export default ModalContext;
