@@ -89,7 +89,7 @@ export const announceHandlers: RequestHandler[] = [
       );
     }
   }),
-  rest.get(`${SERVER_URL}/api/subscription/whalebe`, (req, res, ctx) => {
+  rest.get(`${SERVER_URL}/api/announcement/whalebe`, (req, res, ctx) => {
     const mockData = [
       {
         title: '전공별 CDP(기계공학, 기계시스템 등 기계 관련)',
