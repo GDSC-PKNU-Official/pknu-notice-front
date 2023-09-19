@@ -61,11 +61,10 @@ const Container = styled.section`
   height: calc(100vh - 8vh);
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const KakaoMap = styled.div`
-  height: calc(100vh - 8vh - 90px);
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  height: calc(100vh - 90px);
   width: 100%;
 `;
