@@ -9,31 +9,19 @@ import useMajor from '@hooks/useMajor';
 import useModals, { modals } from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { Suspense, useState } from 'react';
-
-type AnimationType = 'bottomBar' | 'announce';
-type GetAnimationType = (type: AnimationType) => string;
+import { Suspense } from 'react';
 
 const Announcement = () => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
   const { openModal, closeModal } = useModals();
-  const [activeAnimation, setActiveAnimation] = useState<boolean>(false);
-
-  const routerToMajorDecision = () => routerTo('/major-decision');
 
   const announceKeyword = decodeURI(window.location.pathname.split('/')[2]);
-  const isKeywordUndefined = () => announceKeyword === 'undefined';
+  const isActiveSchoolAnnouncement = () => announceKeyword === 'undefined';
 
-  const getAnimationType: GetAnimationType = (type) => {
-    if (!activeAnimation) return 'none';
-    if (type === 'bottomBar') {
-      return !isKeywordUndefined() ? BottomBarSlideRight : BottomBarSlideLeft;
-    }
-    return !isKeywordUndefined() ? AnnounceSlideRight : AnnounceSlideLeft;
-  };
-
-  const handleMajorAnnouncements = () => {
+  const routerToMajorDecision = () => routerTo('/major-decision');
+  const routerToSchoolAnnouncement = () => routerTo('');
+  const routerToMajorAnnouncement = () => {
     if (!major) {
       openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.SET_MAJOR,
@@ -46,53 +34,47 @@ const Announcement = () => {
         },
       });
     }
-    if (!activeAnimation) {
-      setActiveAnimation((prev) => !prev);
-    }
     routerTo(`${major}`);
   };
 
   return (
     <Container>
-      <ButtonContainer
-        css={css`
-          width: 100%;
-          display: flex;
-          position: relative;
-          overflow-x: none;
-        `}
-      >
+      <ButtonContainer>
         <Button
-          onClick={() => routerTo('')}
+          onClick={routerToSchoolAnnouncement}
           css={css`
             margin: 0px;
             height: 55px;
             border-radius: 0px;
             background-color: ${THEME.TEXT.WHITE};
-            color: ${isKeywordUndefined() ? THEME.PRIMARY : THEME.TEXT.BLACK};
+            color: ${isActiveSchoolAnnouncement()
+              ? THEME.PRIMARY
+              : THEME.TEXT.BLACK};
           `}
         >
           학교 공지사항
         </Button>
         <Button
-          onClick={() => handleMajorAnnouncements()}
+          onClick={() => routerToMajorAnnouncement()}
           css={css`
             margin: 0px;
             height: 55px;
             border-radius: 0px;
             background-color: ${THEME.TEXT.WHITE};
-            color: ${isKeywordUndefined() ? THEME.TEXT.BLACK : THEME.PRIMARY};
+            color: ${isActiveSchoolAnnouncement()
+              ? THEME.TEXT.BLACK
+              : THEME.PRIMARY};
           `}
         >
           학과 공지사항
         </Button>
-        <ButtonBottomBar getAnimationType={getAnimationType} />
+        <ButtonBottomBar isActiveSchool={isActiveSchoolAnnouncement()} />
       </ButtonContainer>
-      <AnnounceContainer getAnimationType={getAnimationType}>
+      <AnnounceContainer isActiveSchool={isActiveSchoolAnnouncement()}>
         <Suspense fallback={<AnnounceCardSkeleton length={30} />}>
           <AnnounceList
             resource={fetchAnnounceList(
-              announceKeyword !== 'undefined' ? announceKeyword : '',
+              isActiveSchoolAnnouncement() ? '' : announceKeyword,
             )}
           />
         </Suspense>
@@ -114,40 +96,25 @@ const ButtonContainer = styled.div`
   overflow-x: none;
 `;
 
-const ButtonBottomBar = styled.span<{ getAnimationType: GetAnimationType }>`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50%;
-  height: 3px;
-  background-color: ${THEME.PRIMARY};
-  animation: ${({ getAnimationType }) => getAnimationType('bottomBar')} 0.3s
-    forwards;
+const ButtonBottomBar = styled.span<{ isActiveSchool: boolean }>`
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: ${({ isActiveSchool }) => (isActiveSchool ? '0' : '50%')};
+    width: 50%;
+    height: 3px;
+    background-color: ${THEME.PRIMARY};
+    transition: left 0.3s ease-in-out;
+  }
 `;
 
-const AnnounceContainer = styled.div<{ getAnimationType: GetAnimationType }>`
+const AnnounceContainer = styled.div<{ isActiveSchool: boolean }>`
   width: 100%;
   overflow: hidden;
-  animation: ${({ getAnimationType }) => getAnimationType('announce')} 0.3s
-    forwards;
-`;
-
-const BottomBarSlideRight = keyframes`
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
-`;
-
-const BottomBarSlideLeft = keyframes`
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0%);
-  }
+  animation: ${({ isActiveSchool }) =>
+      isActiveSchool ? AnnounceSlideLeft : AnnounceSlideRight}
+    0.3s forwards;
 `;
 
 const AnnounceSlideRight = keyframes`
