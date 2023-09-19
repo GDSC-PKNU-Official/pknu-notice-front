@@ -60,7 +60,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 85%;
-  text-aligb: center;
   margin: 0 auto;
 `;
 
