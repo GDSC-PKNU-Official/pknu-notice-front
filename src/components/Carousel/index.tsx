@@ -66,7 +66,6 @@ const CarouselContainer = styled.div`
   padding: 1rem 0 1rem;
   width: 100%;
   margin: 0 auto;
-
   &: hover {
     cursor: pointer;
   }
@@ -88,6 +87,7 @@ const Title = styled.div`
 const Date = styled.div`
   color: ${THEME.TEXT.GRAY};
   margin-top: 2rem;
+  font-size: 0.8rem;
 `;
 
 const Button = styled.button`
