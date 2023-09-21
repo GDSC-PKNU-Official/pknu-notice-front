@@ -1,7 +1,6 @@
 import http from '@apis/http';
 import InformCard from '@components/Card/InformCard';
 import Carousel from '@components/Carousel';
-import { carouselInfo } from '@constants/carouselInfo';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useRouter from '@hooks/useRouter';
@@ -61,6 +60,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 85%;
   margin: 0 auto;
+  padding-bottom: 5%;
 `;
 
 const InformCardWrapper = styled.div`
