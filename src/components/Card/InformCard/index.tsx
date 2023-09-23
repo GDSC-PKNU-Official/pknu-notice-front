@@ -74,6 +74,7 @@ const InformCard = ({
               font-size: 15px;
               margin: auto 0;
               font-weight: bold;
+              color: ${THEME.TEXT.BLACK};
             `}
           >
             {title} 보러가기

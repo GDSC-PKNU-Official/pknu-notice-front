@@ -51,7 +51,7 @@ const Carousel = () => {
                 <img src={data.imgUrl} width="100%" height={200} />
               </SliderWrapper>
               <Title>{data.title}</Title>
-              <Date>모집기간: ~{data.date}</Date>
+              <Date>모집기간: ~ {data.date}</Date>
               <Button>자세히보기</Button>
             </div>
           ))}
@@ -78,11 +78,16 @@ const SliderWrapper = styled.div`
 
 const Title = styled.div`
   font-weight: bold;
+  font-size: 1rem;
+  height: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Date = styled.div`
   color: ${THEME.TEXT.GRAY};
   margin-top: 2rem;
+  font-size: 0.8rem;
 `;
 
 const Button = styled.button`
