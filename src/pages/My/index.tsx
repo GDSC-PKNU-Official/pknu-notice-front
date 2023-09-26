@@ -3,7 +3,11 @@ import Button from '@components/Button';
 import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
 import { SERVER_URL } from '@config/index';
-import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
+import {
+  MODAL_BUTTON_MESSAGE,
+  MODAL_MESSAGE,
+  MODAL_NOTI_MESSAGE,
+} from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
@@ -30,7 +34,31 @@ const My = () => {
     });
   };
 
-  const handleSubscribeTopic: MouseEventHandler<HTMLElement> = async () => {
+  const handleNotiModal: MouseEventHandler = () => {
+    if (!major) {
+      openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
+        onClose: () => closeModal(modals.alert),
+        routerTo: () => {
+          closeModal(modals.alert);
+          routerToMajorDecision();
+        },
+      });
+      return;
+    }
+
+    openModal<typeof modals.confirm>(modals.confirm, {
+      message: MODAL_NOTI_MESSAGE(major),
+      onConfirmButtonClick: () => {
+        closeModal(modals.confirm);
+        handleSubscribeTopic();
+      },
+      onCancelButtonClick: () => closeModal(modals.confirm),
+    });
+  };
+
+  const handleSubscribeTopic = async () => {
     if (!animation) setAnimation(true);
 
     if (subscribe) {
@@ -51,16 +79,11 @@ const My = () => {
       return;
     }
 
-    if (!('serviceWorker' in navigator)) return;
-    if (!major) {
+    if (!('serviceWorker' in navigator)) {
       openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
+        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
         onClose: () => closeModal(modals.alert),
-        routerTo: () => {
-          closeModal(modals.alert);
-          routerToMajorDecision();
-        },
       });
       return;
     }
@@ -126,7 +149,7 @@ const My = () => {
             <span>학과 공지사항 알림받기</span>
             <ToggleButton
               isOn={Boolean(subscribe)}
-              changeState={handleSubscribeTopic}
+              changeState={handleNotiModal}
               animation={animation}
             />
           </CardList>
