@@ -18,6 +18,8 @@ export const MODAL_MESSAGE = {
     NO_SEARCH_KEYWORD: '검색어를 입력해주세요!',
     SEARCH_FAILED:
       '찾으시는 건물이 존재하지 않아요!\n 검색어를 다시 확인해주세요.',
+    FAIL_SUBSCRIBE_NOTI:
+      '에러가 발생했어요.. 부림이 개발자가 빨리 고쳐볼게요!\n\n 추가 건의사항이 있다면 마이페이지 -> 건의사항 남기기에 남겨주세요',
   },
   SUCCEED: {
     SET_MAJOR: '전공 선택 완료!',
@@ -34,4 +36,8 @@ export const MODAL_BUTTON_MESSAGE = {
   GO_HOME: '홈으로 이동하기',
   SET_MAJOR: '전공선택하러 가기',
   SEND_SUGGESTION: '보내기',
+};
+
+export const MODAL_NOTI_MESSAGE = (major: string) => {
+  return `9시부터 18시 사이 ${major}의 새로운 공지사항이 올라오면 푸시 알림을 받을까요?`;
 };
