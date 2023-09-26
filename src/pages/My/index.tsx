@@ -3,11 +3,7 @@ import Button from '@components/Button';
 import ToggleButton from '@components/Button/Toggle';
 import Icon from '@components/Icon';
 import { SERVER_URL } from '@config/index';
-import {
-  MODAL_BUTTON_MESSAGE,
-  MODAL_MESSAGE,
-  MODAL_NOTI_MESSAGE,
-} from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
@@ -62,22 +58,9 @@ const My = () => {
       return;
     }
 
-    openModal<typeof modals.confirm>(modals.confirm, {
-      message: MODAL_NOTI_MESSAGE(major),
-      onConfirmButtonClick: () => {
-        closeModal(modals.confirm);
-        handleSubscribeTopic();
-      },
-      onCancelButtonClick: () => closeModal(modals.confirm),
-    });
-  };
-
-  const handleSubscribeTopic = async () => {
-    if (!animation) setAnimation(true);
-
     if (subscribe) {
       openModal<typeof modals.confirm>(modals.confirm, {
-        message: MODAL_MESSAGE.CONFIRM.ALARM,
+        message: MODAL_MESSAGE.CONFIRM.STOP_ALARM,
         onConfirmButtonClick: async () => {
           await http.delete(`${SERVER_URL}/api/subscription/major`, {
             data: { subscription: subscribe, major },
@@ -92,6 +75,19 @@ const My = () => {
       });
       return;
     }
+
+    openModal<typeof modals.confirm>(modals.confirm, {
+      message: MODAL_MESSAGE.CONFIRM.GET_ALARM,
+      onConfirmButtonClick: () => {
+        closeModal(modals.confirm);
+        handleSubscribeTopic();
+      },
+      onCancelButtonClick: () => closeModal(modals.confirm),
+    });
+  };
+
+  const handleSubscribeTopic = async () => {
+    if (!animation) setAnimation(true);
 
     if (!('serviceWorker' in navigator)) {
       postSuggestion();
