@@ -4,7 +4,9 @@ export const MODAL_MESSAGE = {
     SET_MAJOR: '이 전공으로 선택할까요?',
     EDIT_MAJOR: '이 전공으로 수정할까요?',
     POST_SUGGESTION: '건의사항을 보내시겠어요?',
-    ALARM: '알림을 그만 받을까요?',
+    STOP_ALARM: '알림을 그만 받을까요?',
+    GET_ALARM:
+      '알림은 9시부터 18시 사이에 보내드려요!\n새로운 공지사항이 올라오면 푸시 알림을 받을까요?',
   },
   ALERT: {
     OVER_MAP_BOUNDARY: '앗! 지도의 영역을 벗어났어요',
@@ -36,8 +38,4 @@ export const MODAL_BUTTON_MESSAGE = {
   GO_HOME: '홈으로 이동하기',
   SET_MAJOR: '전공선택하러 가기',
   SEND_SUGGESTION: '보내기',
-};
-
-export const MODAL_NOTI_MESSAGE = (major: string) => {
-  return `9시부터 18시 사이 ${major}의 새로운 공지사항이 올라오면 푸시 알림을 받을까요?`;
 };
