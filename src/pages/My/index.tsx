@@ -26,6 +26,20 @@ const My = () => {
 
   const routerToMajorDecision = () => routerTo('/major-decision');
 
+  const postSuggestion = async () => {
+    await http.post(
+      `${SERVER_URL}/api/suggestion`,
+      {
+        content: `${major} ${window.navigator.userAgent} 서비스워커 없음`,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+  };
+
   const handleSuggestionModal = () => {
     openModal<typeof modals.suggestion>(modals.suggestion, {
       title: MODAL_MESSAGE.SUGGESTION_TITLE,
@@ -80,6 +94,7 @@ const My = () => {
     }
 
     if (!('serviceWorker' in navigator)) {
+      postSuggestion();
       openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI,
         buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
