@@ -20,7 +20,9 @@ export const MODAL_MESSAGE = {
     NO_SEARCH_KEYWORD: '검색어를 입력해주세요!',
     SEARCH_FAILED:
       '찾으시는 건물이 존재하지 않아요!\n 검색어를 다시 확인해주세요.',
-    FAIL_SUBSCRIBE_NOTI:
+    FAIL_SUBSCRIBE_NOTI1:
+      '에러가 발생했어요. 부림이 개발자가 빨리 고쳐볼게요!\n\n 추가 건의사항이 있다면 마이페이지 -> 건의사항 남기기에 남겨주세요',
+    FAIL_SUBSCRIBE_NOTI2:
       '에러가 발생했어요.. 부림이 개발자가 빨리 고쳐볼게요!\n\n 추가 건의사항이 있다면 마이페이지 -> 건의사항 남기기에 남겨주세요',
   },
   SUCCEED: {
