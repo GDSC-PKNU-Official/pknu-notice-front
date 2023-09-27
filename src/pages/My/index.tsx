@@ -100,6 +100,17 @@ const My = () => {
     }
 
     try {
+      const permission = await Notification.requestPermission();
+
+      if (permission !== 'granted') {
+        openModal<typeof modals.alert>(modals.alert, {
+          message: MODAL_MESSAGE.ALERT.NOT_SUBSCRIB_NOTI,
+          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+          onClose: () => closeModal(modals.alert),
+        });
+        return;
+      }
+
       const registration = await navigator.serviceWorker.ready;
       const VAPID_PUBLIC_KEY =
         'BMTktqZlaL5Bqx7rR2h_fbqBsWROO4k2RnXxwbJXDsP99RSaihgNEkA3JT1iQVT2XRQMRHYMJUyDQS7_r8S5BMc';
