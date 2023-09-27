@@ -22,6 +22,20 @@ const My = () => {
 
   const routerToMajorDecision = () => routerTo('/major-decision');
 
+  const postSuggestion = async () => {
+    await http.post(
+      `${SERVER_URL}/api/suggestion`,
+      {
+        content: `${major} ${window.navigator.userAgent} 서비스워커 없음`,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+  };
+
   const handleSuggestionModal = () => {
     openModal<typeof modals.suggestion>(modals.suggestion, {
       title: MODAL_MESSAGE.SUGGESTION_TITLE,
@@ -30,12 +44,23 @@ const My = () => {
     });
   };
 
-  const handleSubscribeTopic: MouseEventHandler<HTMLElement> = async () => {
-    if (!animation) setAnimation(true);
+  const handleNotiModal: MouseEventHandler = () => {
+    if (!major) {
+      openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
+        onClose: () => closeModal(modals.alert),
+        routerTo: () => {
+          closeModal(modals.alert);
+          routerToMajorDecision();
+        },
+      });
+      return;
+    }
 
     if (subscribe) {
       openModal<typeof modals.confirm>(modals.confirm, {
-        message: MODAL_MESSAGE.CONFIRM.ALARM,
+        message: MODAL_MESSAGE.CONFIRM.STOP_ALARM,
         onConfirmButtonClick: async () => {
           await http.delete(`${SERVER_URL}/api/subscription/major`, {
             data: { subscription: subscribe, major },
@@ -51,16 +76,25 @@ const My = () => {
       return;
     }
 
-    if (!('serviceWorker' in navigator)) return;
-    if (!major) {
+    openModal<typeof modals.confirm>(modals.confirm, {
+      message: MODAL_MESSAGE.CONFIRM.GET_ALARM,
+      onConfirmButtonClick: () => {
+        closeModal(modals.confirm);
+        handleSubscribeTopic();
+      },
+      onCancelButtonClick: () => closeModal(modals.confirm),
+    });
+  };
+
+  const handleSubscribeTopic = async () => {
+    if (!animation) setAnimation(true);
+
+    if (!('serviceWorker' in navigator)) {
+      postSuggestion();
       openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
+        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
         onClose: () => closeModal(modals.alert),
-        routerTo: () => {
-          closeModal(modals.alert);
-          routerToMajorDecision();
-        },
       });
       return;
     }
@@ -126,7 +160,7 @@ const My = () => {
             <span>학과 공지사항 알림받기</span>
             <ToggleButton
               isOn={Boolean(subscribe)}
-              changeState={handleSubscribeTopic}
+              changeState={handleNotiModal}
               animation={animation}
             />
           </CardList>

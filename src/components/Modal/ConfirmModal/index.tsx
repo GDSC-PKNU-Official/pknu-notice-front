@@ -29,6 +29,7 @@ const ConfirmModal = ({
                 font-weight: bold;
                 margin: 0 auto;
                 margin-bottom: 15px;
+                white-space: pre-line;
               `}
             >
               {message}
