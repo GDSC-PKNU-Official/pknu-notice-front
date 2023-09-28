@@ -20,8 +20,12 @@ export const MODAL_MESSAGE = {
     NO_SEARCH_KEYWORD: '검색어를 입력해주세요!',
     SEARCH_FAILED:
       '찾으시는 건물이 존재하지 않아요!\n 검색어를 다시 확인해주세요.',
-    FAIL_SUBSCRIBE_NOTI:
+    FAIL_SUBSCRIBE_NOTI1:
+      '에러가 발생했어요. 부림이 개발자가 빨리 고쳐볼게요!\n\n 추가 건의사항이 있다면 마이페이지 -> 건의사항 남기기에 남겨주세요',
+    FAIL_SUBSCRIBE_NOTI2:
       '에러가 발생했어요.. 부림이 개발자가 빨리 고쳐볼게요!\n\n 추가 건의사항이 있다면 마이페이지 -> 건의사항 남기기에 남겨주세요',
+    NOT_SUBSCRIB_NOTI:
+      '알림받기를 거부했어요 만약 다시 알림을 받고싶다면 \n\n 환경설정 -> 부림이(burimi) -> 알림 허용을 체크해주세요!',
   },
   SUCCEED: {
     SET_MAJOR: '전공 선택 완료!',

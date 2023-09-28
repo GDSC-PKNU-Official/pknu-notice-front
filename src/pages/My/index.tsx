@@ -22,11 +22,11 @@ const My = () => {
 
   const routerToMajorDecision = () => routerTo('/major-decision');
 
-  const postSuggestion = async () => {
+  const postSuggestion = async (text?: string) => {
     await http.post(
       `${SERVER_URL}/api/suggestion`,
       {
-        content: `${major} ${window.navigator.userAgent} 서비스워커 없음`,
+        content: `${major} ${window.navigator.userAgent} 서비스워커 없음 ${text}`,
       },
       {
         headers: {
@@ -89,10 +89,10 @@ const My = () => {
   const handleSubscribeTopic = async () => {
     if (!animation) setAnimation(true);
 
-    if (!('serviceWorker' in navigator)) {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
       postSuggestion();
       openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI,
+        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI1,
         buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
         onClose: () => closeModal(modals.alert),
       });
@@ -100,6 +100,17 @@ const My = () => {
     }
 
     try {
+      const permission = await Notification.requestPermission();
+
+      if (permission !== 'granted') {
+        openModal<typeof modals.alert>(modals.alert, {
+          message: MODAL_MESSAGE.ALERT.NOT_SUBSCRIB_NOTI,
+          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+          onClose: () => closeModal(modals.alert),
+        });
+        return;
+      }
+
       const registration = await navigator.serviceWorker.ready;
       const VAPID_PUBLIC_KEY =
         'BMTktqZlaL5Bqx7rR2h_fbqBsWROO4k2RnXxwbJXDsP99RSaihgNEkA3JT1iQVT2XRQMRHYMJUyDQS7_r8S5BMc';
@@ -119,6 +130,12 @@ const My = () => {
         setSubscribe(subscription);
       }
     } catch (error) {
+      postSuggestion(error as string);
+      openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI2,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
+      });
       return;
     }
   };
