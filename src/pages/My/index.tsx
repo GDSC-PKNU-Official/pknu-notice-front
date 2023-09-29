@@ -89,7 +89,7 @@ const My = () => {
   const handleSubscribeTopic = async () => {
     if (!animation) setAnimation(true);
 
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    if (!('serviceWorker' in navigator)) {
       postSuggestion();
       openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI1,
