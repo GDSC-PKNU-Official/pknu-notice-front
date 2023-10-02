@@ -48,7 +48,7 @@ const SideBarItem = styled.div`
 
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${THEME.TEXT.GRAY};
+  border-bottom: 1px solid ${THEME.BUTTON.GRAY};
 `;
 
 const Title = styled.span`
