@@ -1,48 +1,40 @@
 import Icon from '@components/Icon';
-import { css } from '@emotion/react';
+import SideBar from '@components/SideBar';
+import SideBarContent from '@components/SideBar/Content';
 import styled from '@emotion/styled';
 import useRoter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
+import { useState } from 'react';
 
 const Header = () => {
   const { routerTo, goBack } = useRoter();
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <HeaderContainer>
       <HeaderWrapper>
         <Icon kind="arrowBack" onClick={goBack} />
         <Logo onClick={() => routerTo('/')}>부림이</Logo>
-        <div
-          css={css`
-            width: 28px;
-          `}
-        ></div>
-        {/* <Icon kind="menu" /> */}
+        <SideBar open={open} setOpen={setOpen}>
+          <SideBarContent setOpen={setOpen} />
+        </SideBar>
       </HeaderWrapper>
     </HeaderContainer>
   );
 };
 
-const Logo = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  text-transform: uppercase;
-  font-weight: bold;
-`;
-
 export default Header;
 
 const HeaderContainer = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100%;
   display: flex;
   justify-content: center;
+
+  width: 100%;
   max-width: 480px;
+  position: fixed;
+  top: 0;
+  z-index: 3;
   height: 8vh;
   background-color: ${THEME.TEXT.WHITE};
-  z-index: 2;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
@@ -52,4 +44,13 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Logo = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-transform: uppercase;
+  font-weight: bold;
 `;

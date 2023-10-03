@@ -7,11 +7,23 @@ const imageSize: ImageSize = {
   large: setSize(200),
   medium: setSize(150),
   small: setSize(100),
+  tiny: setSize(45),
 };
 
-const Image = ({ src, outline = false, size = 'medium' }: ImageProps) => {
+const Image = ({
+  src,
+  outline = false,
+  size = 'medium',
+  ...props
+}: ImageProps) => {
   return (
-    <StyledImage src={src} alt="" outline={outline} {...imageSize[size]} />
+    <StyledImage
+      src={src}
+      alt=""
+      outline={outline}
+      {...imageSize[size]}
+      {...props}
+    />
   );
 };
 
