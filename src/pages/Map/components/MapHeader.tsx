@@ -1,15 +1,12 @@
 import Icon from '@components/Icon';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useModals, { modals } from '@hooks/useModals';
-import useUserLocation from '@hooks/useUserLocation';
+import useOverlays from '@hooks/useOverlays';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { BuildingType, Location, PKNUBuilding } from '@type/map';
+import { BuildingType, PKNUBuilding } from '@type/map';
 import React, { memo, useRef } from 'react';
-
-import NumberOverlay from '../handlers/overlay-handler';
 
 interface MapHeaderProps {
   map: any;
@@ -18,64 +15,11 @@ interface MapHeaderProps {
 const MapHeader = ({ map }: MapHeaderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { openModal, closeModal } = useModals();
-  const userLocation: Location | null = useUserLocation();
+  const { addOverlay } = useOverlays();
 
-  const zoomInHandler = (
-    buildingInfo: PKNUBuilding,
-    buildingType: BuildingType,
-    buildingIndex: number,
-  ) => {
-    map.setLevel(2);
-    map.setCenter(
-      buildingInfo &&
-        new window.kakao.maps.LatLng(
-          buildingInfo.latlng[0],
-          buildingInfo.latlng[1],
-        ),
-    );
-    if (
-      document.querySelector(`.${buildingType}-${buildingIndex}`) ||
-      !buildingInfo
-    ) {
-      return;
-    }
-    const buildingNumberOverlay = new NumberOverlay(
-      buildingInfo,
-      openModal,
-      closeModal,
-      userLocation,
-    ).createOverlay(buildingType as BuildingType);
-
-    buildingNumberOverlay.setMap(map);
-  };
-
-  const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!inputRef.current || inputRef.current.value.length < 1) {
-      return openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.NO_SEARCH_KEYWORD,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-        onClose: () => closeModal(modals.alert),
-      });
-    }
-    const searchResult = searchBuildingInfo(inputRef.current?.value);
-    if (searchResult === -1) {
-      return openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.SEARCH_FAILED,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-        onClose: () => closeModal(modals.alert),
-      });
-    }
-    const [buildingType, index] = searchResult;
-    zoomInHandler(
-      PKNU_BUILDINGS[buildingType].buildings[index],
-      buildingType,
-      index,
-    );
-    inputRef.current.value = '';
-  };
-
-  const searchBuildingInfo = (keyword: string): [BuildingType, number] | -1 => {
+  const getBuildingInfo = (
+    keyword: string,
+  ): [BuildingType, number] | undefined => {
     keyword = keyword.split(' ').join('').toUpperCase();
     for (const buildingType of Object.keys(PKNU_BUILDINGS)) {
       const index = PKNU_BUILDINGS[
@@ -87,18 +31,49 @@ const MapHeader = ({ map }: MapHeaderProps) => {
       );
       if (index !== -1) return [buildingType as BuildingType, index];
     }
-    return -1;
+    return;
+  };
+
+  const handleZoomIn = (buildingType: BuildingType, building: PKNUBuilding) => {
+    map.setLevel(2);
+    map.panTo(
+      building &&
+        new window.kakao.maps.LatLng(building.latlng[0], building.latlng[1]),
+    );
+    addOverlay(buildingType, building, map);
+  };
+
+  const handleBuildingSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!inputRef.current || inputRef.current.value.length < 1) {
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.NO_SEARCH_KEYWORD,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
+      });
+    }
+    const searchResult = getBuildingInfo(inputRef.current?.value);
+    if (!searchResult) {
+      return openModal<typeof modals.alert>(modals.alert, {
+        message: MODAL_MESSAGE.ALERT.SEARCH_FAILED,
+        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
+        onClose: () => closeModal(modals.alert),
+      });
+    }
+    const [buildingType, index] = searchResult;
+    inputRef.current.value = '';
+    handleZoomIn(buildingType, PKNU_BUILDINGS[buildingType].buildings[index]);
   };
 
   return (
     <HeaderContainer>
-      <StyledForm onSubmit={searchHandler}>
+      <StyledForm onSubmit={handleBuildingSearch}>
         <StyledInput
           ref={inputRef}
           type="text"
           placeholder="건물번호 또는 건물이름을 검색해주세요"
         />
-        <StyledButton onClick={() => searchHandler}>
+        <StyledButton onClick={() => handleBuildingSearch}>
           <Icon kind="search" size="24" color={THEME.TEXT.WHITE} />
           <StyledText>Search</StyledText>
         </StyledButton>
