@@ -3,16 +3,16 @@ import { Location } from '@type/map';
 import { useEffect, useState } from 'react';
 
 const useUserLocation = () => {
-  const [location, setLocation] = useState<Location | null>(null);
+  const [userLocation, setUserLocation] = useState<Location | null>(null);
 
   const success = (position: any) => {
-    setLocation({
+    setUserLocation({
       LAT: position.coords.latitude,
       LNG: position.coords.longitude,
     });
   };
   const failed = () => {
-    setLocation({
+    setUserLocation({
       ...NO_PROVIDE_LOCATION,
     });
   };
@@ -22,16 +22,16 @@ const useUserLocation = () => {
       navigator.geolocation.getCurrentPosition(success, failed, {
         enableHighAccuracy: true,
         timeout: 1000 * 10,
-        maximumAge: 1000 * 60 * 2,
+        maximumAge: 1000 * 60 * 5,
       });
     } else {
-      setLocation({
+      setUserLocation({
         ...NO_PROVIDE_LOCATION,
       });
     }
   }, []);
 
-  return location;
+  return userLocation;
 };
 
 export default useUserLocation;
