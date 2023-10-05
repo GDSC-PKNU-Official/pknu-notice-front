@@ -5,6 +5,7 @@ import BodyLayout from '@pages/BodyLayout';
 import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
 import Map from '@pages/Map';
+import MapProvider from '@pages/Map/Provider';
 import My from '@pages/My';
 import RouteChangeTracker from '@utils/routeChangeTracker';
 import { Routes, Route, useLocation } from 'react-router-dom';
@@ -23,7 +24,9 @@ const App = () => {
           <Route path="/major-decision/*" element={<MajorDecision />} />
           <Route path="/my" element={<My />} />
         </Route>
-        <Route path="/map" element={<Map />} />
+        <Route element={<MapProvider />}>
+          <Route path="/map" element={<Map />} />
+        </Route>
       </Routes>
       <FooterTab />
     </>
