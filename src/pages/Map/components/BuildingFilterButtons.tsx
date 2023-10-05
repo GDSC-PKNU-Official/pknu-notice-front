@@ -1,76 +1,76 @@
 import Icon from '@components/Icon';
 import { PKNU_BUILDINGS, PKNU_MAP_CENTER } from '@constants/pknu-map';
 import styled from '@emotion/styled';
+import useOverlays from '@hooks/useOverlays';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location } from '@type/map';
-import React, { CSSProperties, SetStateAction, memo, useState } from 'react';
+import React, { CSSProperties, memo, useEffect, useState } from 'react';
 
-import isUserInSchool from '../handlers/distance-handler';
+import isUserInSchool from '../handlers/distance';
 
 interface BuildingFilterButtonsProps {
   map: any;
-  location: Location | null;
-  buildingTypes: BuildingType[];
-  setBuildingTypes: React.Dispatch<SetStateAction<BuildingType[]>>;
+  userLocation: Location | null;
 }
 
 const BuildingFilterButtons = ({
   map,
-  location,
-  buildingTypes,
-  setBuildingTypes,
+  userLocation,
 }: BuildingFilterButtonsProps) => {
-  if (!map) return <></>;
-  const [activeButtons, setActiveButtons] = useState<
-    Record<BuildingType, boolean>
-  >({
-    A: true,
-    B: false,
-    C: false,
-    D: false,
-    E: false,
-  });
+  if (!map || !userLocation) return <></>;
 
-  const setCenterHandler = (location: Location | null) => {
-    map.setCenter(
-      location && new window.kakao.maps.LatLng(location.LAT, location.LNG),
+  const [activeTypes, setActiveTypes] = useState<Record<BuildingType, boolean>>(
+    {
+      A: true,
+      B: false,
+      C: false,
+      D: false,
+      E: false,
+    },
+  );
+  const { handleOverlays } = useOverlays();
+
+  const handleMapCenter = (location: Location) => {
+    if (!location) return;
+    const centerLocation = new window.kakao.maps.LatLng(
+      location.LAT,
+      location.LNG,
     );
     map.setLevel(4);
+    map.panTo(centerLocation);
   };
 
-  const buildingTypesHandler = (type: BuildingType) => {
-    setActiveButtons((prevActiceButtons) => {
+  const handleBuildingTypes = (type: BuildingType) => {
+    setActiveTypes((prevActiveTypes) => {
       return {
-        ...prevActiceButtons,
-        [type]: !prevActiceButtons[type],
+        ...prevActiveTypes,
+        [type]: !prevActiveTypes[type],
       };
     });
-    if (!buildingTypes.includes(type)) {
-      setBuildingTypes((prevTypes) => [...prevTypes, type]);
-      return;
-    }
-    setBuildingTypes((prevTypes) =>
-      prevTypes.filter((prevType) => prevType !== type),
-    );
   };
-  const buttonClickHandler: React.MouseEventHandler<HTMLDivElement> = (e) => {
+
+  const handleButtonClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
     if (e.target instanceof HTMLSpanElement) {
-      buildingTypesHandler(e.target.innerText as BuildingType);
+      handleBuildingTypes(e.target.innerText as BuildingType);
     } else if (
       e.target instanceof HTMLButtonElement &&
       typeof e.target.textContent === 'string'
     ) {
-      buildingTypesHandler(e.target.textContent as BuildingType);
+      handleBuildingTypes(e.target.textContent as BuildingType);
     }
   };
 
+  useEffect(() => {
+    handleOverlays(activeTypes, map);
+  }, [activeTypes]);
+
   return (
     <Containter>
-      <ButtonContainer onClick={buttonClickHandler}>
-        {Object.keys(activeButtons).map((type) => (
+      <ButtonContainer onClick={handleButtonClick}>
+        {Object.keys(activeTypes).map((type) => (
           <FilterButton
             key={type}
-            isActive={activeButtons[type as BuildingType]}
+            isActive={activeTypes[type as BuildingType]}
             activeColor={PKNU_BUILDINGS[type as BuildingType].activeColor}
           >
             <span>{type}</span>
@@ -78,12 +78,12 @@ const BuildingFilterButtons = ({
         ))}
       </ButtonContainer>
       <IconContainer>
-        {location && isUserInSchool(location.LAT, location.LNG) ? (
+        {isUserInSchool(userLocation.LAT, userLocation.LNG) ? (
           <Icon
             kind="locationOn"
             color={THEME.PRIMARY}
             size="32"
-            onClick={() => setCenterHandler(location)}
+            onClick={() => handleMapCenter(userLocation)}
           />
         ) : (
           <Icon kind="locationOff" color={THEME.PRIMARY} size="32" />
@@ -92,7 +92,7 @@ const BuildingFilterButtons = ({
           kind="reset"
           color={THEME.PRIMARY}
           size="32"
-          onClick={() => setCenterHandler(PKNU_MAP_CENTER)}
+          onClick={() => handleMapCenter(PKNU_MAP_CENTER)}
         />
       </IconContainer>
     </Containter>
@@ -100,11 +100,6 @@ const BuildingFilterButtons = ({
 };
 
 export default memo(BuildingFilterButtons);
-
-interface FilterButtonProps {
-  isActive: boolean;
-  activeColor: CSSProperties['color'];
-}
 
 const Containter = styled.section`
   height: 0;
@@ -124,6 +119,11 @@ const ButtonContainer = styled.div`
   top: -50px;
   z-index: 999;
 `;
+
+interface FilterButtonProps {
+  isActive: boolean;
+  activeColor: CSSProperties['color'];
+}
 
 const FilterButton = styled.button<FilterButtonProps>`
   background-color: ${({ activeColor }) => activeColor};

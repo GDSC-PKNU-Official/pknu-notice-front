@@ -5,6 +5,7 @@ import BodyLayout from '@pages/BodyLayout';
 import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
 import Map from '@pages/Map';
+import MapProvider from '@pages/Map/Provider';
 import My from '@pages/My';
 import Tip from '@pages/Tip';
 import RouteChangeTracker from '@utils/routeChangeTracker';
@@ -25,7 +26,9 @@ const App = () => {
           <Route path="/my" element={<My />} />
           <Route path="/tip" element={<Tip />} />
         </Route>
-        <Route path="/map" element={<Map />} />
+        <Route element={<MapProvider />}>
+          <Route path="/map" element={<Map />} />
+        </Route>
       </Routes>
       <FooterTab />
     </>
