@@ -1,7 +1,7 @@
 export const MODAL_MESSAGE = {
   SUGGESTION_TITLE: '건의사항',
   CONFIRM: {
-    SET_MAJOR: '이 전공으로 선택할까요?',
+    SET_MAJOR: '(으)로 선택할까요?',
     EDIT_MAJOR: '이 전공으로 수정할까요?',
     POST_SUGGESTION: '건의사항을 보내시겠어요?',
     STOP_ALARM: '알림을 그만 받을까요?',
