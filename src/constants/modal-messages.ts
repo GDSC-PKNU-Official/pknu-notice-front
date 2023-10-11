@@ -6,7 +6,7 @@ export const MODAL_MESSAGE = {
     POST_SUGGESTION: '건의사항을 보내시겠어요?',
     STOP_ALARM: '알림을 그만 받을까요?',
     GET_ALARM:
-      '알림은 9시부터 18시 사이에 보내드려요!\n새로운 공지사항이 올라오면 푸시 알림을 받을까요?',
+      '알림은 9시부터 18시 사이에 보내드려요\n새로운 공지가 올라오면 푸시 알림을 받을까요?',
   },
   ALERT: {
     OVER_MAP_BOUNDARY: '앗! 지도의 영역을 벗어났어요',
