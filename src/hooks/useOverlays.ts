@@ -1,6 +1,5 @@
 import OverlayContext from '@contexts/overlays';
-import { BuildingType, PKNUBuilding } from '@type/map';
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 
 const useOverlays = () => {
   const overlayContext = useContext(OverlayContext);
@@ -9,20 +8,8 @@ const useOverlays = () => {
   }
 
   const customOverlay = overlayContext;
-
-  const addOverlay = useCallback(
-    (buildingType: BuildingType, building: PKNUBuilding, map: any) => {
-      customOverlay.addOverlay(buildingType, building, map);
-    },
-    [customOverlay],
-  );
-
-  const handleOverlays = useCallback(
-    (activeTypes: Record<BuildingType, boolean>, map: any) => {
-      customOverlay.handleOverlays(activeTypes, map);
-    },
-    [customOverlay],
-  );
+  const addOverlay = customOverlay.addOverlay.bind(customOverlay);
+  const handleOverlays = customOverlay.handleOverlays.bind(customOverlay);
 
   return {
     addOverlay,
