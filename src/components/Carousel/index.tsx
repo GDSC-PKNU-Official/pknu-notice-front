@@ -11,6 +11,7 @@ interface WhalebeData {
   title: string;
   date: string;
   imgUrl: string;
+  link: string;
 }
 
 const Carousel = () => {
@@ -43,16 +44,16 @@ const Carousel = () => {
           carouselData.map((data) => (
             <div
               key={data.title}
-              onClick={() =>
-                window.open('https://whalebe.pknu.ac.kr/main', '_blank')
-              }
+              onClick={() => window.open(data.link, '_blank')}
             >
               <SliderWrapper>
                 <img src={data.imgUrl} width="100%" height={200} />
               </SliderWrapper>
               <Title>{data.title}</Title>
               <Date>모집기간: ~ {data.date}</Date>
-              <Button>자세히보기</Button>
+              <DisplayCenterWrapper>
+                <Button>자세히보기</Button>
+              </DisplayCenterWrapper>
             </div>
           ))}
       </Slider>
@@ -94,7 +95,7 @@ const Button = styled.button`
   border: 1px solid ${THEME.PRIMARY};
   color: ${THEME.PRIMARY};
   background: none;
-  width: 100%;
+  width: 95%;
   height: 3rem;
   border-radius: 0.5rem;
   margin-top: 1rem;
@@ -102,4 +103,8 @@ const Button = styled.button`
   &: hover {
     cursor: pointer;
   }
+`;
+
+const DisplayCenterWrapper = styled.div`
+  text-align: center;
 `;
