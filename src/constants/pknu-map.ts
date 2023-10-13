@@ -10,8 +10,7 @@ type PKNUBuildings = {
 
 export const PKNU_BUILDINGS: PKNUBuildings = {
   A: {
-    activeColor: '#FF6F91',
-
+    activeColor: '#FF569E',
     buildings: [
       {
         buildingNumber: 'A11',
@@ -56,7 +55,7 @@ export const PKNU_BUILDINGS: PKNUBuildings = {
     ],
   },
   B: {
-    activeColor: '#FF9671',
+    activeColor: '#FF9B29',
     buildings: [
       {
         buildingNumber: 'B11',
@@ -96,7 +95,7 @@ export const PKNU_BUILDINGS: PKNUBuildings = {
     ],
   },
   C: {
-    activeColor: '#81C26E',
+    activeColor: '#8FC049',
     buildings: [
       {
         buildingNumber: 'C11',
@@ -156,7 +155,7 @@ export const PKNU_BUILDINGS: PKNUBuildings = {
     ],
   },
   D: {
-    activeColor: '#FFC75F',
+    activeColor: '#FFC801',
     buildings: [
       {
         buildingNumber: 'D12',
@@ -201,7 +200,7 @@ export const PKNU_BUILDINGS: PKNUBuildings = {
     ],
   },
   E: {
-    activeColor: '#D65DB1',
+    activeColor: '#31A4E9',
     buildings: [
       {
         buildingNumber: 'E11',
