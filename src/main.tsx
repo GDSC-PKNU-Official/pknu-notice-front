@@ -1,6 +1,8 @@
 import MajorProvider from '@components/MajorProvider';
 import Modals from '@components/Modal/Modals';
 import ModalsProvider from '@components/ModalsProvider';
+import ToastProvider from '@components/Provider/Toast';
+import Toasts from '@components/Toast/Toasts';
 import ThemeProvider from '@styles/ThemeProvider';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -27,8 +29,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <ThemeProvider>
         <MajorProvider>
           <ModalsProvider>
-            <Modals />
-            <App />
+            <ToastProvider>
+              <Modals />
+              <Toasts />
+              <App />
+            </ToastProvider>
           </ModalsProvider>
         </MajorProvider>
       </ThemeProvider>

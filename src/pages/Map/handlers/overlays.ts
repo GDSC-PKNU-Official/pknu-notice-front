@@ -1,8 +1,9 @@
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
-import { NO_PROVIDE_LOCATION, PKNU_BUILDINGS } from '@constants/pknu-map';
+import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import { CloseModal, OpenModal, modals } from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location, PKNUBuilding } from '@type/map';
+import { hasLocationPermission } from '@utils/map';
 import { CSSProperties } from 'react';
 
 interface ICustomOverlay {
@@ -18,12 +19,12 @@ class CustomOverlay implements ICustomOverlay {
   private overlays: Record<BuildingType, any[]>;
   private openModal: OpenModal;
   private closeModal: CloseModal;
-  private userLocation: Location | null;
+  private userLocation: Location;
 
   constructor(
     openModal: OpenModal,
     closeModal: CloseModal,
-    userLocation: Location | null,
+    userLocation: Location,
   ) {
     this.openModal = openModal;
     this.closeModal = closeModal;
@@ -37,11 +38,14 @@ class CustomOverlay implements ICustomOverlay {
     };
   }
 
-  private hasLocationPermission() {
-    return !this.userLocation ||
-      JSON.stringify(this.userLocation) === JSON.stringify(NO_PROVIDE_LOCATION)
-      ? false
-      : true;
+  private isOverlayInMap(buildingType: BuildingType, building: PKNUBuilding) {
+    const type = buildingType as keyof typeof this.overlays;
+    if (this.overlays[type].length === 0) return false;
+    this.overlays[type].forEach((overlay) => {
+      if (overlay.cc.innerText === building.buildingName) return true;
+    });
+
+    return false;
   }
 
   private isAllOverlayInMap(type: BuildingType) {
@@ -52,7 +56,7 @@ class CustomOverlay implements ICustomOverlay {
     const { buildingNumber, buildingName, latlng } = building;
     const [lat, lng] = latlng;
 
-    this.hasLocationPermission()
+    hasLocationPermission(this.userLocation)
       ? this.openModal<typeof modals.confirm>(modals.confirm, {
           message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
           onConfirmButtonClick: () => {
@@ -99,7 +103,6 @@ class CustomOverlay implements ICustomOverlay {
       PKNU_BUILDINGS[type].activeColor,
       building,
     );
-
     const overlay = new window.kakao.maps.CustomOverlay({
       position: new window.kakao.maps.LatLng(
         building.latlng[0],
@@ -113,15 +116,26 @@ class CustomOverlay implements ICustomOverlay {
     return overlay;
   }
 
+  private getTypeOverlays(buildingType: BuildingType, map: any) {
+    const type = buildingType as keyof typeof this.overlays;
+    const typeOverlays: any[] = [];
+    PKNU_BUILDINGS[type].buildings.forEach((building) => {
+      const overlay = this.createOverlay(type, building);
+      overlay.setMap(map);
+      typeOverlays.push(overlay);
+    });
+
+    return typeOverlays;
+  }
+
   addOverlay(buildingType: BuildingType, building: PKNUBuilding, map: any) {
     const type = buildingType as keyof typeof this.overlays;
-
-    if (this.overlays[type].length === 0) {
+    if (!this.isOverlayInMap(buildingType, building)) {
       const overlay = this.createOverlay(buildingType, building);
       overlay.setMap(map);
       this.overlays = {
         ...this.overlays,
-        [type]: [overlay],
+        [type]: [...this.overlays[type], overlay],
       };
     }
   }
@@ -148,19 +162,11 @@ class CustomOverlay implements ICustomOverlay {
         });
         return;
       }
-
       if (this.isAllOverlayInMap(type)) {
         newOverlays[type] = [...this.overlays[type]];
         return;
       }
-
-      const typeOverlays: any[] = [];
-      PKNU_BUILDINGS[type].buildings.forEach((building) => {
-        const overlay = this.createOverlay(type, building);
-        overlay.setMap(map);
-        typeOverlays.push(overlay);
-      });
-
+      const typeOverlays = this.getTypeOverlays(type, map);
       newOverlays[type] = [...this.overlays[type], ...typeOverlays];
     });
 

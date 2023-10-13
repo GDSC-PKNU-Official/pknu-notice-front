@@ -20,9 +20,4 @@ const getHaversineDistance = (lat: number, lng: number) => {
   return R * angularDistance;
 };
 
-const isUserInShcool = (lat: number, lng: number) => {
-  const maxDistance = 450;
-  return getHaversineDistance(lat, lng) <= maxDistance;
-};
-
-export default isUserInShcool;
+export default getHaversineDistance;

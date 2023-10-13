@@ -21,5 +21,5 @@ export type IconKind =
   | 'light'
   | 'checkedRadio'
   | 'uncheckedRadio'
-  | 'locationOn'
-  | 'locationOff';
+  | 'location'
+  | 'warning';

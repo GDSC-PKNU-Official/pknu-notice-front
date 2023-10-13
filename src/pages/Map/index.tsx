@@ -5,8 +5,7 @@ import useModals from '@hooks/useModals';
 import useUserLocation from '@hooks/useUserLocation';
 import { useEffect, useState } from 'react';
 
-import BuildingFilterButtons from './components/BuildingFilterButtons';
-import MapHeader from './components/MapHeader';
+import { FilterButtons, MapHeader, RefreshButtons } from './components';
 import handleMapBoundary from './handlers/boundary';
 
 declare global {
@@ -36,17 +35,18 @@ const Map = () => {
   handleMapBoundary(map);
 
   return (
-    <Container>
+    <MapContainer>
       <MapHeader map={map} />
+      <FilterButtons map={map} userLocation={userLocation} />
+      <RefreshButtons map={map} userLocation={userLocation} />
       <KakaoMap id="map" />
-      <BuildingFilterButtons map={map} userLocation={userLocation} />
-    </Container>
+    </MapContainer>
   );
 };
 
 export default Map;
 
-const Container = styled.section`
+const MapContainer = styled.section`
   height: calc(100vh - 8vh);
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 import { MODAL_MESSAGE } from '@constants/modal-messages';
-import { isUserInShcool } from '@pages/Map/handlers';
+import { isUserInShcool } from '@utils/map';
 import { useEffect } from 'react';
 
 import { CloseModal, OpenModal, modals } from './useModals';
@@ -20,7 +20,6 @@ const useLocationHandler: UserLocationHandler = (
 
   useEffect(() => {
     if (!map) return;
-
     if (!userLocation) {
       return openModal<typeof modals.alert>(modals.alert, {
         message: MODAL_MESSAGE.ALERT.GET_LOCATION,
@@ -29,7 +28,6 @@ const useLocationHandler: UserLocationHandler = (
     closeModal(modals.alert);
 
     if (!isUserInShcool(userLocation.LAT, userLocation.LNG)) return;
-
     const userLocationMarker = new window.kakao.maps.Marker({
       position: new window.kakao.maps.LatLng(
         userLocation.LAT,

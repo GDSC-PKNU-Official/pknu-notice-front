@@ -3,6 +3,7 @@ import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { SERVER_URL } from '@config/index';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
+import PLCACEHOLDER_MESSAGES from '@constants/placeholder-message';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useModals, { modals } from '@hooks/useModals';
@@ -87,7 +88,7 @@ const SuggestionModal = ({
         </SuggestionHeader>
         <SuggestionArea
           minLength={5}
-          placeholder="건의사항을 5글자 이상 남겨주세요"
+          placeholder={PLCACEHOLDER_MESSAGES.SUGGESTION}
           rows={1}
           ref={areaRef}
           onKeyDown={onResize}
