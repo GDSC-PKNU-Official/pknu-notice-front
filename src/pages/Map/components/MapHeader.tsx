@@ -1,12 +1,13 @@
 import Icon from '@components/Icon';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
+import PLCACEHOLDER_MESSAGES from '@constants/placeholder-message';
 import styled from '@emotion/styled';
 import useModals, { modals } from '@hooks/useModals';
 import useOverlays from '@hooks/useOverlays';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, PKNUBuilding } from '@type/map';
-import React, { memo, useRef } from 'react';
+import React, { useRef } from 'react';
 
 interface MapHeaderProps {
   map: any;
@@ -16,6 +17,15 @@ const MapHeader = ({ map }: MapHeaderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { openModal, closeModal } = useModals();
   const { addOverlay } = useOverlays();
+
+  const handleZoomIn = (buildingType: BuildingType, building: PKNUBuilding) => {
+    addOverlay(buildingType, building, map);
+    map.setLevel(2);
+    map.panTo(
+      building &&
+        new window.kakao.maps.LatLng(building.latlng[0], building.latlng[1]),
+    );
+  };
 
   const getBuildingInfo = (
     keyword: string,
@@ -33,16 +43,6 @@ const MapHeader = ({ map }: MapHeaderProps) => {
     }
     return;
   };
-
-  const handleZoomIn = (buildingType: BuildingType, building: PKNUBuilding) => {
-    map.setLevel(2);
-    map.panTo(
-      building &&
-        new window.kakao.maps.LatLng(building.latlng[0], building.latlng[1]),
-    );
-    addOverlay(buildingType, building, map);
-  };
-
   const handleBuildingSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputRef.current || inputRef.current.value.length < 1) {
@@ -71,7 +71,7 @@ const MapHeader = ({ map }: MapHeaderProps) => {
         <StyledInput
           ref={inputRef}
           type="text"
-          placeholder="건물번호 또는 건물이름을 검색해주세요"
+          placeholder={PLCACEHOLDER_MESSAGES.SEARCH_BUILDING}
         />
         <StyledButton onClick={() => handleBuildingSearch}>
           <Icon kind="search" size="24" color={THEME.TEXT.WHITE} />
@@ -82,7 +82,7 @@ const MapHeader = ({ map }: MapHeaderProps) => {
   );
 };
 
-export default memo(MapHeader);
+export default MapHeader;
 
 const HeaderContainer = styled.div`
   display: flex;
