@@ -1,6 +1,7 @@
 import Icon from '@components/Icon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import useMajor from '@hooks/useMajor';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
 
@@ -14,6 +15,8 @@ const AnnounceCard = ({
   uploadDate,
   pinned = false,
 }: AnnounceCardProps) => {
+  const { major } = useMajor();
+
   const onClick = () => {
     window.open(link, '_blank');
   };
@@ -23,17 +26,18 @@ const AnnounceCard = ({
   return (
     <Card onClick={onClick} data-testid="card">
       <ContentContainer>
-        {pinned && <Icon kind="speaker" color={THEME.PRIMARY} />}
-        <AnnounceTitle pinned={pinned}>{title}</AnnounceTitle>
-        <VertialSeparator
-          css={css`
-            border-left: 1px solid gray;
-            height: 12px;
-            margin: 0 5px;
-          `}
-        />
-        <AnnounceDate>{uploadDate}</AnnounceDate>
+        <FlexWrapper>
+          {pinned && <Icon kind="speaker" color={THEME.PRIMARY} />}
+          <AnnounceTitle pinned={pinned}>{title}</AnnounceTitle>
+        </FlexWrapper>
+        <SubTitle>
+          <VertialSeparator />
+          <Source>{major}</Source>
+          <VertialSeparator />
+          <AnnounceDate>{uploadDate}</AnnounceDate>
+        </SubTitle>
       </ContentContainer>
+      <Contour />
     </Card>
   );
 };
@@ -41,8 +45,8 @@ const AnnounceCard = ({
 export default AnnounceCard;
 
 const Card = styled.div`
-  height: 28px;
-  padding: 10px;
+  min-height: 28px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,18 +56,17 @@ const Card = styled.div`
 
 const ContentContainer = styled.div`
   display: flex;
-  align-items: center;
+  line-height: 1.5;
+  flex-direction: column;
 `;
 
 const AnnounceTitle = styled.span<{ pinned: boolean }>`
+  display: flex;
+  align-items: center;
   flex: 9;
   font-size: 15px;
   font-weight: ${({ pinned }) => (pinned ? 'bold' : 500)};
   margin-left: ${({ pinned }) => (pinned ? '' : '28px')};
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   &: hover {
     cursor: pointer;
@@ -86,8 +89,29 @@ const AnnounceDate = styled.span`
   flex: 1;
   font-size: 10px;
   font-weight: bold;
-  text-align: end;
   white-space: nowrap;
 
   color: ${THEME.TEXT.GRAY};
+`;
+
+const Contour = styled.div`
+  width: 90%;
+  padding-top: 5px;
+  margin: 0 auto;
+  border-bottom: 1px solid ${THEME.BACKGROUND};
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+`;
+
+const SubTitle = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px 0 0 26px;
+`;
+
+const Source = styled.div`
+  font-size: 11px;
+  color: gray;
 `;
