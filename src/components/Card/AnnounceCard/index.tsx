@@ -1,19 +1,17 @@
-import Icon from '@components/Icon';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
 
 interface AnnounceCardProps extends AnnounceItem {
-  pinned?: boolean;
+  Author?: string;
 }
 
 const AnnounceCard = ({
   title,
   link,
   uploadDate,
-  pinned = false,
+  Author,
 }: AnnounceCardProps) => {
   const { major } = useMajor();
 
@@ -27,14 +25,12 @@ const AnnounceCard = ({
     <Card onClick={onClick} data-testid="card">
       <ContentContainer>
         <FlexWrapper>
-          {pinned && <Icon kind="speaker" color={THEME.PRIMARY} />}
-          <AnnounceTitle pinned={pinned}>{title}</AnnounceTitle>
+          <AnnounceTitle>{title}</AnnounceTitle>
         </FlexWrapper>
         <SubTitle>
+          <AnnounceDate>20{uploadDate}</AnnounceDate>
           <VertialSeparator />
-          <Source>{major}</Source>
-          <VertialSeparator />
-          <AnnounceDate>{uploadDate}</AnnounceDate>
+          <Source>{Author ? Author : major}</Source>
         </SubTitle>
       </ContentContainer>
       <Contour />
@@ -45,8 +41,7 @@ const AnnounceCard = ({
 export default AnnounceCard;
 
 const Card = styled.div`
-  min-height: 28px;
-  padding: 4px;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,18 +50,19 @@ const Card = styled.div`
 `;
 
 const ContentContainer = styled.div`
+  padding: 20px 0 20px 0;
   display: flex;
   line-height: 1.5;
   flex-direction: column;
 `;
 
-const AnnounceTitle = styled.span<{ pinned: boolean }>`
+const AnnounceTitle = styled.span`
   display: flex;
   align-items: center;
   flex: 9;
-  font-size: 15px;
-  font-weight: ${({ pinned }) => (pinned ? 'bold' : 500)};
-  margin-left: ${({ pinned }) => (pinned ? '' : '28px')};
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 28px;
 
   &: hover {
     cursor: pointer;
@@ -86,17 +82,15 @@ const VertialSeparator = styled.div`
 `;
 
 const AnnounceDate = styled.span`
-  flex: 1;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 13px;
   white-space: nowrap;
 
   color: ${THEME.TEXT.GRAY};
+  padding-right: 5px;
 `;
 
 const Contour = styled.div`
   width: 90%;
-  padding-top: 5px;
   margin: 0 auto;
   border-bottom: 1px solid ${THEME.BACKGROUND};
 `;
@@ -108,10 +102,11 @@ const FlexWrapper = styled.div`
 const SubTitle = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px 0 0 26px;
+  padding: 10px 0 0 28px;
 `;
 
 const Source = styled.div`
-  font-size: 11px;
+  font-size: 13px;
   color: gray;
+  padding-left: 5px;
 `;
