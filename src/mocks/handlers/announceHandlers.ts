@@ -96,18 +96,21 @@ export const announceHandlers: RequestHandler[] = [
         date: '2023.09.17',
         imgUrl:
           'https://whalebe.pknu.ac.kr/upload/program/2023/09/13/66e59b5f-4cb9-41fc-b65a-79c2d843229a.png',
+        link: 'https://whalebe.pknu.ac.kr/main/65?action=get&yy=2023&shtm=U0003002&nonsubjcCd=N202309038&nonsubjcCrsCd=C201900053',
       },
       {
         title: '전공별 CDP(생물/생명과학, 바이오/제약)',
         date: '2023.09.17',
         imgUrl:
           'https://whalebe.pknu.ac.kr/upload/program/2023/09/13/c207c16f-a57d-4216-8e6a-4ee53fead465.png',
+        link: 'https://whalebe.pknu.ac.kr/main/65?action=get&yy=2023&shtm=U0003002&nonsubjcCd=N202310003&nonsubjcCrsCd=C202301005',
       },
       {
         title: '전공별 CDP(인문/상경계열, 마케팅, 인사, 영업, 경영기획 등)',
         date: '2023.09.17',
         imgUrl:
           'https://whalebe.pknu.ac.kr/upload/program/2023/09/13/4e4b7e74-28d4-4758-b80d-babe6ec1d286.png',
+        link: 'https://whalebe.pknu.ac.kr/main/65?action=get&yy=2023&shtm=U0003002&nonsubjcCd=N202309059&nonsubjcCrsCd=C202306003',
       },
     ];
     return res(ctx.status(200), ctx.json(mockData));
