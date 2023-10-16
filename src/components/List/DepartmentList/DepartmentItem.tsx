@@ -63,7 +63,9 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
   };
   const handleMajorConfirmModal = () => {
     openModal<typeof modals.confirm>(modals.confirm, {
-      message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
+      message:
+        selected.substring(selected.indexOf(' ') + 1) +
+        MODAL_MESSAGE.CONFIRM.SET_MAJOR,
       onConfirmButtonClick: () => handlerMajorSetModal(),
       onCancelButtonClick: () => closeModal(modals.confirm),
     });

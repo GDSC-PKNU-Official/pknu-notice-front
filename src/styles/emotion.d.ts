@@ -12,7 +12,7 @@ declare module '@emotion/react' {
     PRIMARY: string; // 71BC5C
 
     BUTTON: {
-      GREEN: string;
+      BLUE: string;
       GRAY: string;
     };
 

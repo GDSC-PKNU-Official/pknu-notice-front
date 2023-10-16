@@ -17,14 +17,14 @@ import {
   MdOutlineCancel,
   MdCampaign,
   MdOutlineRestartAlt,
-  MdOutlineLocationOn,
   MdOutlineSearch,
-  MdOutlineLocationOff,
   MdLocalPrintshop,
   MdHandshake,
   MdEditDocument,
   MdPersonSearch,
   MdOutlineLightbulb,
+  MdOutlineMyLocation,
+  MdOutlineError,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -50,8 +50,8 @@ const ICON: { [key in IconKind]: IconType } = {
   light: MdOutlineLightbulb,
   uncheckedRadio: MdRadioButtonUnchecked,
   checkedRadio: MdRadioButtonChecked,
-  locationOn: MdOutlineLocationOn,
-  locationOff: MdOutlineLocationOff,
+  location: MdOutlineMyLocation,
+  warning: MdOutlineError,
 };
 
 interface IconProps {
