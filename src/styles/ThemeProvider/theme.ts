@@ -9,10 +9,10 @@ export const THEME: Theme = {
     WHITE: '#FFFFFF',
   },
 
-  PRIMARY: '#71BC5C',
+  PRIMARY: '#95B1DC',
 
   BUTTON: {
-    GREEN: '#71BC5C',
+    BLUE: '#95B1DC',
     GRAY: '#E7E7E7',
   },
 

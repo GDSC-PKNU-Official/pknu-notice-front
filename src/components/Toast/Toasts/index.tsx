@@ -30,10 +30,11 @@ const ToastContainer = styled.section`
   left: 0;
   bottom: 100px;
   width: 100%;
+  opacity: 0.9;
 
   display: flex;
   flex-direction: column-reverse;
-  align-items: flex-end;
+  align-items: center;
   row-gap: 12px;
   z-index: 9999;
 `;
