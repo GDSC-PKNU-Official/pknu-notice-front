@@ -84,7 +84,7 @@ const SuggestionModal = ({
           >
             {title}
           </span>
-          <Icon kind="cancel" onClick={onClose} color={THEME.BUTTON.GREEN} />
+          <Icon kind="cancel" onClick={onClose} color={THEME.BUTTON.BLUE} />
         </SuggestionHeader>
         <SuggestionArea
           minLength={5}
