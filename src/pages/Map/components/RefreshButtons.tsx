@@ -19,11 +19,11 @@ const RefreshButtons = ({ map, userLocation }: RefreshButtonsProps) => {
 
   const handleMapCenter = (location: Location) => {
     if (!hasLocationPermission(location)) {
-      addToast(TOAST_MESSAGES.SHARE_LOCATION, 'warning');
+      addToast(TOAST_MESSAGES.SHARE_LOCATION);
       return;
     }
     if (!isUserInShcool(location.LAT, location.LNG)) {
-      addToast(TOAST_MESSAGES.OUT_OF_SHOOL, 'warning');
+      addToast(TOAST_MESSAGES.OUT_OF_SHOOL);
       return;
     }
     const centerLocation = new window.kakao.maps.LatLng(
