@@ -32,7 +32,7 @@ const StyledButton = styled.button`
   border-radius: 8px;
   padding: 10px;
 
-  background-color: ${THEME.BUTTON.GREEN};
+  background-color: ${THEME.BUTTON.BLUE};
   color: #ffffff;
   font-weight: bold;
 
