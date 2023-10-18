@@ -23,7 +23,7 @@
 - 원한다면 공지사항 업로드 시 push 알림을 받을 수 있어요
 <div style="display: flex">
 
-<img width="400" alt="image" src="https://github.com/GDSC-PKNU-21-22/pknu-notice-front/assets/71641127/66975050-bf13-44a2-b124-ae08a569e03a">
+<img width="448" alt="image" src="https://github.com/GDSC-PKNU-Official/pknu-notice-back/assets/71641127/7143348d-5b1a-4acf-b15c-6a1985cc6599">
 </div>
 
 ### 🗺️ 학교 건물 파악하기
