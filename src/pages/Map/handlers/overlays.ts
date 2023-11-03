@@ -19,12 +19,12 @@ class CustomOverlay implements ICustomOverlay {
   private overlays: Record<BuildingType, any[]>;
   private openModal: OpenModal;
   private closeModal: CloseModal;
-  private userLocation: Location;
+  private userLocation: Location | null;
 
   constructor(
     openModal: OpenModal,
     closeModal: CloseModal,
-    userLocation: Location,
+    userLocation: Location | null,
   ) {
     this.openModal = openModal;
     this.closeModal = closeModal;
@@ -56,6 +56,7 @@ class CustomOverlay implements ICustomOverlay {
     const { buildingNumber, buildingName, latlng } = building;
     const [lat, lng] = latlng;
 
+    if (!this.userLocation) return;
     hasLocationPermission(this.userLocation)
       ? this.openModal<typeof modals.confirm>(modals.confirm, {
           message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
