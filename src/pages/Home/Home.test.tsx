@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 
 import Home from './index';
 
-describe('App 컴포넌트 테스트', () => {
+describe('Home Page 컴포넌트 테스트', () => {
   it('페이지에 공지사항 및 졸업요건 컴포넌트가 렌더링된다.', () => {
     render(
       <MajorProvider>
@@ -18,7 +18,7 @@ describe('App 컴포넌트 테스트', () => {
         wrapper: MemoryRouter,
       },
     );
-    const notificationText = screen.getByText('공지사항');
+    const notificationText = screen.getByText('학교 공지사항');
     expect(notificationText).toBeInTheDocument();
 
     const requirementText = screen.getByText('졸업요건');
