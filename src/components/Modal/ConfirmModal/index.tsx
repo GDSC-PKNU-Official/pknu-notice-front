@@ -41,8 +41,8 @@ const ConfirmModal = ({
                 justify-content: center;
               `}
             >
-              <Button onClick={onConfirmButtonClick}>네!</Button>
               <Button onClick={onCancelButtonClick}>아니오</Button>
+              <Button onClick={onConfirmButtonClick}>네!</Button>
             </div>
           </>
         </Modal>
