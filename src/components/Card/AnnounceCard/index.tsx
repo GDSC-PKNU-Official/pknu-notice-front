@@ -2,38 +2,33 @@ import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
+import openLink from '@utils/router/openLink';
 
 interface AnnounceCardProps extends AnnounceItem {
-  Author?: string;
+  author?: string;
 }
 
 const AnnounceCard = ({
   title,
   link,
   uploadDate,
-  Author,
+  author,
 }: AnnounceCardProps) => {
   const { major } = useMajor();
-
-  const onClick = () => {
-    window.open(link, '_blank');
-  };
 
   uploadDate = uploadDate.slice(2);
 
   return (
-    <Card onClick={onClick} data-testid="card">
+    <Card onClick={() => openLink(link)} data-testid="card">
       <ContentContainer>
-        <FlexWrapper>
-          <AnnounceTitle>{title}</AnnounceTitle>
-        </FlexWrapper>
-        <SubTitle>
+        <AnnounceTitle>{title}</AnnounceTitle>
+        <SubContent>
           <AnnounceDate>20{uploadDate}</AnnounceDate>
-          <VertialSeparator />
-          <Source>{Author ? Author : major}</Source>
-        </SubTitle>
+          <VertialBoundaryLine />
+          <Source>{author ? author : major}</Source>
+        </SubContent>
       </ContentContainer>
-      <Contour />
+      <HorizonBoundaryLine />
     </Card>
   );
 };
@@ -45,28 +40,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   color: ${THEME.TEXT.BLACK};
-`;
-
-const ContentContainer = styled.div`
-  padding: 20px 0 20px 0;
-  display: flex;
-  line-height: 1.5;
-  flex-direction: column;
-`;
-
-const AnnounceTitle = styled.span`
-  display: flex;
-  align-items: center;
-  flex: 9;
-  font-size: 16px;
-  font-weight: 500;
-  margin-left: 28px;
-
-  &: hover {
-    cursor: pointer;
-  }
 
   transition: 0.3s;
   &:active {
@@ -75,7 +49,24 @@ const AnnounceTitle = styled.span`
   }
 `;
 
-const VertialSeparator = styled.div`
+const ContentContainer = styled.div`
+  padding: 20px 0 20px 0;
+  display: flex;
+  line-height: 1.5;
+  flex-direction: column;
+
+  gap: 10px;
+`;
+
+const AnnounceTitle = styled.span`
+  display: flex;
+  align-items: center;
+  flex: 9;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const VertialBoundaryLine = styled.div`
   border-left: 1px solid gray;
   height: 12px;
   margin: 0 5px;
@@ -89,20 +80,13 @@ const AnnounceDate = styled.span`
   padding-right: 5px;
 `;
 
-const Contour = styled.div`
-  width: 90%;
-  margin: 0 auto;
+const HorizonBoundaryLine = styled.div`
   border-bottom: 1px solid ${THEME.BACKGROUND};
 `;
 
-const FlexWrapper = styled.div`
-  display: flex;
-`;
-
-const SubTitle = styled.div`
+const SubContent = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 0 0 28px;
 `;
 
 const Source = styled.div`
