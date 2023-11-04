@@ -23,8 +23,9 @@ const InformCard = ({
 }: InformCardProps) => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
-  const routerToMajorDecision = () => routerTo('/major-decision');
   const { openModal, closeModal } = useModals();
+
+  const routeToMajorDecisionPage = () => routerTo('/major-decision');
 
   const handleMajorModal = () => {
     if (!majorRequired || major) {
@@ -38,7 +39,7 @@ const InformCard = ({
       onClose: () => closeModal(modals.alert),
       routerTo: () => {
         closeModal(modals.alert);
-        routerToMajorDecision();
+        routeToMajorDecisionPage();
       },
     });
   };
@@ -46,40 +47,13 @@ const InformCard = ({
   return (
     <>
       <Card data-testid="card" onClick={handleMajorModal}>
-        <Wrapper>
-          <div
-            css={css`
-              display: flex;
-              border-radius: 50%;
-              background-color: ${THEME.PRIMARY};
-              height: 45px;
-              width: 45px;
-              justify-content: center;
-              align-items: center;
-            `}
-          >
-            <Icon kind={icon} color={THEME.TEXT.WHITE} />
-          </div>
-        </Wrapper>
-        <Wrapper>
-          <span
-            css={css`
-              font-size: 13px;
-            `}
-          >
-            {title}
-          </span>
-          <span
-            css={css`
-              font-size: 15px;
-              margin: auto 0;
-              font-weight: bold;
-              color: ${THEME.TEXT.BLACK};
-            `}
-          >
-            {title} 보러가기
-          </span>
-        </Wrapper>
+        <IconContainer>
+          <Icon kind={icon} color={THEME.TEXT.WHITE} />
+        </IconContainer>
+        <TextContainer>
+          <span>{title}</span>
+          <span>{title} 보러가기</span>
+        </TextContainer>
       </Card>
     </>
   );
@@ -89,33 +63,38 @@ export default InformCard;
 
 const Card = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
   padding: 3% 1% 2% 0;
-  color: ${THEME.TEXT.GRAY};
-  height: 70px;
-
-  & > svg {
-    margin: 10px 0;
-  }
-  cursor: pointer;
+  height: 4rem;
 
   transition: all 0.2s ease-in-out;
 
-  &:active {
-    transform: scale(0.95);
-    opacity: 0.6;
+  span:nth-of-type(1) {
+    font-size: 12px;
+    color: ${THEME.TEXT.GRAY};
+  }
+
+  span:nth-of-type(2) {
+    font-size: 16px;
+    font-weight: bold;
+    color: ${THEME.TEXT.BLACK};
   }
 `;
 
-const Wrapper = styled.div`
-  &:first-of-type {
-    display: flex;
-    align-items: center;
-  }
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
-  &:nth-of-type(2) {
-    display: flex;
-    flex-direction: column;
-    padding: 4% 0 3% 3%;
-  }
+const IconContainer = styled.div`
+  height: 45px;
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+
+  border-radius: 50%;
+  background-color: ${THEME.PRIMARY};
 `;
