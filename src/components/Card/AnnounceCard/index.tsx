@@ -1,39 +1,34 @@
-import Icon from '@components/Icon';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import useMajor from '@hooks/useMajor';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItem } from '@type/announcement';
+import openLink from '@utils/router/openLink';
 
 interface AnnounceCardProps extends AnnounceItem {
-  pinned?: boolean;
+  author?: string;
 }
 
 const AnnounceCard = ({
   title,
   link,
   uploadDate,
-  pinned = false,
+  author,
 }: AnnounceCardProps) => {
-  const onClick = () => {
-    window.open(link, '_blank');
-  };
+  const { major } = useMajor();
 
   uploadDate = uploadDate.slice(2);
 
   return (
-    <Card onClick={onClick} data-testid="card">
+    <Card onClick={() => openLink(link)} data-testid="card">
       <ContentContainer>
-        {pinned && <Icon kind="speaker" color={THEME.PRIMARY} />}
-        <AnnounceTitle pinned={pinned}>{title}</AnnounceTitle>
-        <VertialSeparator
-          css={css`
-            border-left: 1px solid gray;
-            height: 12px;
-            margin: 0 5px;
-          `}
-        />
-        <AnnounceDate>{uploadDate}</AnnounceDate>
+        <AnnounceTitle>{title}</AnnounceTitle>
+        <SubContent>
+          <AnnounceDate>20{uploadDate}</AnnounceDate>
+          <VertialBoundaryLine />
+          <Source>{author ? author : major}</Source>
+        </SubContent>
       </ContentContainer>
+      <HorizonBoundaryLine />
     </Card>
   );
 };
@@ -41,33 +36,11 @@ const AnnounceCard = ({
 export default AnnounceCard;
 
 const Card = styled.div`
-  height: 28px;
-  padding: 10px;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   color: ${THEME.TEXT.BLACK};
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const AnnounceTitle = styled.span<{ pinned: boolean }>`
-  flex: 9;
-  font-size: 15px;
-  font-weight: ${({ pinned }) => (pinned ? 'bold' : 500)};
-  margin-left: ${({ pinned }) => (pinned ? '' : '28px')};
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  &: hover {
-    cursor: pointer;
-  }
 
   transition: 0.3s;
   &:active {
@@ -76,18 +49,48 @@ const AnnounceTitle = styled.span<{ pinned: boolean }>`
   }
 `;
 
-const VertialSeparator = styled.div`
+const ContentContainer = styled.div`
+  padding: 20px 0 20px 0;
+  display: flex;
+  line-height: 1.5;
+  flex-direction: column;
+
+  gap: 10px;
+`;
+
+const AnnounceTitle = styled.span`
+  display: flex;
+  align-items: center;
+  flex: 9;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const VertialBoundaryLine = styled.div`
   border-left: 1px solid gray;
   height: 12px;
   margin: 0 5px;
 `;
 
 const AnnounceDate = styled.span`
-  flex: 1;
-  font-size: 10px;
-  font-weight: bold;
-  text-align: end;
+  font-size: 13px;
   white-space: nowrap;
 
   color: ${THEME.TEXT.GRAY};
+  padding-right: 5px;
+`;
+
+const HorizonBoundaryLine = styled.div`
+  border-bottom: 1px solid ${THEME.BACKGROUND};
+`;
+
+const SubContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Source = styled.div`
+  font-size: 13px;
+  color: gray;
+  padding-left: 5px;
 `;

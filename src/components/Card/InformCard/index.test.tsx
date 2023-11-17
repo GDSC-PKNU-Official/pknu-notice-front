@@ -43,12 +43,13 @@ const setMajorMock = (isRender: boolean) => {
 
   jest.mock('react', () => ({
     ...jest.requireActual('react'),
-    useState: () => [mockMajor, mockSetMajor],
+    useState: () => [mockMajor, mockSetMajor, graduationLink],
   }));
 
   return {
     major: mockMajor,
     setMajor: mockSetMajor,
+    graduationLink,
   };
 };
 

@@ -15,7 +15,9 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe.skip('학과선택 페이지 로직 테스트', () => {
+  const mockGraduationLink = 'https://ce.pknu.ac.kr/ce/2889';
   const mockSetMajor = jest.fn();
+
   beforeEach(() => {
     jest.mock('react', () => ({
       ...jest.requireActual('react'),
@@ -30,7 +32,13 @@ describe.skip('학과선택 페이지 로직 테스트', () => {
   it('전공 선택 버튼 클릭 후, 상태 변경 테스트', async () => {
     render(
       <MemoryRouter>
-        <MajorContext.Provider value={{ major: null, setMajor: mockSetMajor }}>
+        <MajorContext.Provider
+          value={{
+            major: null,
+            setMajor: mockSetMajor,
+            graduationLink: mockGraduationLink,
+          }}
+        >
           <MajorDecision />
         </MajorContext.Provider>
       </MemoryRouter>,

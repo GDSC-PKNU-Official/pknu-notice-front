@@ -67,7 +67,7 @@ const CarouselContainer = styled.div`
   padding: 1rem 0 1rem;
   width: 100%;
   margin: 0 auto;
-  &: hover {
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -100,7 +100,7 @@ const Button = styled.button`
   border-radius: 0.5rem;
   margin-top: 1rem;
 
-  &: hover {
+  &:hover {
     cursor: pointer;
   }
 `;

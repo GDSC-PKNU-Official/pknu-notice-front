@@ -31,6 +31,7 @@ jest.mock('@hooks/useModals', () => {
 });
 
 describe.skip('학과선택 테스트', () => {
+  const mockGraduationLink = 'https://ce.pknu.ac.kr/ce/2889';
   const mockUseMajor = useMajor as jest.MockedFunction<typeof useMajor>;
   const mockSetMajor = jest.fn();
 
@@ -38,6 +39,7 @@ describe.skip('학과선택 테스트', () => {
     mockUseMajor.mockReturnValue({
       setMajor: mockSetMajor,
       major: '컴퓨터공학과',
+      graduationLink: mockGraduationLink,
     });
   });
 
