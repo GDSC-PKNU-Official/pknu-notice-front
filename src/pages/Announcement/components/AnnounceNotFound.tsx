@@ -1,4 +1,4 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React from 'react';

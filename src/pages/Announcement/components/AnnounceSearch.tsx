@@ -1,4 +1,4 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import PATH from '@constants/path';
 import PLCACEHOLDER_MESSAGES from '@constants/placeholder-message';
 import TOAST_MESSAGES from '@constants/toast-message';

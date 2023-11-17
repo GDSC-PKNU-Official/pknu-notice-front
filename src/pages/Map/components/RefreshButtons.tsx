@@ -1,4 +1,4 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import { PKNU_MAP_CENTER } from '@constants/pknu-map';
 import TOAST_MESSAGES from '@constants/toast-message';
 import styled from '@emotion/styled';

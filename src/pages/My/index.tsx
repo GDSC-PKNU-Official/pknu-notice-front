@@ -1,7 +1,7 @@
 import http from '@apis/http';
-import Button from '@components/Button';
-import ToggleButton from '@components/Button/Toggle';
-import Icon from '@components/Icon';
+import Button from '@components/Common/Button';
+import ToggleButton from '@components/Common/Button/Toggle';
+import Icon from '@components/Common/Icon';
 import { SERVER_URL } from '@config/index';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';

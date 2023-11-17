@@ -1,4 +1,4 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -53,9 +53,5 @@ const ListWrapper = styled.div`
   &:active {
     transform: scale(0.95);
     opacity: 0.6;
-  }
-
-  &: hover {
-    cursor: pointer;
   }
 `;

@@ -1,4 +1,4 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import SIDEBAR_CONTENT from '@constants/sidebar';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';

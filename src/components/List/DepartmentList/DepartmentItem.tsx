@@ -1,6 +1,6 @@
 import http from '@apis/http';
-import Button from '@components/Button';
-import Icon from '@components/Icon';
+import Button from '@components/Common/Button';
+import Icon from '@components/Common/Icon';
 import { SERVER_URL } from '@config/index';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
@@ -114,10 +114,6 @@ const ListWrapper = styled.div`
   &:active {
     transform: scale(0.95);
     opacity: 0.6;
-  }
-
-  &: hover {
-    cursor: pointer;
   }
 `;
 

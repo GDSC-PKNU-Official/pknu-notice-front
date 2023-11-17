@@ -1,6 +1,6 @@
 import fetchAnnounceList from '@apis/Suspense/fetch-announce-list';
-import AnnounceList from '@components/Card/AnnounceCard/AnnounceList';
-import AnnounceCardSkeleton from '@components/Card/AnnounceCard/Skeleton';
+import AnnounceList from '@components/List/AnnounceList';
+import AnnounceCardSkeleton from '@components/List/AnnounceList/Skeleton';
 import { ANNOUNCEMENT_TYPE } from '@constants/announcement';
 import PATH from '@constants/path';
 import { keyframes } from '@emotion/react';

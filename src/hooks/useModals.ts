@@ -1,6 +1,6 @@
-import AlertModal from '@components/Modal/AlertModal';
-import ConfirmModal from '@components/Modal/ConfirmModal';
-import SuggestionModal from '@components/Modal/SuggestionModal';
+import AlertModal from '@components/Common/Modal/AlertModal';
+import ConfirmModal from '@components/Common/Modal/ConfirmModal';
+import SuggestionModal from '@components/Common/Modal/SuggestionModal';
 import ModalsContext from '@contexts/modals';
 import {
   ComponentProps,
