@@ -1,4 +1,4 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import PLCACEHOLDER_MESSAGES from '@constants/placeholder-message';

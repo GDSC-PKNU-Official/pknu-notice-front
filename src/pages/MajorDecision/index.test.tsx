@@ -1,4 +1,4 @@
-import MajorProvider from '@components/MajorProvider';
+import MajorProvider from '@components/Providers/MajorProvider';
 import MajorContext from '@contexts/major';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

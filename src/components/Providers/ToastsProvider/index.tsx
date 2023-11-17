@@ -6,7 +6,7 @@ interface ToastProviderProps {
   children: React.ReactNode;
 }
 
-const ToastProvider = ({ children }: ToastProviderProps) => {
+const ToastsProvider = ({ children }: ToastProviderProps) => {
   const [toasts, setToasts] = useState<ToastState[]>([]);
 
   return (
@@ -18,4 +18,4 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
   );
 };
 
-export default ToastProvider;
+export default ToastsProvider;

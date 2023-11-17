@@ -1,5 +1,5 @@
-import MajorProvider from '@components/MajorProvider';
-import ModalsProvider from '@components/ModalsProvider';
+import MajorProvider from '@components/Providers/MajorProvider';
+import ModalsProvider from '@components/Providers/ModalsProvider';
 import useModals, { modals } from '@hooks/useModals';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

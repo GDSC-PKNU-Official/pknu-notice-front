@@ -3,11 +3,11 @@ import SkeletomItem from '@styles/Skeleton/SkeletonItem';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React from 'react';
 
-interface CollegeSkeletonProps {
+interface CollegeListSkeletonProps {
   length: number;
 }
 
-const CollegeSkeleton = ({ length }: CollegeSkeletonProps) => {
+const CollegeListSkeleton = ({ length }: CollegeListSkeletonProps) => {
   return (
     <>
       {Array.from({ length }, (_, idx) => (
@@ -20,7 +20,7 @@ const CollegeSkeleton = ({ length }: CollegeSkeletonProps) => {
   );
 };
 
-export default CollegeSkeleton;
+export default CollegeListSkeleton;
 
 const ListWrapper = styled.div`
   display: flex;

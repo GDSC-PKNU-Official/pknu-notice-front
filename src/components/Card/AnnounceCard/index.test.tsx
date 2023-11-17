@@ -1,5 +1,5 @@
 import http from '@apis/http';
-import MajorProvider from '@components/MajorProvider';
+import MajorProvider from '@components/Providers/MajorProvider';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AnnounceItemList } from '@type/announcement';

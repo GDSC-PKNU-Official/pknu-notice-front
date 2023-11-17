@@ -8,11 +8,6 @@ interface Props {
   animation: boolean;
 }
 
-interface Circle {
-  isOn: boolean;
-  animation: boolean;
-}
-
 const ToggleButton = (props: Props) => {
   const { isOn, changeState, animation } = props;
 
@@ -25,6 +20,11 @@ const ToggleButton = (props: Props) => {
 
 export default ToggleButton;
 
+// chore : Circle interface 위치 수정
+interface Circle {
+  isOn: boolean;
+  animation: boolean;
+}
 const Button = styled.button<Circle>`
   position: relative;
   border: none;

@@ -1,5 +1,5 @@
-import Button from '@components/Button';
-import Icon from '@components/Icon';
+import Button from '@components/Common/Button';
+import Icon from '@components/Common/Icon';
 import { css } from '@emotion/react';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';

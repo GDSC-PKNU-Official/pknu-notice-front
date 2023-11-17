@@ -1,5 +1,5 @@
-import Icon from '@components/Icon';
-import Image from '@components/Image';
+import Icon from '@components/Common/Icon';
+import Image from '@components/Common/Image';
 import ASSET_PATH from '@constants/assets-path';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';

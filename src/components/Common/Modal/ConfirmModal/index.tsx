@@ -1,4 +1,4 @@
-import Button from '@components/Button';
+import Button from '@components/Common/Button';
 import { css } from '@emotion/react';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React from 'react';

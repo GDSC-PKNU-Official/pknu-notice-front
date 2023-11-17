@@ -4,9 +4,9 @@ import useUserLocation from '@hooks/useUserLocation';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { CustomOverlay } from '../handlers';
+import CustomOverlay from './overlay';
 
-const MapProvider = () => {
+const OverlayProvider = () => {
   const { openModal, closeModal } = useModals();
   const userLocation = useUserLocation();
   const customOverlay = new CustomOverlay(openModal, closeModal, userLocation);
@@ -18,4 +18,4 @@ const MapProvider = () => {
   );
 };
 
-export default MapProvider;
+export default OverlayProvider;

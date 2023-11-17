@@ -1,5 +1,5 @@
-import Icon from '@components/Icon';
-import Image from '@components/Image';
+import Icon from '@components/Common/Icon';
+import Image from '@components/Common/Image';
 import TIP_CONTENT from '@constants/tip';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';

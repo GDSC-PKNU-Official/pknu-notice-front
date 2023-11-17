@@ -1,5 +1,5 @@
-import AlertModal from '@components/Modal/AlertModal';
-import ModalsProvider from '@components/ModalsProvider';
+import AlertModal from '@components/Common/Modal/AlertModal';
+import ModalsProvider from '@components/Providers/ModalsProvider';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import MajorContext from '@contexts/major';
 import useModals from '@hooks/useModals';
@@ -9,8 +9,8 @@ import Major from '@type/major';
 import { IconKind } from '@type/styles/icon';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
-
 import '@testing-library/jest-dom';
+
 import InformCard from './index';
 
 type INFORM_CARD_TYPE = 'ANNOUNCEMENT' | 'GRADUATION';

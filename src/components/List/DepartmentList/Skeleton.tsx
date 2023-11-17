@@ -1,15 +1,15 @@
-import Button from '@components/Button';
+import Button from '@components/Common/Button';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import SkeletomItem from '@styles/Skeleton/SkeletonItem';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React from 'react';
 
-interface DepartmentSkeletonProps {
+interface DepartmentListSkeletonProps {
   length: number;
 }
 
-const DepartmentSkeleton = ({ length }: DepartmentSkeletonProps) => {
+const DepartmentListSkeleton = ({ length }: DepartmentListSkeletonProps) => {
   return (
     <>
       <div
@@ -31,7 +31,7 @@ const DepartmentSkeleton = ({ length }: DepartmentSkeletonProps) => {
   );
 };
 
-export default DepartmentSkeleton;
+export default DepartmentListSkeleton;
 
 const ListWrapper = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import React, { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 
 import DepartmentItem from './DepartmentItem';
-import DepartmentSkeleton from '../Skeleton/department';
+import DepartmentSkeleton from './Skeleton';
 
 const DepartmentList = () => {
   const { college } = useParams();

@@ -2,11 +2,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import SkeletomItem from '@styles/Skeleton/SkeletonItem';
 
-interface AnnounceCardSkeletonProps {
+interface AnnounceListSkeletonProps {
   length: number;
 }
 
-const AnnounceCardSkeleton = ({ length }: AnnounceCardSkeletonProps) => {
+const AnnounceListSkeleton = ({ length }: AnnounceListSkeletonProps) => {
   return (
     <>
       {Array.from({ length }, (_, idx) => (
@@ -28,7 +28,7 @@ const AnnounceCardSkeleton = ({ length }: AnnounceCardSkeletonProps) => {
   );
 };
 
-export default AnnounceCardSkeleton;
+export default AnnounceListSkeleton;
 
 const Card = styled.div`
   height: 28px;

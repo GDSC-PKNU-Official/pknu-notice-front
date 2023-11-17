@@ -1,6 +1,5 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
 import useModals, { modals } from '@hooks/useModals';

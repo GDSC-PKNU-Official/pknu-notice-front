@@ -6,7 +6,7 @@ import { AnnounceItemList, AnnouncementType } from '@type/announcement';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Fragment } from 'react';
 
-import AnnounceCard from '..';
+import AnnounceCard from '../../Card/AnnounceCard';
 
 type Resource =
   | AxiosResponse<AnnounceItemList>
