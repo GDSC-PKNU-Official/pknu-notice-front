@@ -1,14 +1,19 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import SideBar from '@components/SideBar';
 import SideBarContent from '@components/SideBar/Content';
 import styled from '@emotion/styled';
 import useRoter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const { routerTo, goBack } = useRoter();
   const [open, setOpen] = useState<boolean>(false);
+  const location = useLocation();
+
+  if (location.pathname === '/map') return <></>;
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
