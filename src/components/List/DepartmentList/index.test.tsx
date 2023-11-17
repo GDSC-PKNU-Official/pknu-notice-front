@@ -1,7 +1,7 @@
+import ConfirmModal from '@components/Common/Modal/ConfirmModal';
 import DepartmentList from '@components/List/DepartmentList';
-import MajorProvider from '@components/MajorProvider';
-import ConfirmModal from '@components/Modal/ConfirmModal';
-import ModalsProvider from '@components/ModalsProvider';
+import MajorProvider from '@components/Providers/MajorProvider';
+import ModalsProvider from '@components/Providers/ModalsProvider';
 import { MODAL_MESSAGE } from '@constants/modal-messages';
 import useMajor from '@hooks/useMajor';
 import useModals from '@hooks/useModals';
