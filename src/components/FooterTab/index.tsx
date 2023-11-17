@@ -1,9 +1,9 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 
-const footerTabs = [
+const FOOTER_TABS = [
   { kind: 'map', label: '지도', path: '/map' },
   { kind: 'home', label: '홈', path: '/' },
   { kind: 'accountCircle', label: '마이', path: '/my' },
@@ -16,7 +16,7 @@ const FooterTab = () => {
 
   return (
     <Footer>
-      {footerTabs.map(({ kind, label, path }) => (
+      {FOOTER_TABS.map(({ kind, label, path }) => (
         <TabButton
           role="button"
           key={kind}
