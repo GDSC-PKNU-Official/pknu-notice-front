@@ -2,6 +2,7 @@ import BodyLayout from '@components/BodyLayout';
 import FooterTab from '@components/FooterTab';
 import Header from '@components/Header';
 import Announcement from '@pages/Announcement';
+import FAQPage from '@pages/FAQ';
 import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
 import Map from '@pages/Map';
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/major-decision/*" element={<MajorDecision />} />
           <Route path="/my" element={<My />} />
           <Route path="/tip" element={<Tip />} />
+          <Route path="/FAQ" element={<FAQPage />} />
         </Route>
         <Route element={<OverlayProvider />}>
           <Route path="/map" element={<Map />} />
