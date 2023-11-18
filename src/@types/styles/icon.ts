@@ -6,6 +6,7 @@ export type IconKind =
   | 'notification'
   | 'school'
   | 'arrowBack'
+  | 'arrowRight'
   | 'plus'
   | 'edit'
   | 'suggest'
