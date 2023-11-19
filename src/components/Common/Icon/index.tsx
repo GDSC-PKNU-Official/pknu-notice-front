@@ -25,6 +25,7 @@ import {
   MdOutlineLightbulb,
   MdOutlineMyLocation,
   MdOutlineError,
+  MdOutlineKeyboardArrowRight,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -35,6 +36,7 @@ const ICON: { [key in IconKind]: IconType } = {
   notification: MdNotifications,
   school: MdSchool,
   arrowBack: MdArrowBackIos,
+  arrowRight: MdOutlineKeyboardArrowRight,
   plus: MdAddCircleOutline,
   edit: MdOutlineModeEdit,
   suggest: MdOutlineQuestionAnswer,
