@@ -1,5 +1,5 @@
 import FAQBox from '@components/FAQBox';
-import { FAQ_DATA, FQA_CONSTANTS } from '@constants/FAQ';
+import { FAQ_DATA, FAQ_CONSTANTS } from '@constants/FAQ';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React from 'react';
@@ -8,8 +8,8 @@ const FAQPage = () => {
   return (
     <Container>
       <TextContainer>
-        <FAQTitle>{FQA_CONSTANTS.TITLE}</FAQTitle>
-        <FAQSubTitle>{FQA_CONSTANTS.SUB_TITLE}</FAQSubTitle>
+        <FAQTitle>{FAQ_CONSTANTS.TITLE}</FAQTitle>
+        <FAQSubTitle>{FAQ_CONSTANTS.SUB_TITLE}</FAQSubTitle>
         <BoundaryLine />
       </TextContainer>
       <FAQContainer>

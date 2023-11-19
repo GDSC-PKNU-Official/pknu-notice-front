@@ -1,4 +1,4 @@
-const FQA_CONSTANTS = {
+const FAQ_CONSTANTS = {
   QUESTION_MARK: 'Q.',
   LINE_SEPERATOR: '\n',
   TITLE: '자주 묻는 질문',
@@ -6,4 +6,4 @@ const FQA_CONSTANTS = {
   LINK: '링크',
 } as const;
 
-export default FQA_CONSTANTS;
+export default FAQ_CONSTANTS;

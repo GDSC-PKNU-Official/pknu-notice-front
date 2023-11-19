@@ -1,5 +1,5 @@
 import Icon from '@components/Common/Icon';
-import { FQA_CONSTANTS } from '@constants/FAQ';
+import { FAQ_CONSTANTS } from '@constants/FAQ';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -25,13 +25,13 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
 
   const hasAnswerLink = () => !!answer.link;
   const answerTextSeperatedLine = answer.text.split(
-    FQA_CONSTANTS.LINE_SEPERATOR,
+    FAQ_CONSTANTS.LINE_SEPERATOR,
   );
 
   return (
     <>
       <QuestionContainer onClick={toggleAnswer} showAnswer={showAnswer}>
-        <QuestionMark>{FQA_CONSTANTS.QUESTION_MARK}</QuestionMark>
+        <QuestionMark>{FAQ_CONSTANTS.QUESTION_MARK}</QuestionMark>
         <QuestionText>{question}</QuestionText>
         <IconContainer>
           <Icon kind="arrowRight" size="24" />
@@ -43,7 +43,7 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
             <p key={index}>{line}</p>
           ))}
           {hasAnswerLink() && (
-            <StyledLink onClick={moveToLink}>{FQA_CONSTANTS.LINK}</StyledLink>
+            <StyledLink onClick={moveToLink}>{FAQ_CONSTANTS.LINK}</StyledLink>
           )}
         </AnswerContainer>
       )}
