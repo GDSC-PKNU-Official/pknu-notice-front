@@ -7,15 +7,13 @@ interface TipCardListProps {
   tipItemRenderer: (tipItem: TipData) => JSX.Element;
 }
 
-const TipCarList = ({ tipList, tipItemRenderer }: TipCardListProps) => {
-  return (
-    <Container>{tipList.map((tipItem) => tipItemRenderer(tipItem))}</Container>
-  );
+const TipCardList = ({ tipList, tipItemRenderer }: TipCardListProps) => {
+  return <Grid>{tipList.map((tipItem) => tipItemRenderer(tipItem))}</Grid>;
 };
 
-export default TipCarList;
+export default TipCardList;
 
-const Container = styled.section`
+const Grid = styled.section`
   display: grid;
   padding: 0 20px 10px 20px;
   grid-template-columns: 1fr auto;

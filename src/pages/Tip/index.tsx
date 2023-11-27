@@ -1,6 +1,6 @@
 import TipCard from '@components/Card/TipCard';
 import InformUpperLayout from '@components/InformUpperLayout';
-import TipCarList from '@components/List/TipCardList';
+import TipCardList from '@components/List/TipCardList';
 import PATH from '@constants/path';
 import {
   HONEY_TIP_DATA,
@@ -40,7 +40,7 @@ const Tip = () => {
           onClick={routerToHoneyTip}
         />
       </InformUpperLayout>
-      <TipCarList
+      <TipCardList
         tipList={tipList}
         tipItemRenderer={(tipItem: TipData) => (
           <TipCard onClick={() => openLink(tipItem.link)}>
