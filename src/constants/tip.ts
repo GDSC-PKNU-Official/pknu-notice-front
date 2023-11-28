@@ -6,7 +6,7 @@ export interface TipData {
   link: string;
 }
 
-export const SHORTCUT_DATA: TipData[] = [
+export const SHORTCUT_DATA: readonly TipData[] = [
   {
     title: '부경대학교',
     subTitle: '부경대학교\n홈페이지로 이동',
@@ -56,9 +56,9 @@ export const SHORTCUT_DATA: TipData[] = [
     pngPath: '/assets/tipImages/png/baekgyeong_hi.png',
     link: 'https://pknulib.champstudy.com/',
   },
-];
+] as const;
 
-export const HONEY_TIP_DATA: TipData[] = [
+export const HONEY_TIP_DATA: readonly TipData[] = [
   {
     title: '아우란트검사',
     subTitle: '인성·역량·취업준비도\n·진로적성검사',
@@ -87,12 +87,12 @@ export const HONEY_TIP_DATA: TipData[] = [
     pngPath: '/assets/tipImages/png/baekgyeong_teach.png',
     link: 'https://irumi.pknu.ac.kr/nxui/launch.html?screenid=Desktop_screen_quick&menuId=U020913',
   },
-];
+] as const;
 
 export const TIP_TYPE = {
   SHORTCUT: 'shortcut',
   HONEY_TIP: 'honeytip',
-};
+} as const;
 
 export const TIP_PAGE = {
   TITLE: '꿀팁 사이트',
