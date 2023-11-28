@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/announcement/*" element={<Announcement />} />
           <Route path="/major-decision/*" element={<MajorDecision />} />
           <Route path="/my" element={<My />} />
-          <Route path="/tip" element={<Tip />} />
+          <Route path="/tip/:type" element={<Tip />} />
           <Route path="/FAQ" element={<FAQPage />} />
         </Route>
         <Route element={<OverlayProvider />}>

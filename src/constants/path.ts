@@ -9,6 +9,10 @@ const PATH = {
     `/announcement/${category}/pinned`,
   SEARCH_ANNOUNCEMENT: (category: Category, keyword: string) =>
     `/announcement/${category}/search?q=${keyword}`,
+  TIP: {
+    SHORTCUT: '/tip/shortcut',
+    HONEY_TIP: '/tip/honeytip',
+  },
 } as const;
 
 export default PATH;

@@ -1,40 +1,59 @@
-import Icon from '@components/Common/Icon';
-import Image from '@components/Common/Image';
-import TIP_CONTENT from '@constants/tip';
-import { css } from '@emotion/react';
+import TipCard from '@components/Card/TipCard';
+import InformUpperLayout from '@components/InformUpperLayout';
+import TipCardList from '@components/List/TipCardList';
+import PATH from '@constants/path';
+import {
+  HONEY_TIP_DATA,
+  SHORTCUT_DATA,
+  TIP_PAGE,
+  TIP_TYPE,
+  TipData,
+} from '@constants/tip';
 import styled from '@emotion/styled';
-import { THEME } from '@styles/ThemeProvider/theme';
+import useRouter from '@hooks/useRouter';
+import openLink from '@utils/router/openLink';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const Tip = () => {
-  const moveToPath = (path: string) => {
-    window.open(path, '_blank');
-  };
+  const { type } = useParams();
+  if (!type) return <></>;
+
+  const { routerTo } = useRouter();
+  const routerToShortcut = () => routerTo(PATH.TIP.SHORTCUT);
+  const routerToHoneyTip = () => routerTo(PATH.TIP.HONEY_TIP);
+  const tipList = type === TIP_TYPE.SHORTCUT ? SHORTCUT_DATA : HONEY_TIP_DATA;
 
   return (
     <Container>
-      {TIP_CONTENT.map((item) => {
-        return (
-          <TipItem key={item.id} onClick={() => moveToPath(item.path)}>
-            {item.iconKind && (
-              <IconContainer>
-                <Icon kind={item.iconKind} color={THEME.TEXT.WHITE} />
-              </IconContainer>
-            )}
-            {item.imagePath && (
-              <Image
-                src={item.imagePath}
-                size="tiny"
-                outline={false}
-                css={css`
-                  border-radius: 50%;
-                `}
-              />
-            )}
-            {item.title}
-          </TipItem>
-        );
-      })}
+      <InformUpperLayout>
+        <InformUpperLayout.InformTitle title={TIP_PAGE.TITLE} />
+        <InformUpperLayout.InformSubTitle subTitle={TIP_PAGE.SUB_TITLE} />
+        <InformUpperLayout.InformTypeButton
+          type={TIP_PAGE.BUTTON.SHORTCUT}
+          isActive={type === TIP_TYPE.SHORTCUT}
+          onClick={routerToShortcut}
+        />
+        <InformUpperLayout.InformTypeButton
+          type={TIP_PAGE.BUTTON.HONEY_TIP}
+          isActive={type === TIP_TYPE.HONEY_TIP}
+          onClick={routerToHoneyTip}
+        />
+      </InformUpperLayout>
+      <TipCardList
+        tipList={tipList}
+        tipItemRenderer={(tipItem: TipData) => (
+          <TipCard onClick={() => openLink(tipItem.link)}>
+            <TipCard.TipTitle title={tipItem.title} />
+            <TipCard.TipSubTitle subTitle={tipItem.subTitle} />
+            <TipCard.TipImage
+              title={tipItem.title}
+              webpPath={tipItem.webpPath}
+              pngPath={tipItem.pngPath}
+            />
+          </TipCard>
+        )}
+      />
     </Container>
   );
 };
@@ -42,34 +61,6 @@ const Tip = () => {
 export default Tip;
 
 const Container = styled.section`
-  width: 80%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin: 0 auto;
-
-  line-height: 4;
-  gap: 10px;
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  border-radius: 50%;
-  background-color: ${THEME.PRIMARY};
-  height: 45px;
-  width: 45px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TipItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: ${THEME.IVORY};
-  padding: 5px;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;

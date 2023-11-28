@@ -7,7 +7,7 @@ const imageSize: ImageSize = {
   large: setSize(200),
   medium: setSize(150),
   small: setSize(100),
-  tiny: setSize(45),
+  tiny: setSize(80),
 };
 
 const Image = ({
