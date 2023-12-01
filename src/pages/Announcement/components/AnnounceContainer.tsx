@@ -1,4 +1,5 @@
 import fetchAnnounceList from '@apis/Suspense/fetch-announce-list';
+import InformUpperLayout from '@components/InformUpperLayout';
 import AnnounceList from '@components/List/AnnounceList';
 import AnnounceCardSkeleton from '@components/List/AnnounceList/Skeleton';
 import { ANNOUNCEMENT_TYPE } from '@constants/announcement';
@@ -6,6 +7,7 @@ import PATH from '@constants/path';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
+import { THEME } from '@styles/ThemeProvider/theme';
 import {
   AnnounceItemList,
   AnnouncementCategory,
@@ -13,9 +15,6 @@ import {
 } from '@type/announcement';
 import React, { Suspense, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-
-import AnnounceSearch from './AnnounceSearch';
-import AnnounceTypeButtons from './AnnounceTypeButtons';
 
 interface AnnounceContainerProps {
   title: string;
@@ -45,20 +44,21 @@ const AnnounceContainer = ({
 
   return (
     <Container>
-      <AnnounceTitle>{title}</AnnounceTitle>
-      <AnnounceSearch category={category} />
-      <ButtonContainer>
-        <AnnounceTypeButtons
+      <InformUpperLayout>
+        <InformUpperLayout.InformTitle title={title} />
+        <InformUpperLayout.InformSearchForm category={category} />
+        <InformUpperLayout.InformTypeButton
           type="일반"
-          onClick={showNormalAnnouncement}
           isActive={type === ANNOUNCEMENT_TYPE.NORMAL}
+          onClick={showNormalAnnouncement}
         />
-        <AnnounceTypeButtons
+        <InformUpperLayout.InformTypeButton
           type="고정"
-          onClick={showPinnedAnnouncement}
           isActive={type === ANNOUNCEMENT_TYPE.PINNED}
+          onClick={showPinnedAnnouncement}
         />
-      </ButtonContainer>
+      </InformUpperLayout>
+      <BoundaryLine />
       <AnnounceListContainer type={type as AnnouncementType}>
         <Suspense fallback={<AnnounceCardSkeleton length={30} />}>
           <AnnounceList resource={resource} type={type as AnnouncementType} />
@@ -71,23 +71,9 @@ const AnnounceContainer = ({
 export default AnnounceContainer;
 
 const Container = styled.div`
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-
-  row-gap: 15px;
-  padding: 10px;
-`;
-
-const AnnounceTitle = styled.span`
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  column-gap: 10px;
+  overflow-x: hidden;
 `;
 
 const getAnimationType = (type: AnnouncementType) => {
@@ -96,7 +82,8 @@ const getAnimationType = (type: AnnouncementType) => {
 };
 
 const AnnounceListContainer = styled.div<{ type: AnnouncementType }>`
-  width: 100%;
+  padding: 0 20px 0 20px;
+
   overflow: hidden;
   animation: ${({ type }) => getAnimationType(type)} 0.3s forwards;
 `;
@@ -117,4 +104,12 @@ const AnnounceSlideLeft = keyframes`
   to {
     transform: translateX(0%);
   }
+`;
+
+const BoundaryLine = styled.hr`
+  height: 1px;
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  background-color: ${THEME.TEXT.BLACK};
+  border: none;
 `;
