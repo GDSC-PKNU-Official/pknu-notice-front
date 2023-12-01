@@ -1,7 +1,5 @@
 import { ANNOUNCEMENT_TYPE } from '@constants/announcement';
-import styled from '@emotion/styled';
 import { AnnounceSearchList } from '@pages/Announcement/components';
-import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItemList, AnnouncementType } from '@type/announcement';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Fragment } from 'react';
