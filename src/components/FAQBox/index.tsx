@@ -18,9 +18,7 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const toggleAnswer = () => setShowAnswer((prevState) => !prevState);
 
-  const answerTextSeperatedLine = answer.text.split(
-    FAQ_CONSTANTS.LINE_SEPERATOR,
-  );
+  const seperatedAnswerText = answer.text.split(FAQ_CONSTANTS.LINE_SEPERATOR);
   const moveToLink = () => {
     if (!answer.link) return;
     openLink(answer.link);
@@ -38,7 +36,7 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
       </QuestionContainer>
       {showAnswer && (
         <AnswerContainer>
-          {answerTextSeperatedLine.map((line, index) => (
+          {seperatedAnswerText.map((line, index) => (
             <p key={index}>{line}</p>
           ))}
           {hasAnswerLink() && (
@@ -82,8 +80,6 @@ const IconContainer = styled.div`
   position: absolute;
   right: 0;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
 `;
 
 const AnswerContainer = styled.div`
