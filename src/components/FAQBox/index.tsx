@@ -18,15 +18,14 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const toggleAnswer = () => setShowAnswer((prevState) => !prevState);
 
+  const answerTextSeperatedLine = answer.text.split(
+    FAQ_CONSTANTS.LINE_SEPERATOR,
+  );
   const moveToLink = () => {
     if (!answer.link) return;
     openLink(answer.link);
   };
-
   const hasAnswerLink = () => !!answer.link;
-  const answerTextSeperatedLine = answer.text.split(
-    FAQ_CONSTANTS.LINE_SEPERATOR,
-  );
 
   return (
     <>
@@ -34,7 +33,7 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
         <QuestionMark>{FAQ_CONSTANTS.QUESTION_MARK}</QuestionMark>
         <QuestionText>{question}</QuestionText>
         <IconContainer>
-          <Icon kind="arrowRight" size="24" />
+          <Icon kind="arrowDown" size="24" />
         </IconContainer>
       </QuestionContainer>
       {showAnswer && (
@@ -47,7 +46,6 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
           )}
         </AnswerContainer>
       )}
-
       <BoundaryLine />
     </>
   );
@@ -66,7 +64,7 @@ const QuestionContainer = styled.div<{ showAnswer: boolean }>`
       color: ${showAnswer && THEME.PRIMARY};
     }
     & > div > svg {
-      transform: ${showAnswer ? 'rotate(90deg)' : 'rotate(0deg)'};
+      transform: ${showAnswer ? 'rotate(-180deg)' : 'rotate(0deg)'};
       transition: all ease 0.3s;
     }
   `}
@@ -102,6 +100,8 @@ const StyledLink = styled.span`
   border-bottom: 1px solid ${THEME.PRIMARY};
 `;
 
-const BoundaryLine = styled.div`
-  border-bottom: 1px solid #ededed;
+const BoundaryLine = styled.hr`
+  height: 1px;
+  background-color: #ededed;
+  border: none;
 `;
