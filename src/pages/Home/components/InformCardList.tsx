@@ -13,13 +13,13 @@ const InformCardList = () => {
   return (
     <>
       <InformCard
-        icon="notification"
+        icon="schoolBuilding"
         title={ANNOUNCEMENT_TITLE.SCHOOL}
         majorRequired={false}
         onClick={() => routerTo(PATH.NORMAL_ANNOUNCEMENT('school'))}
       />
       <InformCard
-        icon="notification"
+        icon="speaker"
         title={ANNOUNCEMENT_TITLE.MAROR}
         majorRequired={true}
         onClick={() => routerTo(PATH.NORMAL_ANNOUNCEMENT('major'))}
