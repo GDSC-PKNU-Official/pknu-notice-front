@@ -7,10 +7,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-interface WhalebeData {
+export interface WhalebeData {
   title: string;
-  date: string;
-  imgUrl: string;
+  operating_period: string;
+  recruitment_period: string;
+  imgurl: string;
   link: string;
 }
 
@@ -47,10 +48,11 @@ const Carousel = () => {
               onClick={() => window.open(data.link, '_blank')}
             >
               <SliderWrapper>
-                <img src={data.imgUrl} width="100%" height={200} />
+                <img src={data.imgurl} width="100%" height={200} />
               </SliderWrapper>
               <Title>{data.title}</Title>
-              <Date>모집기간: ~ {data.date}</Date>
+              <Date>모집기간: {data.recruitment_period}</Date>
+              <Date>운영기간: {data.operating_period}</Date>
               <DisplayCenterWrapper>
                 <Button>자세히보기</Button>
               </DisplayCenterWrapper>
@@ -80,14 +82,14 @@ const SliderWrapper = styled.div`
 const Title = styled.div`
   font-weight: bold;
   font-size: 1rem;
-  height: 2rem;
+  height: 3rem;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 const Date = styled.div`
   color: ${THEME.TEXT.GRAY};
-  margin-top: 2rem;
+  margin-top: 0.3rem;
   font-size: 0.8rem;
 `;
 
