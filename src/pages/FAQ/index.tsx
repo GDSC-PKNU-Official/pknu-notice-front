@@ -32,7 +32,6 @@ const Container = styled.div`
 const BoundaryLine = styled.hr`
   height: 1px;
   width: calc(100% - 40px);
-  margin: 0 auto;
   background-color: ${THEME.TEXT.BLACK};
   border: none;
 `;
