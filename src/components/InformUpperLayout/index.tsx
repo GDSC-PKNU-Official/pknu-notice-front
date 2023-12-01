@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import getInformUpperLayoutSubElement from './domain/getInformUpperLayoutSubElement';
+import InformSearchForm from './InformSearchForm';
 import InformSubTitle from './InformSubTitle';
 import InformTitle from './InformTitle';
 import InformTypeButton from './InformTypeButton';
@@ -18,11 +19,16 @@ const InformUpperLayout = ({ children }: StrictPropsWithChildren) => {
     children,
     InformTypeButton,
   );
+  const informSearchForm = getInformUpperLayoutSubElement(
+    children,
+    InformSearchForm,
+  );
 
   return (
     <Container>
       {informTitle}
       {informSubTitle}
+      {informSearchForm}
       {informTypeButton && (
         <TypeButtonContainer>{informTypeButton}</TypeButtonContainer>
       )}
@@ -35,6 +41,7 @@ export default InformUpperLayout;
 InformUpperLayout.InformTitle = InformTitle;
 InformUpperLayout.InformSubTitle = InformSubTitle;
 InformUpperLayout.InformTypeButton = InformTypeButton;
+InformUpperLayout.InformSearchForm = InformSearchForm;
 
 const Container = styled.section`
   padding: 0px 20px 0px 20px;
@@ -43,7 +50,7 @@ const Container = styled.section`
 `;
 
 const TypeButtonContainer = styled.div`
-  padding: 0 0 10px 0;
+  padding: 10px 0 10px 0;
   display: flex;
   column-gap: 10px;
 `;
