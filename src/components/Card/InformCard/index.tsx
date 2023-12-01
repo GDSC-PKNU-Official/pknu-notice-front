@@ -8,7 +8,7 @@ import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
 
 interface InformCardProps {
-  icon: IconKind & ('school' | 'notification');
+  icon: IconKind & ('school' | 'schoolBuilding' | 'speaker');
   title: string;
   majorRequired: boolean;
   onClick: () => void;
