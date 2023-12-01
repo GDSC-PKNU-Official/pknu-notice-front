@@ -32,7 +32,6 @@ const AnnounceList = ({ resource, type }: AnnounceListProps) => {
 
   return (
     <>
-      <BoundaryLine />
       {type === ANNOUNCEMENT_TYPE.NORMAL &&
         normalAnnouncemnet.map((announce, idx) => (
           <Fragment key={idx}>
@@ -55,7 +54,3 @@ const AnnounceList = ({ resource, type }: AnnounceListProps) => {
 };
 
 export default AnnounceList;
-
-const BoundaryLine = styled.div`
-  border-bottom: 1px solid ${THEME.TEXT.BLACK};
-`;
