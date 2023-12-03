@@ -5,6 +5,7 @@ import {
   MdHome,
   MdAccountCircle,
   MdSchool,
+  MdOutlineLocationCity,
   MdNotifications,
   MdMenu,
   MdArrowBackIos,
@@ -26,6 +27,7 @@ import {
   MdOutlineMyLocation,
   MdOutlineError,
   MdOutlineKeyboardArrowRight,
+  MdOutlineKeyboardArrowDown,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -35,8 +37,10 @@ const ICON: { [key in IconKind]: IconType } = {
   menu: MdMenu,
   notification: MdNotifications,
   school: MdSchool,
-  arrowBack: MdArrowBackIos,
+  schoolBuilding: MdOutlineLocationCity,
   arrowRight: MdOutlineKeyboardArrowRight,
+  arrowDown: MdOutlineKeyboardArrowDown,
+  arrowBack: MdArrowBackIos,
   plus: MdAddCircleOutline,
   edit: MdOutlineModeEdit,
   suggest: MdOutlineQuestionAnswer,

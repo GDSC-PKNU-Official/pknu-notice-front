@@ -18,7 +18,7 @@ type INFORM_CARD_TYPE = 'ANNOUNCEMENT' | 'GRADUATION';
 type INFORM_CARD_DATA = {
   [key in INFORM_CARD_TYPE]: {
     title: string;
-    icon: IconKind & ('school' | 'notification');
+    icon: IconKind & ('school' | 'schoolBuilding');
     onClick: () => void;
   };
 };
@@ -26,8 +26,8 @@ type INFORM_CARD_DATA = {
 const graduationLink = 'https://ce.pknu.ac.kr/ce/2889';
 const INFORM_CARD: INFORM_CARD_DATA = {
   ANNOUNCEMENT: {
-    title: '공지사항',
-    icon: 'notification',
+    title: '학교 공지사항',
+    icon: 'schoolBuilding',
     onClick: () => mockRouterTo('/announcement'),
   },
   GRADUATION: {

@@ -1,5 +1,6 @@
 import { Children, isValidElement } from 'react';
 
+import InformSearchForm from '../InformSearchForm';
 import InformSubTitle from '../InformSubTitle';
 import InformTitle from '../InformTitle';
 import InformTypeButton from '../InformTypeButton';
@@ -7,7 +8,8 @@ import InformTypeButton from '../InformTypeButton';
 type InformUpperLayoutChildType =
   | typeof InformTitle
   | typeof InformSubTitle
-  | typeof InformTypeButton;
+  | typeof InformTypeButton
+  | typeof InformSearchForm;
 
 const getInformUpperLayoutSubElement = (
   children: React.ReactNode,

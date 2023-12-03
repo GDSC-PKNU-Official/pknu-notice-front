@@ -7,19 +7,19 @@ import useRouter from '@hooks/useRouter';
 import useToasts from '@hooks/useToast';
 import React, { useRef } from 'react';
 
-interface AnnounceSearchProps {
+interface InformSearchForm {
   category: 'school' | 'major';
 }
 
-const AnnounceSearch = ({ category }: AnnounceSearchProps) => {
+const InformSearchForm = ({ category }: InformSearchForm) => {
   const { routerTo } = useRouter();
   const { addToast } = useToasts();
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!inputRef.current) return;
     e.preventDefault();
+
     if (inputRef.current.value.length === 0) {
       addToast(TOAST_MESSAGES.SEARCH_KEYWORD);
       return;
@@ -31,22 +31,20 @@ const AnnounceSearch = ({ category }: AnnounceSearchProps) => {
   };
 
   return (
-    <div>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledInput
-          ref={inputRef}
-          type="text"
-          placeholder={PLCACEHOLDER_MESSAGES.SEARCH_TITLE}
-        />
-        <StyledIconWrapper onClick={() => handleSubmit}>
-          <Icon kind="search" color="#7A9DD3" />
-        </StyledIconWrapper>
-      </StyledForm>
-    </div>
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledInput
+        ref={inputRef}
+        type="text"
+        placeholder={PLCACEHOLDER_MESSAGES.SEARCH_TITLE}
+      />
+      <StyledIconWrapper onClick={() => handleSubmit}>
+        <Icon kind="search" color="#7A9DD3" />
+      </StyledIconWrapper>
+    </StyledForm>
   );
 };
 
-export default AnnounceSearch;
+export default InformSearchForm;
 
 const StyledForm = styled.form`
   display: flex;

@@ -1,7 +1,5 @@
 import { ANNOUNCEMENT_TYPE } from '@constants/announcement';
-import styled from '@emotion/styled';
 import { AnnounceSearchList } from '@pages/Announcement/components';
-import { THEME } from '@styles/ThemeProvider/theme';
 import { AnnounceItemList, AnnouncementType } from '@type/announcement';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Fragment } from 'react';
@@ -32,7 +30,6 @@ const AnnounceList = ({ resource, type }: AnnounceListProps) => {
 
   return (
     <>
-      <BoundaryLine />
       {type === ANNOUNCEMENT_TYPE.NORMAL &&
         normalAnnouncemnet.map((announce, idx) => (
           <Fragment key={idx}>
@@ -55,7 +52,3 @@ const AnnounceList = ({ resource, type }: AnnounceListProps) => {
 };
 
 export default AnnounceList;
-
-const BoundaryLine = styled.div`
-  border-bottom: 1px solid ${THEME.TEXT.BLACK};
-`;

@@ -1,4 +1,5 @@
 import FAQBox from '@components/FAQBox';
+import InformUpperLayout from '@components/InformUpperLayout';
 import { FAQ_DATA, FAQ_CONSTANTS } from '@constants/FAQ';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
@@ -7,16 +8,14 @@ import React from 'react';
 const FAQPage = () => {
   return (
     <Container>
-      <TextContainer>
-        <FAQTitle>{FAQ_CONSTANTS.TITLE}</FAQTitle>
-        <FAQSubTitle>{FAQ_CONSTANTS.SUB_TITLE}</FAQSubTitle>
-        <BoundaryLine />
-      </TextContainer>
+      <InformUpperLayout>
+        <InformUpperLayout.InformTitle title={FAQ_CONSTANTS.TITLE} />
+        <InformUpperLayout.InformSubTitle subTitle={FAQ_CONSTANTS.SUB_TITLE} />
+      </InformUpperLayout>
+      <BoundaryLine />
       <FAQContainer>
         {FAQ_DATA.map((data, index) => (
-          <React.Fragment key={index}>
-            <FAQBox {...data} />
-          </React.Fragment>
+          <FAQBox {...data} key={index} />
         ))}
       </FAQContainer>
     </Container>
@@ -26,32 +25,18 @@ const FAQPage = () => {
 export default FAQPage;
 
 const Container = styled.div`
-  padding: 10px;
   display: flex;
   flex-direction: column;
 `;
 
-const TextContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+const BoundaryLine = styled.hr`
+  height: 1px;
+  width: calc(100% - 40px);
+  background-color: ${THEME.TEXT.BLACK};
+  border: none;
 `;
 
-const FAQTitle = styled.span`
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const FAQSubTitle = styled.span`
-  color: ${THEME.TEXT.GRAY};
-  line-height: 1.3;
-`;
-
-const FAQContainer = styled.div`
+const FAQContainer = styled.section`
+  padding: 0 20px 0 20px;
   line-height: 4;
-`;
-
-const BoundaryLine = styled.div`
-  border-bottom: 1px solid ${THEME.TEXT.BLACK};
 `;

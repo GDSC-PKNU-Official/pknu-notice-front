@@ -38,8 +38,8 @@ export const SHORTCUT_DATA: readonly TipData[] = [
   {
     title: '이루미',
     subTitle: '부경대 포털 사이트\n바로가기',
-    webpPath: '/assets/tipImages/webp/baekgyeong_teach.webp',
-    pngPath: '/assets/tipImages/png/baekgyeong_teach.png',
+    webpPath: '/assets/tipImages/webp/baekgyeong_hand_love.webp',
+    pngPath: '/assets/tipImages/png/baekgyeong_hand_love.png',
     link: 'https://portal.pknu.ac.kr/',
   },
   {
