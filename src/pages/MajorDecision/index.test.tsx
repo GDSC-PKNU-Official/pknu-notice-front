@@ -15,7 +15,6 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe.skip('학과선택 페이지 로직 테스트', () => {
-  const mockGraduationLink = 'https://ce.pknu.ac.kr/ce/2889';
   const mockSetMajor = jest.fn();
 
   beforeEach(() => {
@@ -36,7 +35,6 @@ describe.skip('학과선택 페이지 로직 테스트', () => {
           value={{
             major: null,
             setMajor: mockSetMajor,
-            graduationLink: mockGraduationLink,
           }}
         >
           <MajorDecision />
