@@ -5,13 +5,11 @@ import Announcement from '@pages/Announcement';
 import FAQPage from '@pages/FAQ';
 import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
-import Map from '@pages/Map';
+import MapPage from '@pages/Map';
 import My from '@pages/My';
 import Tip from '@pages/Tip';
 import RouteChangeTracker from '@utils/routeChangeTracker';
 import { Routes, Route } from 'react-router-dom';
-
-import { OverlayProvider } from './components/Providers';
 
 const App = () => {
   RouteChangeTracker();
@@ -28,9 +26,7 @@ const App = () => {
           <Route path="/tip/:type" element={<Tip />} />
           <Route path="/FAQ" element={<FAQPage />} />
         </Route>
-        <Route element={<OverlayProvider />}>
-          <Route path="/map" element={<Map />} />
-        </Route>
+        <Route path="/map" element={<MapPage />} />
       </Routes>
       <FooterTab />
     </>
