@@ -1,28 +1,44 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import useModals from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React from 'react';
 
-interface ModalProps {
-  onClose: () => void;
-  children: JSX.Element;
-}
+import getModalSubElement from './domain/getModalSubElement';
+import ModalButton from './ModalButton';
+import ModalTitle from './ModalTitle';
 
-const Modal = ({ children, onClose }: ModalProps) => {
-  const onClick = (e: React.MouseEvent<HTMLElement>) => {
+type StaticPropsWithChidren<T = unknown> = T & { children: React.ReactNode };
+
+const Modal = ({ children }: StaticPropsWithChidren) => {
+  const { closeModal } = useModals();
+
+  const modalTitle = getModalSubElement(children, ModalTitle);
+  const modalButtons = getModalSubElement(children, ModalButton);
+  const hasModalButtons = modalButtons.length !== 0;
+
+  const onBackgroundClick = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      closeModal();
     }
   };
 
   return (
-    <ModalBackground onClick={onClick}>
-      <ModalContent>{children}</ModalContent>
+    <ModalBackground onClick={onBackgroundClick}>
+      <ModalContent>
+        {modalTitle}
+        {hasModalButtons && (
+          <ModalButtonsContainer>{modalButtons}</ModalButtonsContainer>
+        )}
+      </ModalContent>
     </ModalBackground>
   );
 };
 
 export default Modal;
+
+Modal.ModalTitle = ModalTitle;
+Modal.ModalButton = ModalButton;
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -36,6 +52,7 @@ const ModalBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 9999;
 `;
+
 const modalIn = keyframes`
   from{
     opacity: 0;
@@ -48,17 +65,21 @@ const modalIn = keyframes`
 `;
 
 const ModalContent = styled.div`
+  max-height: 70vh;
+  max-width: 480px;
+  width: 80%;
   display: flex;
   flex-direction: column;
-
-  animation: ${modalIn} 0.3s ease-out;
-  width: 80%;
-  max-width: 480px;
-  max-height: 70vh;
+  padding: 0 30px 0 30px;
   overflow: auto;
-  padding: 30px;
   border-radius: 15px;
   background-color: ${THEME.TEXT.WHITE};
-  color: ${THEME.TEXT.GRAY};
-  font-weight: bold;
+  animation: ${modalIn} 0.3s ease-out;
+`;
+
+const ModalButtonsContainer = styled.div`
+  padding: 0 0 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 `;
