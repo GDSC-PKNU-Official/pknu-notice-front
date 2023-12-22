@@ -2,13 +2,14 @@ import http from '@apis/http';
 import Button from '@components/Common/Button';
 import ToggleButton from '@components/Common/Button/Toggle';
 import Icon from '@components/Common/Icon';
+import Modal from '@components/Common/Modal';
 import { SERVER_URL } from '@config/index';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import urlBase64ToUint8Array from '@hooks/urlBase64ToUint8Array';
 import useMajor from '@hooks/useMajor';
-import useModals, { modals } from '@hooks/useModals';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { MouseEventHandler, useEffect, useState } from 'react';
@@ -18,7 +19,7 @@ const My = () => {
   const [animation, setAnimation] = useState(false);
   const { major } = useMajor();
   const { routerTo } = useRouter();
-  const { openModal, closeModal } = useModals();
+  const { openModal } = useModals();
 
   const routerToMajorDecision = () => routerTo('/major-decision');
 
@@ -36,54 +37,50 @@ const My = () => {
     );
   };
 
-  const handleSuggestionModal = () => {
-    openModal<typeof modals.suggestion>(modals.suggestion, {
-      title: MODAL_MESSAGE.SUGGESTION_TITLE,
-      buttonMessage: MODAL_BUTTON_MESSAGE.SEND_SUGGESTION,
-      onClose: () => closeModal(modals.suggestion),
-    });
-  };
-
   const handleNotiModal: MouseEventHandler = () => {
     if (!major) {
-      openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
-        onClose: () => closeModal(modals.alert),
-        routerTo: () => {
-          closeModal(modals.alert);
-          routerToMajorDecision();
-        },
-      });
+      openModal(
+        <Modal>
+          <Modal.ModalTitle title={MODAL_MESSAGE.ALERT.SET_MAJOR} />
+          <Modal.ModalButton
+            text={MODAL_BUTTON_MESSAGE.CONFIRM}
+            onClick={routerToMajorDecision}
+          />
+        </Modal>,
+      );
       return;
     }
 
     if (subscribe) {
-      openModal<typeof modals.confirm>(modals.confirm, {
-        message: MODAL_MESSAGE.CONFIRM.STOP_ALARM,
-        onConfirmButtonClick: async () => {
-          await http.delete(`${SERVER_URL}/api/subscription/major`, {
-            data: { subscription: subscribe, major },
-          });
-          setSubscribe(null);
-          closeModal(modals.confirm);
-          localStorage.removeItem('subscribe');
-        },
-        onCancelButtonClick: () => {
-          closeModal(modals.confirm);
-        },
-      });
+      openModal(
+        <Modal>
+          <Modal.ModalTitle title={MODAL_MESSAGE.CONFIRM.STOP_ALARM} />
+          <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.NO} />
+          <Modal.ModalButton
+            text={MODAL_BUTTON_MESSAGE.YES}
+            onClick={async () => {
+              await http.delete(`${SERVER_URL}/api/subscription/major`, {
+                data: { subscription: subscribe, major },
+              });
+              setSubscribe(null);
+              localStorage.removeItem('subscribe');
+            }}
+          />
+        </Modal>,
+      );
       return;
     }
 
-    openModal<typeof modals.confirm>(modals.confirm, {
-      message: MODAL_MESSAGE.CONFIRM.GET_ALARM,
-      onConfirmButtonClick: () => {
-        closeModal(modals.confirm);
-        handleSubscribeTopic();
-      },
-      onCancelButtonClick: () => closeModal(modals.confirm),
-    });
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.CONFIRM.GET_ALARM} />
+        <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.NO} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.YES}
+          onClick={handleSubscribeTopic}
+        />
+      </Modal>,
+    );
   };
 
   const handleSubscribeTopic = async () => {
@@ -91,11 +88,12 @@ const My = () => {
 
     if (!('serviceWorker' in navigator)) {
       postSuggestion();
-      openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI1,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-        onClose: () => closeModal(modals.alert),
-      });
+      openModal(
+        <Modal>
+          <Modal.ModalTitle title={MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI1} />
+          <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.CLOSE} />
+        </Modal>,
+      );
       return;
     }
 
@@ -103,11 +101,14 @@ const My = () => {
       const permission = await Notification.requestPermission();
 
       if (permission !== 'granted') {
-        openModal<typeof modals.alert>(modals.alert, {
-          message: MODAL_MESSAGE.ALERT.NOT_SUBSCRIB_NOTI,
-          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-          onClose: () => closeModal(modals.alert),
-        });
+        openModal(
+          <Modal>
+            <Modal.ModalTitle
+              title={MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI1}
+            />
+            <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.CLOSE} />
+          </Modal>,
+        );
         return;
       }
 
@@ -131,11 +132,12 @@ const My = () => {
       }
     } catch (error) {
       postSuggestion(error as string);
-      openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI2,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-        onClose: () => closeModal(modals.alert),
-      });
+      openModal(
+        <Modal>
+          <Modal.ModalTitle title={MODAL_MESSAGE.ALERT.FAIL_SUBSCRIBE_NOTI2} />
+          <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.CLOSE} />
+        </Modal>,
+      );
       return;
     }
   };
@@ -184,7 +186,7 @@ const My = () => {
         </MajorCard>
       </Major>
       <Suggestion>
-        <Button data-testid="modal" onClick={handleSuggestionModal}>
+        <Button data-testid="modal">
           <Icon kind="suggest" color={THEME.TEXT.WHITE} />
           <span>건의사항 남기기</span>
         </Button>

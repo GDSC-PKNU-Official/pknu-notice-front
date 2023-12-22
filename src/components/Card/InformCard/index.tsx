@@ -1,8 +1,9 @@
 import Icon from '@components/Common/Icon';
+import Modal from '@components/Common/Modal';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals, { modals } from '@hooks/useModals';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
@@ -22,7 +23,7 @@ const InformCard = ({
 }: InformCardProps) => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
-  const { openModal, closeModal } = useModals();
+  const { openModal } = useModals();
 
   const routeToMajorDecisionPage = () => routerTo('/major-decision');
 
@@ -31,42 +32,39 @@ const InformCard = ({
       onClick();
       return;
     }
-    openModal<typeof modals.alert>(modals.alert, {
-      message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-      buttonMessage: MODAL_BUTTON_MESSAGE.SET_MAJOR,
-      iconKind: 'plus',
-      onClose: () => closeModal(modals.alert),
-      routerTo: () => {
-        closeModal(modals.alert);
-        routeToMajorDecisionPage();
-      },
-    });
+
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.ALERT.SET_MAJOR} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.SET_MAJOR}
+          iconKind="plus"
+          onClick={routeToMajorDecisionPage}
+        />
+      </Modal>,
+    );
   };
 
   return (
-    <>
-      <Card data-testid="card" onClick={handleMajorModal}>
-        <IconContainer>
-          <Icon kind={icon} color={THEME.TEXT.WHITE} />
-        </IconContainer>
-        <TextContainer>
-          <span>{title}</span>
-          <span>{title} 보러가기</span>
-        </TextContainer>
-      </Card>
-    </>
+    <Card data-testid="card" onClick={handleMajorModal}>
+      <IconContainer>
+        <Icon kind={icon} color={THEME.TEXT.WHITE} />
+      </IconContainer>
+      <TextContainer>
+        <span>{title}</span>
+        <span>{title} 보러가기</span>
+      </TextContainer>
+    </Card>
   );
 };
 
 export default InformCard;
 
 const Card = styled.div`
-  display: flex;
-  align-items: center;
   padding: 3% 1% 2% 0;
   height: 4rem;
-
-  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
 
   span:nth-of-type(1) {
     font-size: 12px;
@@ -78,6 +76,8 @@ const Card = styled.div`
     font-weight: bold;
     color: ${THEME.TEXT.BLACK};
   }
+
+  transition: all 0.2s ease-in-out;
 `;
 
 const TextContainer = styled.div`
@@ -93,7 +93,6 @@ const IconContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 10px;
-
   border-radius: 50%;
   background-color: ${THEME.PRIMARY};
 `;
