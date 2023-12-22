@@ -2,22 +2,23 @@ import Icon from '@components/Common/Icon';
 import { PKNU_MAP_CENTER } from '@constants/pknu-map';
 import TOAST_MESSAGES from '@constants/toast-message';
 import styled from '@emotion/styled';
+import useMap from '@hooks/useMap';
 import useToasts from '@hooks/useToast';
+import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { Location } from '@type/map';
 import { hasLocationPermission, isUserInShcool } from '@utils/map';
 import React from 'react';
 
-interface RefreshButtonsProps {
-  map: any;
-  userLocation: Location | null;
-}
+const RefreshButtons = () => {
+  const { map } = useMap();
+  const userLocation = useUserLocation();
 
-const RefreshButtons = ({ map, userLocation }: RefreshButtonsProps) => {
-  if (!map || !userLocation) return <></>;
   const { addToast } = useToasts();
 
-  const handleMapCenter = (location: Location) => {
+  const handleMapCenter = (location: Location | null) => {
+    if (!location) return;
+
     if (!hasLocationPermission(location)) {
       addToast(TOAST_MESSAGES.SHARE_LOCATION);
       return;
@@ -26,6 +27,7 @@ const RefreshButtons = ({ map, userLocation }: RefreshButtonsProps) => {
       addToast(TOAST_MESSAGES.OUT_OF_SHOOL);
       return;
     }
+
     const centerLocation = new window.kakao.maps.LatLng(
       location.LAT,
       location.LNG,
