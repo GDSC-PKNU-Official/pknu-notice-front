@@ -1,6 +1,6 @@
-import AlertModal from '@components/Common/Modal/AlertModal';
+import Modal from '@components/Common/Modal';
 import ModalsProvider from '@components/Providers/ModalsProvider';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import MajorContext from '@contexts/major';
 import useModals from '@hooks/useModals';
 import { render, screen } from '@testing-library/react';
@@ -140,13 +140,16 @@ describe('InformCard 컴포넌트 테스트', () => {
       await userEvent.click(card);
     });
 
-    expect(useModals().openModal).toHaveBeenCalledWith(AlertModal, {
-      message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-      buttonMessage: '전공선택하러 가기',
-      iconKind: 'plus',
-      onClose: expect.any(Function),
-      routerTo: expect.any(Function),
-    });
+    expect(useModals().openModal).toHaveBeenCalledWith(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.ALERT.SET_MAJOR} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.SET_MAJOR}
+          iconKind="plus"
+          onClick={expect.any(Function)}
+        />
+      </Modal>,
+    );
   });
 
   it('전역상태가 설정 됐을 경우, 졸업요건 클릭 시 페이지 이동 테스트', async () => {
