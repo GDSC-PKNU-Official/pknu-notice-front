@@ -1,9 +1,9 @@
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
-import { CloseModal, OpenModal, modals } from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, Location, PKNUBuilding } from '@type/map';
 import { hasLocationPermission } from '@utils/map';
+import openLink from '@utils/router/openLink';
 import { CSSProperties } from 'react';
 
 interface ICustomOverlay {
@@ -15,19 +15,20 @@ interface ICustomOverlay {
   ): void;
 }
 
+type OpenModal = (
+  title: string,
+  btn1Text: string,
+  onClick?: () => void,
+  btn2Text?: string,
+) => void;
+
 class CustomOverlay implements ICustomOverlay {
   private overlays: Record<BuildingType, any[]>;
   private openModal: OpenModal;
-  private closeModal: CloseModal;
   private userLocation: Location | null;
 
-  constructor(
-    openModal: OpenModal,
-    closeModal: CloseModal,
-    userLocation: Location | null,
-  ) {
+  constructor(openModal: OpenModal, userLocation: Location | null) {
     this.openModal = openModal;
-    this.closeModal = closeModal;
     this.userLocation = userLocation;
     this.overlays = {
       A: [],
@@ -52,31 +53,36 @@ class CustomOverlay implements ICustomOverlay {
     return this.overlays[type].length >= PKNU_BUILDINGS[type].buildings.length;
   }
 
-  private routeHandler(building: PKNUBuilding) {
-    const { buildingNumber, buildingName, latlng } = building;
+  private openNoLocationModal() {
+    this.openModal(
+      MODAL_MESSAGE.ALERT.NO_LOCATION_PERMISSON,
+      MODAL_BUTTON_MESSAGE.CLOSE,
+    );
+  }
+
+  private openConfirmRoutingModal(buildingInfo: PKNUBuilding) {
+    const { buildingNumber, buildingName, latlng } = buildingInfo;
     const [lat, lng] = latlng;
 
+    const kakaoMapAppURL = `kakaomap://route?sp=${this.userLocation?.LAT},${this.userLocation?.LNG}&ep=${lat},${lng}`;
+    const kakaoMapWebURL = `https://map.kakao.com/link/from/현위치,${this.userLocation?.LAT},${this.userLocation?.LNG}/to/${buildingName},${lat},${lng}`;
+    const isKakaoMapInstalled = /KAKAOMAP/i.test(navigator.userAgent);
+    const openUrl = isKakaoMapInstalled ? kakaoMapAppURL : kakaoMapWebURL;
+
+    this.openModal(
+      `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
+      MODAL_BUTTON_MESSAGE.NO,
+      () => openLink(openUrl),
+      MODAL_BUTTON_MESSAGE.YES,
+    );
+  }
+
+  private handleRoutingModal(building: PKNUBuilding) {
     if (!this.userLocation) return;
+
     hasLocationPermission(this.userLocation)
-      ? this.openModal<typeof modals.confirm>(modals.confirm, {
-          message: `목적지(${buildingNumber})로 길찾기를 시작할까요?`,
-          onConfirmButtonClick: () => {
-            const kakaoMapWebURL = `https://map.kakao.com/link/from/현위치,${this.userLocation?.LAT},${this.userLocation?.LNG}/to/${buildingName},${lat},${lng}`;
-            const kakaoMapAppURL = `kakaomap://route?sp=${this.userLocation?.LAT},${this.userLocation?.LNG}&ep=${lat},${lng}`;
-            const isKakaoMapInstalled = /KAKAOMAP/i.test(navigator.userAgent);
-            window.open(
-              isKakaoMapInstalled ? kakaoMapAppURL : kakaoMapWebURL,
-              '_blank',
-            );
-            this.closeModal(modals.confirm);
-          },
-          onCancelButtonClick: () => this.closeModal(modals.confirm),
-        })
-      : this.openModal<typeof modals.alert>(modals.alert, {
-          message: MODAL_MESSAGE.ALERT.NO_LOCATION_PERMISSON,
-          buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-          onClose: () => this.closeModal(modals.alert),
-        });
+      ? this.openConfirmRoutingModal(building)
+      : this.openNoLocationModal();
   }
 
   private createOverlayContent(
@@ -94,7 +100,7 @@ class CustomOverlay implements ICustomOverlay {
     });
     const buildingNumberText = document.createTextNode(building.buildingNumber);
     content.appendChild(buildingNumberText);
-    content.onclick = () => this.routeHandler(building);
+    content.onclick = () => this.handleRoutingModal(building);
 
     return content;
   }
@@ -120,6 +126,7 @@ class CustomOverlay implements ICustomOverlay {
   private getTypeOverlays(buildingType: BuildingType, map: any) {
     const type = buildingType as keyof typeof this.overlays;
     const typeOverlays: any[] = [];
+
     PKNU_BUILDINGS[type].buildings.forEach((building) => {
       const overlay = this.createOverlay(type, building);
       overlay.setMap(map);
@@ -163,10 +170,12 @@ class CustomOverlay implements ICustomOverlay {
         });
         return;
       }
+
       if (this.isAllOverlayInMap(type)) {
         newOverlays[type] = [...this.overlays[type]];
         return;
       }
+
       const typeOverlays = this.getTypeOverlays(type, map);
       newOverlays[type] = [...this.overlays[type], ...typeOverlays];
     });
