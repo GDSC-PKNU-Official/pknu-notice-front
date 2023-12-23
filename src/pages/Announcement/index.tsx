@@ -30,7 +30,17 @@ const Announcement = () => {
           <AnnounceContainer
             title={ANNOUNCEMENT_TITLE.MAROR}
             category={ANNOUNCEMENT_CATEGORY.MAJOR}
-            endPoint={major}
+            endPoint={'?major=' + major}
+          />
+        }
+      />
+      <Route
+        path={PATH.LANGUAGE_ANNOUNCEMENT}
+        element={
+          <AnnounceContainer
+            title={ANNOUNCEMENT_TITLE.LANGUAGE}
+            category={ANNOUNCEMENT_CATEGORY.LANGUAGE}
+            endPoint={'/language'}
           />
         }
       />
