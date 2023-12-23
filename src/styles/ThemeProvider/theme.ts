@@ -5,14 +5,15 @@ export const THEME: Theme = {
 
   TEXT: {
     BLACK: '#000000',
+    SEMIBLACK: '#444444',
     GRAY: '#808080',
     WHITE: '#FFFFFF',
   },
 
-  PRIMARY: '#95B1DC',
+  PRIMARY: '#7A9DD3',
 
   BUTTON: {
-    BLUE: '#95B1DC',
+    BLUE: '#7A9DD3',
     GRAY: '#E7E7E7',
   },
 
