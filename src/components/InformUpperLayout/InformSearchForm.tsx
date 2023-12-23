@@ -8,7 +8,7 @@ import useToasts from '@hooks/useToast';
 import React, { useRef } from 'react';
 
 interface InformSearchForm {
-  category: 'school' | 'major';
+  category: 'school' | 'major' | 'language' | 'recruit';
 }
 
 const InformSearchForm = ({ category }: InformSearchForm) => {
