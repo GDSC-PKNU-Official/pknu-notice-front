@@ -1,12 +1,13 @@
 import http from '@apis/http';
 import Button from '@components/Common/Button';
 import Icon from '@components/Common/Icon';
+import Modal from '@components/Common/Modal';
 import { SERVER_URL } from '@config/index';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals, { modals } from '@hooks/useModals';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -26,23 +27,21 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
 
   const { routerTo } = useRouter();
   const { major, setMajor } = useMajor();
-  const { openModal, closeModal } = useModals();
+  const { openModal } = useModals();
   const [selected, setSelected] = useState<string>('');
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
 
   const routerToHome = () => {
-    closeModal(modals.alert);
     routerTo('/');
   };
+
   const handleMajorClick: React.MouseEventHandler<HTMLElement> = (e) => {
     if (e.currentTarget.textContent === null) return;
     setSelected(e.currentTarget.textContent);
     setButtonDisable(false);
   };
 
-  const handlerMajorSetModal = () => {
-    closeModal(modals.confirm);
-
+  const handleMajorSetting = () => {
     const storedSubscribe = localStorage.getItem('subscribe');
     if (major && storedSubscribe) {
       http.delete(`${SERVER_URL}/api/subscription/major`, {
@@ -54,21 +53,32 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
     localStorage.setItem('major', afterSpace);
     setMajor(afterSpace);
 
-    openModal<typeof modals.alert>(modals.alert, {
-      message: MODAL_MESSAGE.SUCCEED.SET_MAJOR,
-      buttonMessage: MODAL_BUTTON_MESSAGE.GO_HOME,
-      onClose: () => routerToHome(),
-      routerTo: () => routerToHome(),
-    });
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.SUCCEED.SET_MAJOR} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.GO_HOME}
+          onClick={routerToHome}
+        />
+      </Modal>,
+    );
   };
-  const handleMajorConfirmModal = () => {
-    openModal<typeof modals.confirm>(modals.confirm, {
-      message:
-        selected.substring(selected.indexOf(' ') + 1) +
-        MODAL_MESSAGE.CONFIRM.SET_MAJOR,
-      onConfirmButtonClick: () => handlerMajorSetModal(),
-      onCancelButtonClick: () => closeModal(modals.confirm),
-    });
+
+  const handleMajorConfirm = () => {
+    const modalTitle =
+      selected.substring(selected.indexOf(' ') + 1) +
+      MODAL_MESSAGE.CONFIRM.SET_MAJOR;
+
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={modalTitle} />
+        <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.NO} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.YES}
+          onClick={handleMajorSetting}
+        />
+      </Modal>,
+    );
   };
 
   return (
@@ -90,7 +100,7 @@ const DepartmentItem = ({ resource }: DepartmentItemProps) => {
         ))}
       </div>
       <ButtonContainer>
-        <Button disabled={buttonDisable} onClick={handleMajorConfirmModal}>
+        <Button disabled={buttonDisable} onClick={handleMajorConfirm}>
           선택완료
         </Button>
       </ButtonContainer>

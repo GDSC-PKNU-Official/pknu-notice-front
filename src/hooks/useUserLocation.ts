@@ -1,9 +1,15 @@
 import { NO_PROVIDE_LOCATION } from '@constants/pknu-map';
-import { Location } from '@type/map';
-import { useEffect, useState } from 'react';
+import UserLocationContext from '@contexts/user-location';
+import { useContext, useEffect } from 'react';
 
 const useUserLocation = () => {
-  const [userLocation, setUserLocation] = useState<Location | null>(null);
+  const context = useContext(UserLocationContext);
+
+  if (!context) {
+    throw new Error('UserLocationContext does not exists.');
+  }
+
+  const { userLocation, setUserLocation } = context;
 
   const success = (position: any) => {
     setUserLocation({
@@ -11,6 +17,7 @@ const useUserLocation = () => {
       LNG: position.coords.longitude,
     });
   };
+
   const failed = () => {
     setUserLocation({
       ...NO_PROVIDE_LOCATION,

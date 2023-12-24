@@ -7,8 +7,8 @@ const Modals = () => {
   return (
     <>
       {modals &&
-        modals.map(({ Component, props }, idx) => {
-          return <Component key={idx} {...(props as any)} />;
+        modals.map(({ Component }, idx) => {
+          return <React.Fragment key={idx}>{Component}</React.Fragment>;
         })}
     </>
   );
