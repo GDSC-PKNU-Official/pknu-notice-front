@@ -1,16 +1,17 @@
 import postSuggestion from '@apis/suggestion/post-suggestion';
 import Button from '@components/Common/Button';
+import Modal from '@components/Common/Modal';
 import InformUpperLayout from '@components/InformUpperLayout';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import PLCACEHOLDER_MESSAGES from '@constants/placeholder-message';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useModals, { modals } from '@hooks/useModals';
+import useModals from '@hooks/useModals';
 import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useRef, useState } from 'react';
 
 const SuggestionPage = () => {
-  const { openModal, closeModal } = useModals();
+  const { openModal } = useModals();
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const [isInValidInput, setIsInValidInput] = useState<boolean>(true);
 
@@ -24,11 +25,26 @@ const SuggestionPage = () => {
 
   const onButtonClick = () => {
     postSuggestion(areaRef.current?.value);
-    openModal<typeof modals.alert>(modals.alert, {
-      message: MODAL_MESSAGE.SUCCEED.POST_SUGGESTION,
-      buttonMessage: MODAL_BUTTON_MESSAGE.CONFIRM,
-      onClose: () => closeModal(modals.alert),
-    });
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.SUCCEED.POST_SUGGESTION} />
+        <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.CONFIRM} />
+      </Modal>,
+    );
+    areaRef.current ? (areaRef.current.value = '') : null;
+  };
+
+  const handlePostSuggestion = () => {
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.CONFIRM.POST_SUGGESTION} />
+        <Modal.ModalButton text={MODAL_BUTTON_MESSAGE.NO} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.YES}
+          onClick={onButtonClick}
+        />
+      </Modal>,
+    );
   };
 
   return (
@@ -46,7 +62,7 @@ const SuggestionPage = () => {
       />
       <Button
         disabled={isInValidInput}
-        onClick={onButtonClick}
+        onClick={handlePostSuggestion}
         css={css`
           width: 50%;
           margin: 0 auto;
