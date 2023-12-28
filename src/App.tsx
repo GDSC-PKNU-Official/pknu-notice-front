@@ -7,6 +7,7 @@ import Home from '@pages/Home';
 import MajorDecision from '@pages/MajorDecision';
 import MapPage from '@pages/Map';
 import My from '@pages/My';
+import SuggestionPage from '@pages/Suggestion';
 import Tip from '@pages/Tip';
 import RouteChangeTracker from '@utils/routeChangeTracker';
 import { Routes, Route } from 'react-router-dom';
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/my" element={<My />} />
           <Route path="/tip/:type" element={<Tip />} />
           <Route path="/FAQ" element={<FAQPage />} />
+          <Route path="/suggestion" element={<SuggestionPage />} />
         </Route>
         <Route path="/map" element={<MapPage />} />
       </Routes>
