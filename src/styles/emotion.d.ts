@@ -5,6 +5,7 @@ declare module '@emotion/react' {
     BACKGROUND: string; // EAEAEA
     TEXT: {
       BLACK: string;
+      SEMIBLACK: string;
       GRAY: string;
       WHITE: string;
     };

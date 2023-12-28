@@ -19,7 +19,7 @@ import { useParams } from 'react-router-dom';
 interface AnnounceContainerProps {
   title: string;
   category: AnnouncementCategory;
-  endPoint: string | null;
+  endPoint: string;
 }
 
 const AnnounceContainer = ({

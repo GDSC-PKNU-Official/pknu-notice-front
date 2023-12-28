@@ -25,4 +25,6 @@ export type IconKind =
   | 'checkedRadio'
   | 'uncheckedRadio'
   | 'location'
-  | 'warning';
+  | 'warning'
+  | 'account'
+  | 'language';
