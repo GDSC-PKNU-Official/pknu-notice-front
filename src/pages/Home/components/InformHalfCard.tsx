@@ -4,19 +4,19 @@ import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
 
-interface InformHalfCardListProps {
+interface InformHalfCardProps {
   iconKind: IconKind;
   title: string;
   subTitle: string;
   link: string;
 }
 
-const InformHalfCardList = ({
+const InformHalfCard = ({
   iconKind,
   title,
   subTitle,
   link,
-}: InformHalfCardListProps) => {
+}: InformHalfCardProps) => {
   const { routerTo } = useRouter();
 
   return (
@@ -30,7 +30,7 @@ const InformHalfCardList = ({
   );
 };
 
-export default InformHalfCardList;
+export default InformHalfCard;
 
 const Container = styled.div`
   display: flex;
