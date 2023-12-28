@@ -3,6 +3,7 @@ import { useContext } from 'react';
 
 const useOverlays = () => {
   const overlayContext = useContext(OverlayContext);
+
   if (!overlayContext) {
     throw new Error('OverlayContext does not exists.');
   }

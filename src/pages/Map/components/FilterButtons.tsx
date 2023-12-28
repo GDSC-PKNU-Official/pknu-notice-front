@@ -1,62 +1,41 @@
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import useBuildingTypes from '@hooks/useBuildingTypes';
+import useMap from '@hooks/useMap';
 import useOverlays from '@hooks/useOverlays';
+import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { BuildingType, Location } from '@type/map';
-import React, { CSSProperties, useEffect, useState } from 'react';
+import { BuildingType } from '@type/map';
+import React, { CSSProperties, useEffect } from 'react';
 
-interface FilterButtonsProps {
-  map: any;
-  userLocation: Location | null;
-}
-
-const FilterButtons = ({ map, userLocation }: FilterButtonsProps) => {
-  if (!map || !userLocation) return <></>;
-  const [activeTypes, setActiveTypes] = useState<Record<BuildingType, boolean>>(
-    {
-      A: true,
-      B: false,
-      C: false,
-      D: false,
-      E: false,
-    },
-  );
+const FilterButtons = () => {
+  const userLocation = useUserLocation();
+  const { map } = useMap();
+  const { activeTypes, handleBuildingTypes } = useBuildingTypes();
   const { handleOverlays } = useOverlays();
 
-  const handleBuildingTypes = (type: BuildingType) => {
-    setActiveTypes((prevActiveTypes) => {
-      return {
-        ...prevActiveTypes,
-        [type]: !prevActiveTypes[type],
-      };
-    });
-  };
+  const onClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    if (!(e.target instanceof HTMLButtonElement)) return;
 
-  const handleButtonClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    if (e.target instanceof HTMLSpanElement) {
-      handleBuildingTypes(e.target.innerText as BuildingType);
-    } else if (
-      e.target instanceof HTMLButtonElement &&
-      typeof e.target.textContent === 'string'
-    ) {
-      handleBuildingTypes(e.target.textContent as BuildingType);
-    }
+    handleBuildingTypes(e.target.textContent as BuildingType);
   };
 
   useEffect(() => {
+    if (!map || !userLocation) return;
+
     handleOverlays(activeTypes, map);
-  }, [activeTypes]);
+  }, [map, userLocation, activeTypes]);
 
   return (
-    <ButtonContainer onClick={handleButtonClick}>
+    <ButtonContainer onClick={onClick}>
       {Object.keys(activeTypes).map((type) => (
         <FilterButton
           key={type}
           isActive={activeTypes[type as BuildingType]}
           activeColor={PKNU_BUILDINGS[type as BuildingType].activeColor}
         >
-          <span>{type}</span>
+          {type}
         </FilterButton>
       ))}
     </ButtonContainer>
@@ -99,11 +78,4 @@ const FilterButton = styled.button<FilterButtonProps>`
     text-shadow: isActive && '0px 2px 2px rgba(0, 0, 0, 0.1)';
     border: 1px solid ${isActive ? activeColor : THEME.TEXT.GRAY};
   `}
-  transition: text-shadow 0.2s ease-in-out;
-  span {
-    display: inline-block;
-    position: relative;
-    transform: translateY(${({ isActive }) => (isActive ? '0' : '1px')});
-    transition: transform 0.2s ease-in-out;
-  }
 `;

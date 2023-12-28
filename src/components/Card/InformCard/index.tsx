@@ -1,15 +1,15 @@
-import Icon from '@components/Icon';
+import Icon from '@components/Common/Icon';
+import Modal from '@components/Common/Modal';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useMajor from '@hooks/useMajor';
-import useModals, { modals } from '@hooks/useModals';
+import useModals from '@hooks/useModals';
 import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
 
 interface InformCardProps {
-  icon: IconKind & ('school' | 'notification');
+  icon: IconKind & ('school' | 'schoolBuilding' | 'speaker');
   title: string;
   majorRequired: boolean;
   onClick: () => void;
@@ -23,99 +23,76 @@ const InformCard = ({
 }: InformCardProps) => {
   const { major } = useMajor();
   const { routerTo } = useRouter();
-  const routerToMajorDecision = () => routerTo('/major-decision');
-  const { openModal, closeModal } = useModals();
+  const { openModal } = useModals();
+
+  const routeToMajorDecisionPage = () => routerTo('/major-decision');
 
   const handleMajorModal = () => {
     if (!majorRequired || major) {
       onClick();
       return;
     }
-    openModal<typeof modals.alert>(modals.alert, {
-      message: MODAL_MESSAGE.ALERT.SET_MAJOR,
-      buttonMessage: MODAL_BUTTON_MESSAGE.SET_MAJOR,
-      iconKind: 'plus',
-      onClose: () => closeModal(modals.alert),
-      routerTo: () => {
-        closeModal(modals.alert);
-        routerToMajorDecision();
-      },
-    });
+
+    openModal(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.ALERT.SET_MAJOR} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.SET_MAJOR}
+          iconKind="plus"
+          onClick={routeToMajorDecisionPage}
+        />
+      </Modal>,
+    );
   };
 
   return (
-    <>
-      <Card data-testid="card" onClick={handleMajorModal}>
-        <Wrapper>
-          <div
-            css={css`
-              display: flex;
-              border-radius: 50%;
-              background-color: ${THEME.PRIMARY};
-              height: 45px;
-              width: 45px;
-              justify-content: center;
-              align-items: center;
-            `}
-          >
-            <Icon kind={icon} color={THEME.TEXT.WHITE} />
-          </div>
-        </Wrapper>
-        <Wrapper>
-          <span
-            css={css`
-              font-size: 13px;
-            `}
-          >
-            {title}
-          </span>
-          <span
-            css={css`
-              font-size: 15px;
-              margin: auto 0;
-              font-weight: bold;
-              color: ${THEME.TEXT.BLACK};
-            `}
-          >
-            {title} 보러가기
-          </span>
-        </Wrapper>
-      </Card>
-    </>
+    <Card data-testid="card" onClick={handleMajorModal}>
+      <IconContainer>
+        <Icon kind={icon} color={THEME.TEXT.WHITE} />
+      </IconContainer>
+      <TextContainer>
+        <span>{title}</span>
+        <span>{title} 보러가기</span>
+      </TextContainer>
+    </Card>
   );
 };
 
 export default InformCard;
 
 const Card = styled.div`
-  display: flex;
-  flex-direction: row;
   padding: 3% 1% 2% 0;
-  color: ${THEME.TEXT.GRAY};
-  height: 70px;
+  height: 4rem;
+  display: flex;
+  align-items: center;
 
-  & > svg {
-    margin: 10px 0;
+  span:nth-of-type(1) {
+    font-size: 12px;
+    color: ${THEME.TEXT.GRAY};
   }
-  cursor: pointer;
+
+  span:nth-of-type(2) {
+    font-size: 16px;
+    font-weight: bold;
+    color: ${THEME.TEXT.BLACK};
+  }
 
   transition: all 0.2s ease-in-out;
-
-  &:active {
-    transform: scale(0.95);
-    opacity: 0.6;
-  }
 `;
 
-const Wrapper = styled.div`
-  &:first-of-type {
-    display: flex;
-    align-items: center;
-  }
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
-  &:nth-of-type(2) {
-    display: flex;
-    flex-direction: column;
-    padding: 4% 0 3% 3%;
-  }
+const IconContainer = styled.div`
+  height: 45px;
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: ${THEME.PRIMARY};
 `;

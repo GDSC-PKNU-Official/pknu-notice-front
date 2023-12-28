@@ -4,7 +4,7 @@ import { THEME } from '@styles/ThemeProvider/theme';
 import React, { Suspense } from 'react';
 
 import CollegeItem from './CollegeItem';
-import CollegeSkeleton from '../Skeleton/college';
+import CollegeSkeleton from './Skeleton';
 
 const CollegeList = () => {
   return (

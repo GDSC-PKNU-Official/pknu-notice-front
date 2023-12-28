@@ -1,4 +1,5 @@
 import http from '@apis/http';
+import MajorProvider from '@components/Providers/MajorProvider';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AnnounceItemList } from '@type/announcement';
@@ -34,7 +35,12 @@ describe('공지사항 카드 컴포넌트 테스트', () => {
     const { 고정, 일반 } = announceList;
 
     일반.forEach(async (annouce) => {
-      render(<AnnounceCard {...annouce} />, { wrapper: MemoryRouter });
+      render(
+        <MajorProvider>
+          <AnnounceCard {...annouce} />
+        </MajorProvider>,
+        { wrapper: MemoryRouter },
+      );
     });
 
     const annouceCards = screen.getAllByTestId('card');

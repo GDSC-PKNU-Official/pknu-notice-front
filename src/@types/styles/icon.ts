@@ -5,6 +5,9 @@ export type IconKind =
   | 'menu'
   | 'notification'
   | 'school'
+  | 'schoolBuilding'
+  | 'arrowRight'
+  | 'arrowDown'
   | 'arrowBack'
   | 'plus'
   | 'edit'
@@ -22,4 +25,6 @@ export type IconKind =
   | 'checkedRadio'
   | 'uncheckedRadio'
   | 'location'
-  | 'warning';
+  | 'warning'
+  | 'account'
+  | 'language';

@@ -1,21 +1,20 @@
-import Icon from '@components/Icon';
-import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
+import Icon from '@components/Common/Icon';
+import { MODAL_MESSAGE } from '@constants/modal-messages';
 import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import PLCACEHOLDER_MESSAGES from '@constants/placeholder-message';
 import styled from '@emotion/styled';
-import useModals, { modals } from '@hooks/useModals';
+import useMap from '@hooks/useMap';
 import useOverlays from '@hooks/useOverlays';
+import useToasts from '@hooks/useToast';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, PKNUBuilding } from '@type/map';
+import getBuildingInfo from '@utils/map/get-building-info';
 import React, { useRef } from 'react';
 
-interface MapHeaderProps {
-  map: any;
-}
-
-const MapHeader = ({ map }: MapHeaderProps) => {
+const MapHeader = () => {
+  const { map } = useMap();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { openModal, closeModal } = useModals();
+  const { addToast } = useToasts();
   const { addOverlay } = useOverlays();
 
   const handleZoomIn = (buildingType: BuildingType, building: PKNUBuilding) => {
@@ -27,39 +26,22 @@ const MapHeader = ({ map }: MapHeaderProps) => {
     );
   };
 
-  const getBuildingInfo = (
-    keyword: string,
-  ): [BuildingType, number] | undefined => {
-    keyword = keyword.split(' ').join('').toUpperCase();
-    for (const buildingType of Object.keys(PKNU_BUILDINGS)) {
-      const index = PKNU_BUILDINGS[
-        buildingType as BuildingType
-      ].buildings.findIndex(
-        (PKNU_BUILDING) =>
-          PKNU_BUILDING.buildingName === keyword ||
-          PKNU_BUILDING.buildingNumber === keyword,
-      );
-      if (index !== -1) return [buildingType as BuildingType, index];
-    }
-    return;
-  };
   const handleBuildingSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!inputRef.current || inputRef.current.value.length < 1) {
-      return openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.NO_SEARCH_KEYWORD,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-        onClose: () => closeModal(modals.alert),
-      });
+
+    const hasSearchKeyword =
+      inputRef.current && inputRef.current.value.length >= 1;
+    if (!hasSearchKeyword) {
+      addToast(MODAL_MESSAGE.ALERT.NO_SEARCH_KEYWORD);
+      return;
     }
+
     const searchResult = getBuildingInfo(inputRef.current?.value);
     if (!searchResult) {
-      return openModal<typeof modals.alert>(modals.alert, {
-        message: MODAL_MESSAGE.ALERT.SEARCH_FAILED,
-        buttonMessage: MODAL_BUTTON_MESSAGE.CLOSE,
-        onClose: () => closeModal(modals.alert),
-      });
+      addToast(MODAL_MESSAGE.ALERT.SEARCH_FAILED);
+      return;
     }
+
     const [buildingType, index] = searchResult;
     inputRef.current.value = '';
     handleZoomIn(buildingType, PKNU_BUILDINGS[buildingType].buildings[index]);

@@ -1,32 +1,33 @@
-import Icon from '@components/Icon';
-import SideBar from '@components/SideBar';
-import SideBarContent from '@components/SideBar/Content';
+import Icon from '@components/Common/Icon';
 import styled from '@emotion/styled';
 import useRoter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { useState } from 'react';
 
 const Header = () => {
-  const { routerTo, goBack } = useRoter();
-  const [open, setOpen] = useState<boolean>(false);
+  const { routerTo, goBack, currentPath } = useRoter();
+  if (currentPath === '/map') return <></>;
+
+  const isNotHomePage = currentPath !== '/';
+
   return (
-    <HeaderContainer>
-      <HeaderWrapper>
-        <Icon kind="arrowBack" onClick={goBack} />
-        <Logo onClick={() => routerTo('/')}>부림이</Logo>
-        <SideBar open={open} setOpen={setOpen}>
-          <SideBarContent setOpen={setOpen} />
-        </SideBar>
-      </HeaderWrapper>
-    </HeaderContainer>
+    <Container>
+      {isNotHomePage && (
+        <IconContainer>
+          <Icon kind="arrowBack" onClick={goBack} size="20" />
+        </IconContainer>
+      )}
+      <Logo onClick={() => routerTo('/')}>부림이</Logo>
+    </Container>
   );
 };
 
 export default Header;
 
-const HeaderContainer = styled.div`
+const Container = styled.section`
+  position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   width: 100%;
   max-width: 480px;
@@ -38,12 +39,9 @@ const HeaderContainer = styled.div`
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
-const HeaderWrapper = styled.div`
-  width: 90%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const IconContainer = styled.div`
+  position: absolute;
+  left: 1rem;
 `;
 
 const Logo = styled.span`

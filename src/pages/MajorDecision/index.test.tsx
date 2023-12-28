@@ -1,4 +1,4 @@
-import MajorProvider from '@components/MajorProvider';
+import MajorProvider from '@components/Providers/MajorProvider';
 import MajorContext from '@contexts/major';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -16,6 +16,7 @@ jest.mock('react-router-dom', () => ({
 
 describe.skip('학과선택 페이지 로직 테스트', () => {
   const mockSetMajor = jest.fn();
+
   beforeEach(() => {
     jest.mock('react', () => ({
       ...jest.requireActual('react'),
@@ -30,7 +31,12 @@ describe.skip('학과선택 페이지 로직 테스트', () => {
   it('전공 선택 버튼 클릭 후, 상태 변경 테스트', async () => {
     render(
       <MemoryRouter>
-        <MajorContext.Provider value={{ major: null, setMajor: mockSetMajor }}>
+        <MajorContext.Provider
+          value={{
+            major: null,
+            setMajor: mockSetMajor,
+          }}
+        >
           <MajorDecision />
         </MajorContext.Provider>
       </MemoryRouter>,

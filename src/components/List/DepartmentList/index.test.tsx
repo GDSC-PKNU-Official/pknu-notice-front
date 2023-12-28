@@ -1,8 +1,8 @@
+import Modal from '@components/Common/Modal';
 import DepartmentList from '@components/List/DepartmentList';
-import MajorProvider from '@components/MajorProvider';
-import ConfirmModal from '@components/Modal/ConfirmModal';
-import ModalsProvider from '@components/ModalsProvider';
-import { MODAL_MESSAGE } from '@constants/modal-messages';
+import MajorProvider from '@components/Providers/MajorProvider';
+import ModalsProvider from '@components/Providers/ModalsProvider';
+import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import useMajor from '@hooks/useMajor';
 import useModals from '@hooks/useModals';
 import { render, act, screen } from '@testing-library/react';
@@ -100,11 +100,15 @@ describe.skip('학과선택 테스트', () => {
       await userEvent.click(confirmButton);
     });
 
-    expect(useModals().openModal).toHaveBeenCalledWith(ConfirmModal, {
-      message: MODAL_MESSAGE.CONFIRM.SET_MAJOR,
-      onCancelButtonClick: expect.any(Function),
-      onConfirmButtonClick: expect.any(Function),
-    });
+    expect(useModals().openModal).toHaveBeenCalledWith(
+      <Modal>
+        <Modal.ModalTitle title={MODAL_MESSAGE.SUCCEED.SET_MAJOR} />
+        <Modal.ModalButton
+          text={MODAL_BUTTON_MESSAGE.GO_HOME}
+          onClick={expect.any(Function)}
+        />
+      </Modal>,
+    );
   });
 
   it('학과 이름에 스페이스가 있는 경우 (학부, 전공이 모두 있는경우) 테스트', async () => {
