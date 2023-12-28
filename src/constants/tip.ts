@@ -6,7 +6,7 @@ export interface TipData {
   link: string;
 }
 
-export const SHORTCUT_DATA: TipData[] = [
+export const SHORTCUT_DATA: readonly TipData[] = [
   {
     title: '부경대학교',
     subTitle: '부경대학교\n홈페이지로 이동',
@@ -58,7 +58,7 @@ export const SHORTCUT_DATA: TipData[] = [
   },
 ] as const;
 
-export const HONEY_TIP_DATA: TipData[] = [
+export const HONEY_TIP_DATA: readonly TipData[] = [
   {
     title: '아우란트검사',
     subTitle: '인성·역량·취업준비도\n·진로적성검사',
