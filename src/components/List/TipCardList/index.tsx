@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 interface TipCardListProps {
-  tipList: TipData[];
+  tipList: readonly TipData[];
   tipItemRenderer: (tipItem: TipData) => JSX.Element;
 }
 
