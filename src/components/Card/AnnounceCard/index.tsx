@@ -6,26 +6,36 @@ import openLink from '@utils/router/openLink';
 
 interface AnnounceCardProps extends AnnounceItem {
   author?: string;
+  recruitment_period?: string;
 }
 
 const AnnounceCard = ({
   title,
   link,
   uploadDate,
+  recruitment_period,
   author,
 }: AnnounceCardProps) => {
   const { major } = useMajor();
 
-  uploadDate = uploadDate.slice(2);
+  const showDate = () => {
+    if (recruitment_period) return recruitment_period;
+    uploadDate = uploadDate.slice(2);
+    return `20${uploadDate}`;
+  };
 
   return (
     <Card onClick={() => openLink(link)} data-testid="card">
       <ContentContainer>
         <AnnounceTitle>{title}</AnnounceTitle>
         <SubContent>
-          <AnnounceDate>20{uploadDate}</AnnounceDate>
-          <VertialBoundaryLine />
-          <Source>{author ? author : major}</Source>
+          <AnnounceDate>{showDate()}</AnnounceDate>
+          {!recruitment_period && (
+            <>
+              <VertialBoundaryLine />
+              <Source>{author ? author : major}</Source>
+            </>
+          )}
         </SubContent>
       </ContentContainer>
       <HorizonBoundaryLine />
