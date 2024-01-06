@@ -15,6 +15,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe.skip('학과선택 페이지 로직 테스트', () => {
+  const mockGetMajor = jest.fn();
   const mockSetMajor = jest.fn();
 
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe.skip('학과선택 페이지 로직 테스트', () => {
       <MemoryRouter>
         <MajorContext.Provider
           value={{
-            major: null,
+            getMajor: mockGetMajor,
             setMajor: mockSetMajor,
           }}
         >
