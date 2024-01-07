@@ -44,6 +44,16 @@ const Announcement = () => {
           />
         }
       />
+      <Route
+        path={PATH.RECRUIT_ANNOUNCEMENT}
+        element={
+          <AnnounceContainer
+            title={ANNOUNCEMENT_TITLE.RECRUIT}
+            category={ANNOUNCEMENT_CATEGORY.RECRUIT}
+            endPoint={'/recruit'}
+          />
+        }
+      />
     </Routes>
   );
 };
