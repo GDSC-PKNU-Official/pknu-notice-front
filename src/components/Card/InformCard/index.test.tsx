@@ -5,7 +5,6 @@ import MajorContext from '@contexts/major';
 import useModals from '@hooks/useModals';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Major from '@type/major';
 import { IconKind } from '@type/styles/icon';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
@@ -38,18 +37,14 @@ const INFORM_CARD: INFORM_CARD_DATA = {
 };
 
 const setMajorMock = (isRender: boolean) => {
-  const mockMajor: Major = isRender ? null : '컴퓨터인공지능학부';
+  const mockGetMajor = jest.fn();
   const mockSetMajor = jest.fn();
 
-  jest.mock('react', () => ({
-    ...jest.requireActual('react'),
-    useState: () => [mockMajor, mockSetMajor, graduationLink],
-  }));
+  mockGetMajor.mockReturnValue(isRender ? null : '컴퓨터인공지능학부');
 
   return {
-    major: mockMajor,
+    getMajor: mockGetMajor,
     setMajor: mockSetMajor,
-    graduationLink,
   };
 };
 
@@ -76,6 +71,7 @@ jest.mock('@hooks/useModals', () => {
 
 describe('InformCard 컴포넌트 테스트', () => {
   const oldWindowLocation = window.location;
+
   beforeEach(() => {
     Object.defineProperty(window, 'location', {
       configurable: true,

@@ -2,13 +2,19 @@ import MajorContext from '@contexts/major';
 import { useContext } from 'react';
 
 const useMajor = () => {
-  const context = useContext(MajorContext);
+  const majorStorage = useContext(MajorContext);
 
-  if (!context) {
+  if (!majorStorage) {
     throw new Error('MajorContext does not exists.');
   }
 
-  return context;
+  const major = majorStorage.getMajor();
+  const setMajor = majorStorage.setMajor.bind(majorStorage);
+
+  return {
+    major,
+    setMajor,
+  };
 };
 
 export default useMajor;

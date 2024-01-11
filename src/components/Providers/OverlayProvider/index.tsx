@@ -2,8 +2,7 @@ import Modal from '@components/Common/Modal';
 import OverlayContext from '@contexts/overlays';
 import useModals from '@hooks/useModals';
 import useUserLocation from '@hooks/useUserLocation';
-import React, { useMemo } from 'react';
-import { Outlet } from 'react-router-dom';
+import React from 'react';
 
 import CustomOverlay from './overlay';
 
