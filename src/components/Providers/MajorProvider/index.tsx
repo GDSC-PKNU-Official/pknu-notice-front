@@ -1,22 +1,19 @@
 import MajorContext from '@contexts/major';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
+import MajorStorage from './major-storage';
 
 interface MajorProviderProps {
   children: React.ReactNode;
 }
 
+const MAJOR_STORAGE_KEY = 'major' as string;
+
 const MajorProvider = ({ children }: MajorProviderProps) => {
-  const [major, setMajor] = useState<string | null>(null);
-
-  useEffect(() => {
-    const storedMajor = localStorage.getItem('major');
-    if (!storedMajor) return;
-
-    setMajor(storedMajor);
-  }, []);
+  const majorStorage = new MajorStorage(MAJOR_STORAGE_KEY);
 
   return (
-    <MajorContext.Provider value={{ major, setMajor }}>
+    <MajorContext.Provider value={majorStorage}>
       {children}
     </MajorContext.Provider>
   );

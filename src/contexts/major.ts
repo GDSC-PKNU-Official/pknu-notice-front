@@ -2,8 +2,8 @@ import Major from '@type/major';
 import { createContext } from 'react';
 
 interface MajorState {
-  major: Major;
-  setMajor: React.Dispatch<React.SetStateAction<Major>>;
+  getMajor: () => Major;
+  setMajor: (major: string) => void;
 }
 
 const MajorContext = createContext<MajorState | null>(null);
