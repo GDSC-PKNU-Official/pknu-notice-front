@@ -30,12 +30,12 @@ const AnnounceContainer = ({
   const { type } = useParams();
   if (!type) return <></>;
 
-  const { routerTo } = useRouter();
+  const { replaceTo } = useRouter();
 
   const showNormalAnnouncement = () =>
-    routerTo(PATH.NORMAL_ANNOUNCEMENT(category));
+    replaceTo(PATH.NORMAL_ANNOUNCEMENT(category));
   const showPinnedAnnouncement = () =>
-    routerTo(PATH.PINNED_ANNOUNCEMENT(category));
+    replaceTo(PATH.PINNED_ANNOUNCEMENT(category));
 
   const resource = useMemo(
     () => fetchAnnounceList<AnnounceItemList>(endPoint),
