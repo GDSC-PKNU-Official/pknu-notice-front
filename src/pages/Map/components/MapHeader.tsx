@@ -8,7 +8,7 @@ import useOverlays from '@hooks/useOverlays';
 import useToasts from '@hooks/useToast';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, PKNUBuilding } from '@type/map';
-import { getBuildingInfo } from '@utils/map/building-info';
+import { getBuildingSearchResult } from '@utils/map/building-info';
 import React, { useRef } from 'react';
 
 const MapHeader = () => {
@@ -36,7 +36,7 @@ const MapHeader = () => {
       return;
     }
 
-    const searchResult = getBuildingInfo(inputRef.current?.value);
+    const searchResult = getBuildingSearchResult(inputRef.current?.value);
     if (!searchResult) {
       addToast(MODAL_MESSAGE.ALERT.SEARCH_FAILED);
       return;
