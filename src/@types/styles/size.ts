@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-export type SizeOption = 'large' | 'medium' | 'small' | 'tiny';
+export type SizeOption = 'large' | 'medium' | 'small' | 'tiny' | 'building';
 
 export interface Size {
   height: CSSProperties['height'];
