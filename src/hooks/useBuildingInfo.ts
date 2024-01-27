@@ -1,7 +1,6 @@
 import fetchBuildingInfo from '@apis/building-info/fetch-building-info';
-import { PKNU_BUILDINGS } from '@constants/pknu-map';
 import { TotalFloorInfo } from '@type/building-info';
-import { BuildingType } from '@type/map';
+import { getBuildingInfo } from '@utils/map/building-info';
 import { AxiosResponse } from 'axios';
 import { CSSProperties, useEffect, useState } from 'react';
 
@@ -11,23 +10,6 @@ interface BuildingInfo {
   latlng: [number, number];
   color: CSSProperties['color'];
 }
-
-const getBuildingInfo = (buildingNumber: string) => {
-  const buildingTypes = Object.keys(PKNU_BUILDINGS) as BuildingType[];
-
-  for (const type of buildingTypes) {
-    for (const building of PKNU_BUILDINGS[type].buildings) {
-      if (building.buildingNumber !== buildingNumber) continue;
-
-      return {
-        buildingCode: building.buildingCode,
-        buildingName: building.buildingName,
-        color: PKNU_BUILDINGS[type].activeColor,
-        latlng: building.latlng,
-      };
-    }
-  }
-};
 
 const useBuildingInfo = (buildingNumber: string) => {
   const [floorInfo, setFloorInfo] = useState<TotalFloorInfo>(
