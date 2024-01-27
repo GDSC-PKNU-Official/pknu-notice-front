@@ -8,7 +8,7 @@ import useOverlays from '@hooks/useOverlays';
 import useToasts from '@hooks/useToast';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { BuildingType, PKNUBuilding } from '@type/map';
-import getBuildingInfo from '@utils/map/get-building-info';
+import { getBuildingInfo } from '@utils/map/building-info';
 import React, { useRef } from 'react';
 
 const MapHeader = () => {

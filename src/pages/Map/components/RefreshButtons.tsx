@@ -7,7 +7,10 @@ import useToasts from '@hooks/useToast';
 import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { Location } from '@type/map';
-import { hasLocationPermission, isUserInShcool } from '@utils/map';
+import {
+  hasLocationPermission,
+  isUserInShcool,
+} from '@utils/map/user-location';
 import React from 'react';
 
 const RefreshButtons = () => {
