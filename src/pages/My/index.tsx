@@ -193,7 +193,7 @@ const My = () => {
           <Icon kind="keyboard" color={THEME.PRIMARY} size="35" />{' '}
           <ListText>키워드 알림 설정</ListText>
         </CardIconList>
-        <CardIconList>
+        <CardIconList onClick={() => routerTo('/faq')}>
           <Icon kind="exclamation" color={THEME.PRIMARY} size="35" />{' '}
           <ListText>자주 묻는 질문</ListText>
         </CardIconList>
