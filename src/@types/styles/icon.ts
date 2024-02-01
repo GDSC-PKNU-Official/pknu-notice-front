@@ -27,4 +27,7 @@ export type IconKind =
   | 'location'
   | 'warning'
   | 'account'
-  | 'language';
+  | 'language'
+  | 'keyboard'
+  | 'exclamation'
+  | 'bell';

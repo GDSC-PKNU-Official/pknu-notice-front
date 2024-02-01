@@ -30,6 +30,9 @@ import {
   MdOutlineKeyboardArrowDown,
   MdAssignmentInd,
   MdLanguage,
+  MdKeyboard,
+  MdError,
+  MdDoorbell,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -62,6 +65,9 @@ const ICON: { [key in IconKind]: IconType } = {
   warning: MdOutlineError,
   account: MdAssignmentInd,
   language: MdLanguage,
+  keyboard: MdKeyboard,
+  exclamation: MdError,
+  bell: MdDoorbell,
 };
 
 interface IconProps {
