@@ -149,42 +149,55 @@ const My = () => {
 
   return (
     <>
-      <Title>마이페이지</Title>
-      <Major>
-        <MajorCard>
-          <CardList>
-            {major ? (
-              <>
-                <div>{major}</div>
-                <Icon
-                  kind="edit"
-                  onClick={routerToMajorDecision}
-                  color={THEME.TEXT.GRAY}
-                  data-testid="edit"
-                />{' '}
-              </>
-            ) : (
-              <div
-                onClick={() => routerToMajorDecision()}
-                css={css`
-                  opacity: 0.5;
-                  width: 100%;
-                `}
-              >
-                학과 선택하러가기
-              </div>
-            )}
-          </CardList>
-          <CardList>
-            <span>학과 공지사항 알림받기</span>
-            <ToggleButton
-              isOn={Boolean(subscribe)}
-              changeState={handleNotiModal}
-              animation={animation}
-            />
-          </CardList>
-        </MajorCard>
-      </Major>
+      <MajorCard>
+        <Title>마이페이지</Title>
+        <CardList>
+          {major ? (
+            <>
+              <div>{major}</div>
+              <Icon
+                kind="edit"
+                onClick={routerToMajorDecision}
+                color={THEME.TEXT.GRAY}
+                data-testid="edit"
+              />{' '}
+            </>
+          ) : (
+            <div
+              onClick={() => routerToMajorDecision()}
+              css={css`
+                opacity: 0.5;
+                width: 100%;
+              `}
+            >
+              학과 선택하러가기
+            </div>
+          )}
+        </CardList>
+        <CardList>
+          <span>학과 공지사항 알림받기</span>
+          <ToggleButton
+            isOn={Boolean(subscribe)}
+            changeState={handleNotiModal}
+            animation={animation}
+          />
+        </CardList>
+      </MajorCard>
+      <MajorCard>
+        <Title>관리</Title>
+        <CardIconList>
+          <Icon kind="bell" color={THEME.PRIMARY} size="35" />{' '}
+          <ListText>알림 설정</ListText>
+        </CardIconList>
+        <CardIconList onClick={() => routerTo('/keyword')}>
+          <Icon kind="keyboard" color={THEME.PRIMARY} size="35" />{' '}
+          <ListText>키워드 알림 설정</ListText>
+        </CardIconList>
+        <CardIconList>
+          <Icon kind="exclamation" color={THEME.PRIMARY} size="35" />{' '}
+          <ListText>자주 묻는 질문</ListText>
+        </CardIconList>
+      </MajorCard>
       <Suggestion>
         <Button data-testid="modal">
           <Icon kind="suggest" color={THEME.TEXT.WHITE} />
@@ -205,13 +218,6 @@ const Title = styled.div`
   margin-bottom: 5%;
 `;
 
-const Major = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  padding: 15px;
-`;
-
 const Suggestion = styled.div`
   position: fixed;
   bottom: 100px;
@@ -227,6 +233,7 @@ const MajorCard = styled.div`
   border-radius: 0.5rem;
   align-items: center;
   font-size: 1rem;
+  margin-top: 8%;
 `;
 
 const CardList = styled.div`
@@ -235,4 +242,20 @@ const CardList = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+const CardIconList = styled.div`
+  padding: 5%;
+  display: flex;
+  align-items: center;
+
+  transition: 0.3s;
+  &:active {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+`;
+
+const ListText = styled.p`
+  padding-left: 1rem;
 `;
