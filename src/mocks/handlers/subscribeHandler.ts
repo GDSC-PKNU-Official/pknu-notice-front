@@ -2,10 +2,10 @@ import { SERVER_URL } from '@config/index';
 import { RequestHandler, rest } from 'msw';
 
 export const subscribeHandler: RequestHandler[] = [
-  rest.post(SERVER_URL + '/api/subscription', (req, res, ctx) => {
+  rest.post(SERVER_URL + '/api/subscription/major', (req, res, ctx) => {
     return res(ctx.status(200));
   }),
-  rest.delete(SERVER_URL + '/api/subscription', (req, res, ctx) => {
+  rest.delete(SERVER_URL + '/api/subscription/major', (req, res, ctx) => {
     return res(ctx.status(200));
   }),
   rest.get(SERVER_URL + '/api/subscription/keyword', (req, res, ctx) => {
