@@ -178,7 +178,7 @@ const My = () => {
           )}
         </CardList>
         <CardList>
-          <span>학과 공지사항 알림받기</span>
+          <span>알림 설정</span>
           <ToggleButton
             isOn={Boolean(subscribe)}
             changeState={handleNotiModal}
