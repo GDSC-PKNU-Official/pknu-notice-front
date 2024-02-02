@@ -51,7 +51,8 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 16px;
+  font-size: 14px;
+  white-space: nowrap;
   font-weight: bold;
 `;
 
@@ -59,6 +60,6 @@ const SubTitle = styled.h3`
   color: ${THEME.TEXT.SEMIBLACK};
   display: flex;
   justify-content: flex-end;
-  font-size: 13px;
+  font-size: 11px;
   padding-bottom: 6px;
 `;
