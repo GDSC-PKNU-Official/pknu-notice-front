@@ -30,6 +30,7 @@ import {
   MdOutlineKeyboardArrowDown,
   MdAssignmentInd,
   MdLanguage,
+  MdOutlineLocationOn,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -58,10 +59,11 @@ const ICON: { [key in IconKind]: IconType } = {
   light: MdOutlineLightbulb,
   uncheckedRadio: MdRadioButtonUnchecked,
   checkedRadio: MdRadioButtonChecked,
-  location: MdOutlineMyLocation,
   warning: MdOutlineError,
   account: MdAssignmentInd,
   language: MdLanguage,
+  myLocation: MdOutlineMyLocation,
+  location: MdOutlineLocationOn,
 };
 
 interface IconProps {

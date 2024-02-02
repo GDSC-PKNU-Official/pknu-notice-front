@@ -7,6 +7,7 @@ import {
   PknuMap,
   RefreshButtons,
 } from '@pages/Map/components';
+import BuildingInfoToggle from '@pages/Map/components/BuildingInfo/BuildingInfoToggle';
 import { Location } from '@type/map';
 import React, { useState } from 'react';
 
@@ -37,8 +38,12 @@ Map.PknuMap = PknuMap;
 Map.MapHeader = MapHeader;
 Map.FilterButtons = FilterButtons;
 Map.RefreshButtons = RefreshButtons;
+Map.BuildingInfoToggle = BuildingInfoToggle;
 
 const MapContainer = styled.div`
+  overflow: hidden;
+  max-width: 480px;
+  min-height: 100vh;
   height: calc(100vh - 8vh);
   display: flex;
   flex-direction: column;
