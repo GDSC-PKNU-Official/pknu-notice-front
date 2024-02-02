@@ -5,6 +5,7 @@ import TOAST_MESSAGES from '@constants/toast-message';
 import styled from '@emotion/styled';
 import useRouter from '@hooks/useRouter';
 import useToasts from '@hooks/useToast';
+import { THEME } from '@styles/ThemeProvider/theme';
 import React, { useRef } from 'react';
 
 interface InformSearchForm {
@@ -60,12 +61,12 @@ const StyledInput = styled.input`
   border: 0;
   border-radius: 15px;
   background-color: #7a9dd30f;
-  color: #7a9dd366;
+  color: ${THEME.TEXT.BLACK};
   font-size: 14px;
   text-indent: 5px;
 
   &::placeholder {
-    color: #7a9dd366;
+    color: ${THEME.TEXT.GRAY};
     font-size: 14px;
   }
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
