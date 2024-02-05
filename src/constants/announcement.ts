@@ -6,6 +6,11 @@ export const ANNOUNCEMENT_TITLE = {
   GRADUATION: '졸업요건',
 };
 
+export const ANNOUNCE_SUB_TITLE = {
+  RECURIT: '채용 정보 확인',
+  LANGUAGE: '어학 정보 확인',
+};
+
 export const ANNOUNCEMENT_CATEGORY = {
   SCHOOL: 'school',
   MAJOR: 'major',
