@@ -1,27 +1,21 @@
-import Icon from '@components/Common/Icon';
 import styled from '@emotion/styled';
-import useRouter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { IconKind } from '@type/styles/icon';
 
-interface InformHalfCardProps {
-  iconKind: IconKind;
+interface InformHalfCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  asset: () => JSX.Element;
   title: string;
   subTitle: string;
-  link: string;
 }
 
 const InformHalfCard = ({
-  iconKind,
+  asset,
   title,
   subTitle,
-  link,
+  ...props
 }: InformHalfCardProps) => {
-  const { routerTo } = useRouter();
-
   return (
-    <Container onClick={() => routerTo(link)}>
-      <Icon kind={iconKind} size="45" color={THEME.PRIMARY} />
+    <Container {...props}>
+      {asset()}
       <TitleWrapper>
         <SubTitle>{subTitle}</SubTitle>
         <Title>{title}</Title>
@@ -33,32 +27,32 @@ const InformHalfCard = ({
 export default InformHalfCard;
 
 const Container = styled.div`
+  padding: 3% 5% 3% 5%;
+  width: 90%;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 39%;
-  background-color: ${THEME.IVORY};
-  padding: 3% 5% 3% 4%;
+  background-color: ${THEME.BACKGROUND};
   border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  height: 55px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 7px;
+  align-items: flex-end;
 `;
 
 const Title = styled.h2`
-  font-size: 16px;
   font-weight: bold;
+  font-size: 12px;
 `;
 
 const SubTitle = styled.h3`
   color: ${THEME.TEXT.SEMIBLACK};
   display: flex;
   justify-content: flex-end;
-  font-size: 13px;
   padding-bottom: 6px;
+  font-size: 10px;
 `;

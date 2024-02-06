@@ -89,6 +89,13 @@ export const HONEY_TIP_DATA: readonly TipData[] = [
   },
 ] as const;
 
+export const TIP_ROUTING_CARD = {
+  WEBP_PATH: '/assets/tipImages/webp/baekgyeong_suprised.webp',
+  NORMAL_PATH: '/assets/tipImages/png/baekgyeong_suprised.png',
+  TITLE: '꿀팁 사이트 바로가기',
+  SUB_TITLE: '부경대 꿀팁 사이트 모음',
+};
+
 export const TIP_TYPE = {
   SHORTCUT: 'shortcut',
   HONEY_TIP: 'honeytip',

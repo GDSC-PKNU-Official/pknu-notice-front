@@ -8,6 +8,7 @@ const imageSize: ImageSize = {
   medium: setSize(150),
   small: setSize(100),
   tiny: setSize(80),
+  halfCard: setSize(50, 60),
   building: setSize(100, 180),
 };
 

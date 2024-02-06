@@ -1,7 +1,7 @@
 import { Theme } from '@emotion/react';
 
 export const THEME: Theme = {
-  BACKGROUND: '#EAEAEA',
+  BACKGROUND: '#FFFFFF',
 
   TEXT: {
     BLACK: '#000000',
@@ -18,5 +18,4 @@ export const THEME: Theme = {
   },
 
   MODAL_BACKGROUND: 'rgba(0, 0, 0, 0.6)',
-  IVORY: '#fffef9',
 };

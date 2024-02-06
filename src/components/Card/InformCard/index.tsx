@@ -50,10 +50,7 @@ const InformCard = ({
       <IconContainer>
         <Icon kind={icon} color={THEME.TEXT.WHITE} />
       </IconContainer>
-      <TextContainer>
-        <span>{title}</span>
-        <span>{title} 보러가기</span>
-      </TextContainer>
+      <InfoTitle>{title}</InfoTitle>
     </Card>
   );
 };
@@ -61,29 +58,11 @@ const InformCard = ({
 export default InformCard;
 
 const Card = styled.div`
-  padding: 3% 1% 2% 0;
+  padding: 5% 0 0 0;
   height: 4rem;
   display: flex;
   align-items: center;
-
-  span:nth-of-type(1) {
-    font-size: 12px;
-    color: ${THEME.TEXT.GRAY};
-  }
-
-  span:nth-of-type(2) {
-    font-size: 16px;
-    font-weight: bold;
-    color: ${THEME.TEXT.BLACK};
-  }
-
   transition: all 0.2s ease-in-out;
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 `;
 
 const IconContainer = styled.div`
@@ -95,4 +74,9 @@ const IconContainer = styled.div`
   margin-right: 10px;
   border-radius: 50%;
   background-color: ${THEME.PRIMARY};
+`;
+
+const InfoTitle = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
 `;
