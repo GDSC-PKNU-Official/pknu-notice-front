@@ -33,6 +33,7 @@ import {
   MdKeyboard,
   MdError,
   MdDoorbell,
+  MdOutlineLocationOn,
 } from 'react-icons/md';
 
 const ICON: { [key in IconKind]: IconType } = {
@@ -61,13 +62,14 @@ const ICON: { [key in IconKind]: IconType } = {
   light: MdOutlineLightbulb,
   uncheckedRadio: MdRadioButtonUnchecked,
   checkedRadio: MdRadioButtonChecked,
-  location: MdOutlineMyLocation,
   warning: MdOutlineError,
   account: MdAssignmentInd,
   language: MdLanguage,
   keyboard: MdKeyboard,
   exclamation: MdError,
   bell: MdDoorbell,
+  myLocation: MdOutlineMyLocation,
+  location: MdOutlineLocationOn,
 };
 
 interface IconProps {

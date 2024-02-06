@@ -24,10 +24,11 @@ export type IconKind =
   | 'light'
   | 'checkedRadio'
   | 'uncheckedRadio'
-  | 'location'
   | 'warning'
   | 'account'
   | 'language'
   | 'keyboard'
   | 'exclamation'
-  | 'bell';
+  | 'bell'
+  | 'myLocation'
+  | 'location';

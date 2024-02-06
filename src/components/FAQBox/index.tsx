@@ -1,10 +1,10 @@
-import Icon from '@components/Common/Icon';
+import ToggleInfo from '@components/Common/ToggleInfo';
 import { FAQ_CONSTANTS } from '@constants/FAQ';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { THEME } from '@styles/ThemeProvider/theme';
 import openLink from '@utils/router/openLink';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface FAQBoxProps {
   readonly question: string;
@@ -15,35 +15,38 @@ interface FAQBoxProps {
 }
 
 const FAQBox = ({ question, answer }: FAQBoxProps) => {
-  const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const toggleAnswer = () => setShowAnswer((prevState) => !prevState);
-
-  const seperatedAnswerText = answer.text.split(FAQ_CONSTANTS.LINE_SEPERATOR);
   const moveToLink = () => {
     if (!answer.link) return;
+
     openLink(answer.link);
   };
-  const hasAnswerLink = () => !!answer.link;
+
+  const hasLink = !!answer.link;
 
   return (
     <>
-      <QuestionContainer onClick={toggleAnswer} showAnswer={showAnswer}>
-        <QuestionMark>{FAQ_CONSTANTS.QUESTION_MARK}</QuestionMark>
-        <QuestionText>{question}</QuestionText>
-        <IconContainer>
-          <Icon kind="arrowDown" size="24" />
-        </IconContainer>
-      </QuestionContainer>
-      {showAnswer && (
-        <AnswerContainer>
-          {seperatedAnswerText.map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
-          {hasAnswerLink() && (
-            <StyledLink onClick={moveToLink}>{FAQ_CONSTANTS.LINK}</StyledLink>
-          )}
-        </AnswerContainer>
-      )}
+      <ToggleInfo
+        infoTitle={() => (
+          <>
+            <span
+              css={css`
+                font-weight: bold;
+              `}
+            >
+              {FAQ_CONSTANTS.QUESTION_MARK}
+            </span>
+            <QuestionText>{question}</QuestionText>
+          </>
+        )}
+        infoDesc={() => (
+          <AnswerContainer>
+            {answer.text}
+            {hasLink && (
+              <StyledLink onClick={moveToLink}>{FAQ_CONSTANTS.LINK}</StyledLink>
+            )}
+          </AnswerContainer>
+        )}
+      />
       <BoundaryLine />
     </>
   );
@@ -51,35 +54,8 @@ const FAQBox = ({ question, answer }: FAQBoxProps) => {
 
 export default FAQBox;
 
-const QuestionContainer = styled.div<{ showAnswer: boolean }>`
-  position: relative;
-  padding: 10px 0px 10px 0px;
-  display: flex;
-  align-items: center;
-
-  ${({ showAnswer }) => css`
-    & > span {
-      color: ${showAnswer && THEME.PRIMARY};
-    }
-    & > div > svg {
-      transform: ${showAnswer ? 'rotate(-180deg)' : 'rotate(0deg)'};
-      transition: all ease 0.3s;
-    }
-  `}
-`;
-
-const QuestionMark = styled.span`
-  font-weight: bold;
-`;
-
 const QuestionText = styled.span`
   text-indent: 1rem;
-`;
-
-const IconContainer = styled.div`
-  position: absolute;
-  right: 0;
-  display: flex;
 `;
 
 const AnswerContainer = styled.div`
@@ -89,6 +65,7 @@ const AnswerContainer = styled.div`
   padding: 10px 20px 10px 20px;
   border-radius: 10px;
   margin-bottom: 10px;
+  white-space: pre-line;
 `;
 
 const StyledLink = styled.span`

@@ -34,7 +34,7 @@ const FAQ_DATA: FAQ[] = [
   {
     question: '이미 앱스토어로 다운 받았어요.(IOS)',
     answer: {
-      text: '이미 앱스토어로 다운 받으셨다면 기존의 앱을 지운 후 아래의 링크로 이동해 방법을 따라해주세요 :)',
+      text: '이미 앱스토어로 다운 받으셨다면 기존의 앱을 지운 후 아래의 링크로 이동해 방법을 따라해주세요 :)\n',
       link: 'https://burimi.notion.site/IOS-71bbd68542f24b8db00718367d327597',
     },
   },

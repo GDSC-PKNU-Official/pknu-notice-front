@@ -32,19 +32,17 @@ const FooterTab = () => {
 };
 
 const Footer = styled.div`
+  position: fixed;
+  bottom: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-
   max-width: 480px;
   width: 100%;
   height: 60px;
   padding: 15px 0px 15px 0px;
   background-color: ${THEME.TEXT.WHITE};
-  position: fixed;
-  bottom: 0;
-  z-index: 2;
-
+  z-index: 999;
   box-shadow: 0px -2px 6px rgba(99, 99, 99, 0.2);
 `;
 
