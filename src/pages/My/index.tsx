@@ -180,7 +180,7 @@ const My = () => {
         <CardList>
           <span>알림 설정</span>
           <ToggleButton
-            isOn={Boolean(subscribe)}
+            isOn={!!subscribe}
             changeState={handleNotiModal}
             animation={animation}
           />
@@ -189,7 +189,7 @@ const My = () => {
       <MajorCard>
         <Title>관리</Title>
         <CardIconList isSubscribe={!!subscribe}>
-          <Icon kind="bell" color={THEME.PRIMARY} size="35" />{' '}
+          <Icon kind="bell" color={THEME.PRIMARY} size="35" />
           <ListText>알림 설정</ListText>
         </CardIconList>
         {/* 토스트 메시지는 실제 사용되는 기능은 아니지만 혹시 구독을 안한 유저가 접근하려고 할 때 접근을 막고 토스트메시지를 보여주기 위해 존재 */}
@@ -201,11 +201,11 @@ const My = () => {
               : addToast(TOAST_MESSAGES.NEED_SUBSCRIBE)
           }
         >
-          <Icon kind="keyboard" color={THEME.PRIMARY} size="35" />{' '}
+          <Icon kind="keyboard" color={THEME.PRIMARY} size="35" />
           <ListText>키워드 알림 설정</ListText>
         </CardIconList>
         <CardIconList isSubscribe={true} onClick={() => routerTo('/faq')}>
-          <Icon kind="exclamation" color={THEME.PRIMARY} size="35" />{' '}
+          <Icon kind="exclamation" color={THEME.PRIMARY} size="35" />
           <ListText>자주 묻는 질문</ListText>
         </CardIconList>
       </MajorCard>
