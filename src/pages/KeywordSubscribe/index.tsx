@@ -11,7 +11,7 @@ import useInput from '@hooks/useInput';
 import useToasts from '@hooks/useToast';
 import RegisteredKeywordList from '@pages/KeywordSubscribe/components/RegisteredKeywordList';
 import { THEME } from '@styles/ThemeProvider/theme';
-import { KeyboardEventHandler, useEffect, useState } from 'react';
+import { FormEvent, FormEventHandler, useEffect, useState } from 'react';
 
 const KeywordSubscribe = () => {
   const [keywords, setKeywords] = useState<string[]>([]);
@@ -34,8 +34,9 @@ const KeywordSubscribe = () => {
     setKeywords((prevKeyword) => prevKeyword.filter((key) => key !== keyword));
   };
 
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key !== 'Enter' || e.nativeEvent.isComposing) return;
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (
+    e: FormEvent<HTMLFormElement>,
+  ) => {
     e.preventDefault();
     onClickSubmit();
   };
@@ -73,7 +74,7 @@ const KeywordSubscribe = () => {
     fetchKeywords();
   }, []);
 
-  const checkIsAvailable = () => (inputKeyword.length > 1 ? true : false);
+  const checkIsAvailable = () => inputKeyword.length > 1;
 
   return (
     <>
@@ -82,18 +83,16 @@ const KeywordSubscribe = () => {
         <InformUpperLayout.InformSubTitle subTitle={KEYWORD_PAGE.SUB_TITLE} />
       </InformUpperLayout>
 
-      <InputWrapper>
+      <InputWrapper onSubmit={handleSubmit}>
         <KeywordInput
           onChange={setInputKeyword}
           placeholder={KEYWORD_PAGE.PLACEHOLDER}
           maxLength={15}
-          onKeyDown={handleKeyDown}
           value={inputKeyword}
         />
         <KeywordSubmit
           disabled={!checkIsAvailable()}
           isAvailable={checkIsAvailable()}
-          onClick={onClickSubmit}
         >
           등록
         </KeywordSubmit>
@@ -109,7 +108,7 @@ const KeywordSubscribe = () => {
 
 export default KeywordSubscribe;
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.form`
   padding: 0 20px 0 20px;
   position: relative;
 `;
