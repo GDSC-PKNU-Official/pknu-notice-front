@@ -8,6 +8,7 @@ const imageSize: ImageSize = {
   medium: setSize(150),
   small: setSize(100),
   tiny: setSize(80),
+  building: setSize(100, 180),
 };
 
 const Image = ({

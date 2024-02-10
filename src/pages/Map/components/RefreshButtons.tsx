@@ -7,7 +7,10 @@ import useToasts from '@hooks/useToast';
 import useUserLocation from '@hooks/useUserLocation';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { Location } from '@type/map';
-import { hasLocationPermission, isUserInShcool } from '@utils/map';
+import {
+  hasLocationPermission,
+  isUserInShcool,
+} from '@utils/map/user-location';
 import React from 'react';
 
 const RefreshButtons = () => {
@@ -39,7 +42,7 @@ const RefreshButtons = () => {
   return (
     <IconContainer>
       <IconBox onClick={() => handleMapCenter(userLocation)}>
-        <Icon kind="location" color={THEME.PRIMARY} size="28" />
+        <Icon kind="myLocation" color={THEME.PRIMARY} size="28" />
       </IconBox>
       <IconBox onClick={() => handleMapCenter(PKNU_MAP_CENTER)}>
         <Icon kind="reset" color={THEME.PRIMARY} size="28" />
@@ -51,13 +54,13 @@ const RefreshButtons = () => {
 export default RefreshButtons;
 
 const IconContainer = styled.div`
-  width: 95%;
   position: absolute;
   top: 6rem;
-  z-index: 999;
+  right: 0;
+  z-index: 3;
   padding: 1rem;
+  width: 10%;
   gap: 10px;
-
   display: flex;
   flex-direction: column;
   align-items: flex-end;

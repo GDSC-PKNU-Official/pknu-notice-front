@@ -25,6 +25,8 @@ const useUserLocation = () => {
   };
 
   useEffect(() => {
+    if (userLocation) return;
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, failed, {
         enableHighAccuracy: true,

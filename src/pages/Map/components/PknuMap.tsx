@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import useMap from '@hooks/useMap';
 import useModals from '@hooks/useModals';
 import useUserLocation from '@hooks/useUserLocation';
-import { isUserInShcool } from '@utils/map';
+import { isUserInShcool } from '@utils/map/user-location';
 import React, { useEffect } from 'react';
 
 import { handleMapBoundary } from '../handlers';
