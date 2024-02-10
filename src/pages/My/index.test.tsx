@@ -1,6 +1,7 @@
 import Modal from '@components/Common/Modal';
 import MajorProvider from '@components/Providers/MajorProvider';
 import ModalsProvider from '@components/Providers/ModalsProvider';
+import ToastsProvider from '@components/Providers/ToastsProvider';
 import { MODAL_BUTTON_MESSAGE, MODAL_MESSAGE } from '@constants/modal-messages';
 import useModals from '@hooks/useModals';
 import { render, screen } from '@testing-library/react';
@@ -64,7 +65,9 @@ describe('마이 페이지 동작 테스트', () => {
     render(
       <MajorProvider>
         <ModalsProvider>
-          <My />
+          <ToastsProvider>
+            <My />
+          </ToastsProvider>
         </ModalsProvider>
       </MajorProvider>,
       { wrapper: MemoryRouter },
@@ -72,6 +75,7 @@ describe('마이 페이지 동작 테스트', () => {
 
     const majorEditButton = screen.getByText('학과 선택하러가기');
     await userEvent.click(majorEditButton);
+
     expect(mockRouterTo).toHaveBeenCalledWith('/major-decision');
   });
 });
