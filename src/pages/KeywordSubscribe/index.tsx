@@ -3,9 +3,11 @@ import {
   fetchSubscribeKeyword,
   postSubscribeKeyword,
 } from '@apis/subscribe/subscribeKeyword';
+import Button from '@components/Common/Button';
 import InformUpperLayout from '@components/InformUpperLayout';
 import { KEYWORD_PAGE } from '@constants/keyword';
 import TOAST_MESSAGES from '@constants/toast-message';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useInput from '@hooks/useInput';
 import useToasts from '@hooks/useToast';
@@ -90,12 +92,26 @@ const KeywordSubscribe = () => {
           maxLength={15}
           value={inputKeyword}
         />
-        <KeywordSubmit
+        <Button
           disabled={!checkIsAvailable()}
-          isAvailable={checkIsAvailable()}
+          css={css`
+            position: absolute;
+            top: 10px;
+            right: 10%;
+            border: none;
+            width: auto;
+            height: auto;
+            background-color: transparent !important;
+            color: ${checkIsAvailable() ? THEME.PRIMARY : THEME.TEXT.GRAY};
+            padding: 0;
+            margin: 0;
+            &: hover {
+              cursor: pointer;
+            }
+          `}
         >
           등록
-        </KeywordSubmit>
+        </Button>
       </InputWrapper>
 
       <RegisteredKeywordList
@@ -123,18 +139,5 @@ const KeywordInput = styled.input`
     border: none;
     outline: none;
     border-bottom: 1.5px solid;
-  }
-`;
-
-const KeywordSubmit = styled.button<{ isAvailable: boolean }>`
-  color: ${(prop) => (prop.isAvailable ? THEME.PRIMARY : THEME.TEXT.GRAY)};
-  border: none;
-  background-color: transparent;
-  position: absolute;
-  top: 10px;
-  right: 10%;
-
-  &: hover {
-    cursor: pointer;
   }
 `;
